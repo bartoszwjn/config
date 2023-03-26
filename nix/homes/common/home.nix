@@ -76,8 +76,11 @@ in {
     home.file = {
       ".cargo/config".source = ./cargo-config.toml;
       ".doom.d".source = mkOutOfStoreSymlink (config.dirs.configRepoRoot + "/emacs/doom");
-      ".emacs-profile".source = config.flakeRoot + "/emacs/emacs-profile";
-      ".emacs-profiles.el".source = config.flakeRoot + "/emacs/emacs-profiles.el";
+      ".emacs-profile".text = "doom";
+      ".emacs-profiles.el".text = ''
+        (("doom" . ((user-emacs-directory . "${config.dirs.doomEmacsRoot}")
+                    (env . (("DOOMDIR" . "~/.doom.d"))))))
+      '';
       ".emacs.d".source = flakeInputs.chemacs2;
       "org".source = mkOutOfStoreSymlink (config.home.homeDirectory + "/Nextcloud/org");
     };
