@@ -36,79 +36,83 @@
   outputs = inputs @ {
     self,
     nixpkgs,
+    flake-utils,
     home-manager,
     fenix,
     archman,
     chemacs2,
     ...
   }: let
-    pkgs = nixpkgs.legacyPackages.x86_64-linux;
     overlays = [self.overlays.default fenix.overlays.default archman.overlays.default];
-  in {
-    overlays.default = final: prev: import ./nix/packages {pkgs = final;};
+  in
+    flake-utils.lib.eachSystem ["x86_64-linux"] (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      packages =
+        import ./nix/packages {inherit pkgs;}
+        // {
+          inherit (home-manager.packages.${system}) home-manager;
+        };
 
-    packages.x86_64-linux =
-      import ./nix/packages {inherit pkgs;}
-      // {
-        inherit (home-manager.packages.x86_64-linux) home-manager;
+      formatter = pkgs.writeShellScriptBin "format-nix" ''
+        ${pkgs.alejandra}/bin/alejandra "$@" 2>/dev/null;
+      '';
+
+      checks = {
+        nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
+          ${pkgs.alejandra}/bin/alejandra --check ${self} 2>/dev/null
+          touch $out
+        '';
+      };
+    })
+    // {
+      homeConfigurations = let
+        mkHome = name:
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            extraSpecialArgs.flakeInputs = inputs;
+            modules = [
+              (./nix/homes + "/${name}/home.nix")
+              {nixpkgs.overlays = overlays;}
+            ];
+          };
+      in {
+        "bart3@TP-XMN" = mkHome "bart3@TP-XMN";
+        "bartek@TP-XMN" = mkHome "bartek@TP-XMN";
       };
 
-    homeConfigurations = let
-      mkHome = name:
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs.flakeInputs = inputs;
+      nixosConfigurations = {
+        blue = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
           modules = [
-            (./nix/homes + "/${name}/home.nix")
-            {nixpkgs.overlays = overlays;}
+            ./nix/systems/blue/configuration.nix
+            {_module.args.flakeInputs = inputs;}
+            home-manager.nixosModules.home-manager
+            {
+              nixpkgs.overlays = overlays;
+              home-manager = {
+                extraSpecialArgs.flakeInputs = inputs;
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.bartoszwjn = import (./nix/homes + "/bartoszwjn@blue/home.nix");
+              };
+            }
           ];
         };
-    in {
-      "bart3@TP-XMN" = mkHome "bart3@TP-XMN";
-      "bartek@TP-XMN" = mkHome "bartek@TP-XMN";
-    };
-
-    nixosConfigurations = {
-      blue = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./nix/systems/blue/configuration.nix
-          {_module.args.flakeInputs = inputs;}
-          home-manager.nixosModules.home-manager
-          {
-            nixpkgs.overlays = overlays;
-            home-manager = {
-              extraSpecialArgs.flakeInputs = inputs;
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.bartoszwjn = import (./nix/homes + "/bartoszwjn@blue/home.nix");
-            };
-          }
-        ];
+        bootstrap = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./nix/systems/bootstrap/configuration.nix
+            {_module.args.flakeInputs = inputs;}
+          ];
+        };
       };
-      bootstrap = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./nix/systems/bootstrap/configuration.nix
-          {_module.args.flakeInputs = inputs;}
-        ];
+
+      overlays.default = final: prev: import ./nix/packages {pkgs = final;};
+
+      templates.rust = {
+        description = "A flake that builds a Rust crate using fenix and crane";
+        path = ./nix/templates/rust;
       };
     };
-
-    formatter.x86_64-linux = pkgs.writeShellScriptBin "format-nix" ''
-      ${pkgs.alejandra}/bin/alejandra "$@" 2>/dev/null;
-    '';
-
-    checks.x86_64-linux = {
-      nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
-        ${pkgs.alejandra}/bin/alejandra --check ${self} 2>/dev/null
-        touch $out
-      '';
-    };
-
-    templates.rust = {
-      description = "A flake that builds a Rust crate using fenix and crane";
-      path = ./nix/templates/rust;
-    };
-  };
 }
