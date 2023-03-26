@@ -27,7 +27,6 @@
       nix-zsh-completions
       nixfmt
       nushell
-      ra
       rclone
       ripgrep
       rust-analyzer

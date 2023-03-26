@@ -18,29 +18,12 @@
         rust-analyzer-src.follows = ""; # don't need it, no need to clutter the lockfile
       };
     };
-    crane = {
-      url = "github:ipetkov/crane";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
     archman = {
       url = "github:bartoszwjn/archman";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
         fenix.follows = "fenix";
-        crane.follows = "crane";
-      };
-    };
-    ra = {
-      url = "github:bartoszwjn/ra";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-        fenix.follows = "fenix";
-        crane.follows = "crane";
       };
     };
     chemacs2 = {
@@ -56,17 +39,16 @@
     home-manager,
     fenix,
     archman,
-    ra,
     chemacs2,
     ...
   }: let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
     overlays = [self.overlays.default fenix.overlays.default archman.overlays.default];
   in {
-    overlays.default = import ./nix/overlay.nix {inherit ra;};
+    overlays.default = final: prev: import ./nix/packages {pkgs = final;};
 
     packages.x86_64-linux =
-      import ./nix/packages {inherit pkgs ra;}
+      import ./nix/packages {inherit pkgs;}
       // {
         inherit (home-manager.packages.x86_64-linux) home-manager;
       };
