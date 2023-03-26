@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-version_file="$CONFIG_REPO_ROOT/emacs/doom/doom-version"
+version_file="$CONFIG_REPO_ROOT/doom-emacs/doom-version"
 
 PS4='+> '
 set -x

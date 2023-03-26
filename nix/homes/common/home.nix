@@ -35,7 +35,7 @@ in {
     flakeRoot = ../../..;
     dirs = {
       configRepoRoot = config.home.homeDirectory + "/repos/config";
-      doomEmacsRoot = config.home.homeDirectory + "/repos/emacs/doom-emacs";
+      doomEmacsRoot = config.home.homeDirectory + "/repos/doom-emacs";
     };
 
     nix = {
@@ -75,7 +75,7 @@ in {
 
     home.file = {
       ".cargo/config".source = ./cargo-config.toml;
-      ".doom.d".source = mkOutOfStoreSymlink (config.dirs.configRepoRoot + "/emacs/doom");
+      ".doom.d".source = mkOutOfStoreSymlink (config.dirs.configRepoRoot + "/doom-emacs");
       ".emacs-profile".text = "doom";
       ".emacs-profiles.el".text = ''
         (("doom" . ((user-emacs-directory . "${config.dirs.doomEmacsRoot}")
