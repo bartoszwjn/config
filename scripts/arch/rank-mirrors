@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+# Sort pacman mirrors with reflector
+
+set -euo pipefail
+
+tmpfile=$(mktemp --tmpdir pacman-mirrorlist.XXXXXXXXXX)
+
+PS4="+> "
+set -x
+
+reflector --protocol https --latest 50 --fastest 5 --sort rate --save "$tmpfile"
+
+chmod a+r "$tmpfile"
+sudo chown root:root "$tmpfile"
+sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.old
+sudo mv "$tmpfile" /etc/pacman.d/mirrorlist

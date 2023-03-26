@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+# Install nix using the official install script
+
+set -euo pipefail
+
+nix_ver="2.4"
+
+tmpdir=$(mktemp -d --tmpdir install-nix.XXXXXXXXXX)
+
+cleanup() {
+    rm -rf "$tmpdir"
+}
+trap cleanup EXIT INT QUIT TERM
+
+script="$tmpdir/install-nix-$nix_ver"
+script_sig="$tmpdir/install-nix-$nix_ver.asc"
+
+curl -o "$script" "https://releases.nixos.org/nix/nix-$nix_ver/install"
+curl -o "$script_sig" "https://releases.nixos.org/nix/nix-$nix_ver/install.asc"
+gpg2 --recv-keys B541D55301270E0BCF15CA5D8170B4726D7198DE
+gpg2 --verify "$script_sig" "$script"
+
+echo -n "Continue? [y/n] "
+read input
+
+if [ "$input" == "n" ]; then
+    exit 0
+elif [ "$input" != "y" ]; then
+    echo "Expected 'y' or 'n'"
+    exit 1
+fi
+
+sh "$script" --daemon

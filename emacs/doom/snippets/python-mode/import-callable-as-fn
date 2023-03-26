@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# key: ifn
+# --
+from typing import Callable as Fn

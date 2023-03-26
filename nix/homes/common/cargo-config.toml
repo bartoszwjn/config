@@ -1,0 +1,15 @@
+[alias]
+b = "build"
+br = "build --release"
+c = "check"
+ca = "check --all-targets"
+d = "doc --document-private-items --no-deps"
+do = "doc --document-private-items --no-deps --open"
+r = "run"
+rr = "run --release"
+t = "test"
+
+[cargo-new]
+name = "Bartosz Wojno"
+email = "bartoszwjn@gmail.com"
+vcs = "git"

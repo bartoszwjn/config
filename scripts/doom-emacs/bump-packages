@@ -1,0 +1,8 @@
+#!/usr/bin/env doomscript
+
+(doom-require 'doom-lib 'packages)
+(doom-require 'doom-lib 'text)
+
+(with-current-buffer (find-file-existing (concat doom-user-dir "/packages.el"))
+  (doom/bump-packages-in-buffer)
+  (save-buffer))

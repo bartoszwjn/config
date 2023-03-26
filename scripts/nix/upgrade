@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Upgrade Nix to the version in the current nixpkgs
+
+set -euo pipefail
+
+PS4='+> '
+set -x
+
+sudo nix-env -f "$LINUX_CONFIG_ROOT/nix/nixpkgs.nix" \
+    --extra-experimental-features flakes \
+    -p /nix/var/nix/profiles/default \
+    -iA nix cacert
+
+sudo systemctl daemon-reload
+sudo systemctl restart nix-daemon

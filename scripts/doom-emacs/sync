@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Sync doom emacs and emacs package version
+
+set -euo pipefail
+
+version_file="$LINUX_CONFIG_ROOT/emacs/doom/doom-version"
+
+PS4='+> '
+set -x
+
+cd "$DOOM_EMACS_ROOT"
+git fetch
+git checkout -B master $(<"$version_file")
+
+doom upgrade --packages

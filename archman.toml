@@ -1,0 +1,170 @@
+xkb_types = "/usr/share/X11/xkb/types/complete"
+
+[links.common]
+"/etc/resolv.conf" = "/run/systemd/resolve/stub-resolv.conf"
+"~/.config/archman/archman.toml" = "archman.toml"
+
+[copies.common]
+"/etc/default/grub" = "arch/grub/grub.TP-XMN"
+"/etc/grub.d/40_custom" = "arch/grub/40_custom"
+"/etc/lightdm/lightdm-gtk-greeter.conf" = "arch/lightdm-gtk-greeter.conf"
+"/etc/locale.conf" = "arch/locale.conf"
+"/etc/nix/nix.conf" = "arch/nix.conf"
+"/etc/tlp.d/10-thresholds.conf" = "arch/tlp-thresholds.conf"
+"/etc/vconsole.conf" = "arch/vconsole.conf"
+"/etc/X11/xorg.conf.d/00-keyboard.conf" = "arch/xorg/00-keyboard.conf"
+"/etc/X11/xorg.conf.d/10-monitor.conf" = "arch/xorg/10-monitor.conf.TP-XMN"
+"/etc/X11/xorg.conf.d/30-touchpad.conf" = "arch/xorg/30-touchpad.conf.TP-XMN"
+"/usr/share/pixmaps/background" = "misc/background.jpg"
+"/usr/share/X11/xkb/symbols/ed" = "keyboard/xkb/symbols/ed"
+"/usr/share/X11/xkb/types/ed" = "keyboard/xkb/types/ed"
+
+[services]
+common = [
+    "NetworkManager.service",
+    "bluetooth.service",
+    "docker.service",
+    "lightdm.service",
+    "nix-daemon.service",
+    "tlp.service",
+]
+
+[package_groups]
+common = []
+
+[packages.common]
+# base packages, drivers
+base = [
+    "acpi_call",
+    "acpilight",
+    "base",
+    "base-devel",
+    "bluez",
+    "dosfstools",
+    "efibootmgr",
+    "grub",
+    "intel-ucode",
+    "linux",
+    "linux-firmware",
+    "networkmanager",
+    "ntfs-3g",
+    "os-prober",
+    "pulseaudio",
+    "pulseaudio-alsa",
+    "pulseaudio-bluetooth",
+    "systemd-resolvconf",
+    "tailscale",
+    "tlp",
+]
+# zsh and friends
+shell = [
+    "bash-completion",
+    "pkgfile",
+    "zsh",
+    "zsh-completions",
+    "zsh-syntax-highlighting",
+]
+# command-line utilities
+cli = [
+    "alsa-utils",
+    "bluez-utils",
+    "cmake",
+    "git",
+    "gnome-keyring",
+    "htop",
+    "hwinfo",
+    "man-db",
+    "man-pages",
+    "mlocate",
+    "openssh",
+    "playerctl",
+    "pulsemixer",
+    "reflector",
+    "rsync",
+    "tree",
+    "unzip",
+    "vi",
+    "vim",
+    "zip",
+]
+# xorg and gui programs
+gui = [
+    "alacritty",
+    "arc-gtk-theme",
+    "arc-icon-theme",
+    "discord",
+    "dmenu",
+    "emacs-nativecomp",
+    "feh",
+    "firefox",
+    "gimp",
+    "i3lock",
+    "keepassxc",
+    "kvantum",
+    "libappindicator-gtk3",
+    "libreoffice-still",
+    "lightdm",
+    "lightdm-gtk-greeter",
+    "network-manager-applet",
+    "nextcloud-client",
+    "pasystray",
+    "picom",
+    "scrot",
+    "seahorse",
+    "solaar",
+    "thunderbird",
+    "xmonad",
+    "xorg-server",
+    "xorg-xinit",
+    "xorg-xmodmap",
+    "xorg-xrandr",
+    "xournalpp",
+    "xss-lock",
+    "xterm",
+    "zathura",
+    "zathura-pdf-mupdf",
+    "zathura-ps",
+    "zsa-wally",
+]
+texlive = [
+    "texlive-bibtexextra",
+    "texlive-core",
+    "texlive-fontsextra",
+    "texlive-formatsextra",
+    "texlive-games",
+    "texlive-humanities",
+    "texlive-music",
+    "texlive-pictures",
+    "texlive-pstricks",
+    "texlive-publishers",
+    "texlive-science",
+]
+programming = [
+    "docker",
+    "docker-buildx",
+    "docker-compose",
+    "docker-machine",
+    "gdb",
+    "postgresql-libs",
+]
+python = [
+    "flake8",
+    "ipython",
+    "mypy",
+    "pyenv",
+    "pyright",
+    "python",
+    "python-isort",
+    "python-pip",
+]
+vm = [
+   "vagrant",
+   "virtualbox",
+   "virtualbox-host-modules-arch",
+]
+misc = [
+    # nested Xorg server for testing Xorg programs
+    "xorg-server-xephyr",
+    # displays X events
+    "xorg-xev",
+]

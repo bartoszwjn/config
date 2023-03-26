@@ -1,0 +1,10 @@
+diff --git a/types/complete b/types/complete
+index 3b59ca2..d70a175 100644
+--- a/types/complete
++++ b/types/complete
+@@ -6,4 +6,5 @@ default xkb_types "complete" {
+     include "level5"
+     include "extra"
+     include "numpad"
++    include "ed"
+ };

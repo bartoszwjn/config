@@ -1,0 +1,45 @@
+default xkb_types "ed" {
+
+    type "ALPHABETIC_UNICODE_FN" {
+        modifiers= Shift+Lock+LevelThree+LevelFive;
+
+        map[Shift] = Level2;
+        map[Lock] = Level2;
+        map[Shift+Lock] = Level1;
+
+        map[LevelThree] = Level3;
+        map[LevelThree+Shift] = Level4;
+        map[LevelThree+Lock] = Level4;
+        map[LevelThree+Shift+Lock] = Level3;
+
+        map[LevelFive] = Level5;
+        map[LevelFive+Shift] = Level5;
+        preserve[LevelFive+Shift] = Shift;
+        map[LevelFive+Lock] = Level5;
+        preserve[LevelFive+Lock] = Lock;
+        map[LevelFive+Shift+Lock] = Level5;
+
+        map[LevelThree+LevelFive] = Level5;
+        map[LevelThree+LevelFive+Shift] = Level5;
+        preserve[LevelThree+LevelFive+Shift] = Shift;
+        map[LevelThree+LevelFive+Lock] = Level5;
+        preserve[LevelThree+LevelFive+Lock] = Lock;
+        map[LevelThree+LevelFive+Shift+Lock] = Level5;
+
+        level_name[Level1] = "Base";
+        level_name[Level2] = "Shift";
+        level_name[Level3] = "Alt Base";
+        level_name[Level4] = "Alt Shift";
+        level_name[Level5] = "Fn";
+    };
+
+    type "TWO_LEVEL_FN" {
+        modifiers=LevelFive;
+
+        map[LevelFive] = Level2;
+
+        level_name[Level1] = "Base";
+        level_name[Level2] = "Fn";
+    };
+
+};

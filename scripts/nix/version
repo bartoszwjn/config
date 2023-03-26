@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Print the version of the `nix` package in the current nixpkgs
+
+set -euo pipefail
+
+PS4='+> '
+set -x
+
+nix-env -qaA nixpkgs.nix

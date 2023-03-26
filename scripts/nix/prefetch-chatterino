@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Prefetch the newest commit of chatterino
+
+set -euo pipefail
+
+PS4='+>'
+set -x
+
+nix-prefetch-github --verbose --nix --fetch-submodules Chatterino chatterino2

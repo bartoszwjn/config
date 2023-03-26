@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Runs sops with SOPS_AGE_KEY set by decrypting the file at AGE_KEY_FILE
+
+set -euo pipefail
+
+SOPS_AGE_KEY=$(age -d "$AGE_KEY_FILE") exec sops "$@"

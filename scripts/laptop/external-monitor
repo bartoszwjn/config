@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Set the external monitor as the main screen
+
+set -euo pipefail
+
+PS4="+> "
+set -x
+
+xrandr --output HDMI-1 --primary --left-of eDP-1 --mode 1920x1080 --rate 240
