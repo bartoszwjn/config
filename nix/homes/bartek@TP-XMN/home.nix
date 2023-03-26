@@ -17,7 +17,7 @@
     username = "bartek";
     packages = [pkgs.chatterino2];
     file = {
-      ".screen-brightness".source = config.repoRoot + "/scripts/laptop/screen-brightness";
+      ".screen-brightness".source = config.flakeRoot + "/scripts/laptop/screen-brightness";
       ".Xresources".text = "Xft.dpi: 96";
     };
   };

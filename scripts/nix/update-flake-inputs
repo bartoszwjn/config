@@ -32,7 +32,7 @@ commit_msg_header="[Nix] Update flake inputs
 
 "
 
-cd "${LINUX_CONFIG_ROOT}"
+cd "${CONFIG_REPO_ROOT}"
 
 old=$(get_deps)
 

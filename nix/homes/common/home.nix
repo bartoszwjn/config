@@ -16,9 +16,15 @@ in {
 
   options = {
     isNixos = lib.mkOption {type = lib.types.bool;};
-    repoRoot = lib.mkOption {type = lib.types.path;};
+    # Path to the root of this Nix flake. Files referenced using this path as the base will be
+    # copied to the Nix store when the configuration is evaluated, so changes to these files require
+    # switching to a new generation of the NixOS/home-manager configuration.
+    flakeRoot = lib.mkOption {type = lib.types.path;};
     dirs = {
-      linuxConfigRoot = lib.mkOption {type = lib.types.str;};
+      # Path to the repository root in the user's home directory. Used to reference files that need
+      # to immediately reflect changes made to the repo, without switching to a new generation of
+      # the config (e.g. in scripts used to switch generations).
+      configRepoRoot = lib.mkOption {type = lib.types.str;};
       doomEmacsRoot = lib.mkOption {type = lib.types.str;};
     };
   };
@@ -26,9 +32,9 @@ in {
   config = {
     programs.home-manager.enable = true;
 
-    repoRoot = ../../..;
+    flakeRoot = ../../..;
     dirs = {
-      linuxConfigRoot = config.home.homeDirectory + "/linux-config";
+      configRepoRoot = config.home.homeDirectory + "/repos/config";
       doomEmacsRoot = config.home.homeDirectory + "/repos/emacs/doom-emacs";
     };
 
@@ -51,9 +57,9 @@ in {
       stateVersion = "22.05";
       keyboard = null;
       sessionVariables = {
-        LINUX_CONFIG_ROOT = config.dirs.linuxConfigRoot;
+        CONFIG_REPO_ROOT = config.dirs.configRepoRoot;
         DOOM_EMACS_ROOT = config.dirs.doomEmacsRoot;
-        NIX_PATH = "nixpkgs=${config.dirs.linuxConfigRoot}/nix/nixpkgs.nix";
+        NIX_PATH = "nixpkgs=${config.dirs.configRepoRoot}/nix/nixpkgs.nix";
         NIX_USER_CONF_FILES = lib.concatStringsSep ":" [
           (config.xdg.configHome + "/nix/nix.conf")
           (config.home.homeDirectory + "/keys/nix-github-token.conf")
@@ -69,9 +75,9 @@ in {
 
     home.file = {
       ".cargo/config".source = ./cargo-config.toml;
-      ".doom.d".source = mkOutOfStoreSymlink (config.dirs.linuxConfigRoot + "/emacs/doom");
-      ".emacs-profile".source = config.repoRoot + "/emacs/emacs-profile";
-      ".emacs-profiles.el".source = config.repoRoot + "/emacs/emacs-profiles.el";
+      ".doom.d".source = mkOutOfStoreSymlink (config.dirs.configRepoRoot + "/emacs/doom");
+      ".emacs-profile".source = config.flakeRoot + "/emacs/emacs-profile";
+      ".emacs-profiles.el".source = config.flakeRoot + "/emacs/emacs-profiles.el";
       ".emacs.d".source = flakeInputs.chemacs2;
       "org".source = mkOutOfStoreSymlink (config.home.homeDirectory + "/Nextcloud/org");
     };

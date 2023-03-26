@@ -6,11 +6,14 @@
   ...
 }: {
   options = {
-    repoRoot = lib.mkOption {type = lib.types.path;};
+    # Path to the root of this Nix flake. Files referenced using this path as the base will be
+    # copied to the Nix store when the configuration is evaluated, so changes to these files will
+    # not be reflected until a new generation of the NixOS/home-manager configuration is activated.
+    flakeRoot = lib.mkOption {type = lib.types.path;};
   };
 
   config = {
-    repoRoot = ../..;
+    flakeRoot = ../..;
 
     nix = {
       registry.nixpkgs = {

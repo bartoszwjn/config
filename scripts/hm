@@ -9,4 +9,4 @@ host=$(uname -n)
 PS4="+> "
 set -x
 
-nix run "$LINUX_CONFIG_ROOT#home-manager" -- --flake "$LINUX_CONFIG_ROOT#$user@$host" "$@"
+nix run "$CONFIG_REPO_ROOT#home-manager" -- --flake "$CONFIG_REPO_ROOT#$user@$host" "$@"

@@ -3,5 +3,5 @@
 
 set -euo pipefail
 
-"$LINUX_CONFIG_ROOT/scripts/doom-emacs/bump-doom"
-"$LINUX_CONFIG_ROOT/scripts/doom-emacs/bump-packages"
+"$CONFIG_REPO_ROOT/scripts/doom-emacs/bump-doom"
+"$CONFIG_REPO_ROOT/scripts/doom-emacs/bump-packages"

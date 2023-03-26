@@ -6,7 +6,7 @@ set -euo pipefail
 PS4='+> '
 set -x
 
-sudo nix-env -f "$LINUX_CONFIG_ROOT/nix/nixpkgs.nix" \
+sudo nix-env -f "$CONFIG_REPO_ROOT/nix/nixpkgs.nix" \
     --extra-experimental-features flakes \
     -p /nix/var/nix/profiles/default \
     -iA nix cacert

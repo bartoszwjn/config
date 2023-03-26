@@ -29,7 +29,7 @@
     };
 
     localVariables = {
-      sd = config.dirs.linuxConfigRoot + "/scripts";
+      sd = config.dirs.configRepoRoot + "/scripts";
     };
     shellAliases = {
       ls = "ls --color=auto";
