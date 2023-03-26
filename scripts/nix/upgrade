@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Upgrade Nix to the version in the current nixpkgs
+# On a non-NixOS system, upgrade Nix to the current version available in nixpkgs
 
 set -euo pipefail
 
