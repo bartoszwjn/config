@@ -39,6 +39,7 @@ in {
     };
 
     nix = {
+      # Already set by the home-manager NixOS module
       package = lib.mkIf (!config.isNixos) pkgs.nix;
       registry.nixpkgs = {
         from = {
@@ -53,7 +54,7 @@ in {
     };
 
     home = {
-      homeDirectory = lib.mkIf (!config.isNixos) "/home/${config.home.username}";
+      homeDirectory = "/home/${config.home.username}";
       stateVersion = "22.05";
       keyboard = null;
       sessionVariables = {
