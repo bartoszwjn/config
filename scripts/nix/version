@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
-# Print the version of the `nix` package in the current nixpkgs
+# Print the currently installed Nix version, as well the newest versions available in nixpkgs
 
 set -euo pipefail
 
-PS4='+> '
-set -x
+echo "=== Installed CLI ==="
+nix --version
 
-nix-env -qaA nixpkgs.nix
+echo "=== Installed daemon ==="
+nix store ping
+
+echo "=== Pinned nixpkgs ==="
+nix eval nixpkgs#nix.version --raw
+echo
+
+echo "=== nixpkgs/nixpkgs-unstable ==="
+nix eval nixpkgs/nixpkgs-unstable#nix.version --raw
+echo
