@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-PS4='+>'
+PS4='+> '
 set -x
 
 nix-prefetch-github --verbose --nix --fetch-submodules Chatterino chatterino2

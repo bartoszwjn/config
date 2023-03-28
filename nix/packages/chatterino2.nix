@@ -15,12 +15,12 @@
 }:
 mkDerivation rec {
   pname = "chatterino2";
-  version = "2023-03-06";
+  version = "2023-03-28";
   src = fetchFromGitHub {
     owner = "Chatterino";
     repo = pname;
-    rev = "01a4861d7602b75b1f553f3adc9e6e622761c089";
-    hash = "sha256-wV8/6W2el0HWJdtLqD06fusRrTdG6TDbyOAMu3pTrWA=";
+    rev = "7aaec5f5c6a47f4ebaa21aa1c9df4d740b89ab30";
+    hash = "sha256-Eauiq7juDQSEU/oZxWj+K4pqlJF9yslDz5yn3ylejeo=";
     fetchSubmodules = true;
   };
   nativeBuildInputs = [pkg-config cmake];
