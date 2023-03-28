@@ -10,27 +10,38 @@
     ./stalonetray.nix
   ];
 
+  # Creates a package with a wrapper script that calls a program in `/usr/bin`. Used to override
+  # the program used by services when the version from nixpkgs doesn't work on a non-NixOS system.
+  lib.file.mkSystemWrapper = pkgName: binName: (
+    pkgs.writeTextFile {
+      name = "system-${pkgName}";
+      text = ''exec /usr/bin/${binName} "$@"'';
+      executable = true;
+      destination = "/bin/${binName}";
+    }
+  );
+
   systemd.user.systemctlPath = lib.mkIf (!config.isNixos) "/usr/bin/systemctl";
 
   # gnome-keyring-daemon
   home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh";
   services.gnome-keyring.enable = true;
-  # pkgs.gnome.gnome-keyring has wrong capabilities on non-NixOS
-  systemd.user.services.gnome-keyring.Service.ExecStart =
-    lib.mkIf (!config.isNixos) (lib.mkForce "/usr/bin/gnome-keyring-daemon --start --foreground");
+  # `pkgs.gnome.gnome-keyring` has wrong capabilities on non-NixOS. There is no
+  # `services.gnome-keyring.package` option.
+  systemd.user.services.gnome-keyring.Service.ExecStart = lib.mkIf (!config.isNixos) (
+    lib.mkForce "/usr/bin/gnome-keyring-daemon --start --foreground"
+  );
 
   # nextcloud-client
   services.nextcloud-client = {
     enable = true;
     startInBackground = true;
+    # `pkgs.nextcloud-client` fails to find OpenGL drivers on non-NixOS
+    package = lib.mkIf (!config.isNixos) (
+      config.lib.file.mkSystemWrapper "nextcloud-client" "nextcloud"
+    );
   };
-  systemd.user.services.nextcloud-client = {
-    Unit.After = ["tray.target"];
-    # pkgs.nextcloud-client fails to find OpenGL drivers on non-NixOS
-    Service.ExecStart = lib.mkIf (!config.isNixos) (lib.mkForce
-      ("/usr/bin/nextcloud"
-        + lib.optionalString config.services.nextcloud-client.startInBackground " --background"));
-  };
+  systemd.user.services.nextcloud-client.Unit.After = ["tray.target"];
 
   # pasystray
   systemd.user.services.pasystray = {
@@ -44,7 +55,7 @@
       pasystrayPath =
         if config.isNixos
         then "${pkgs.pasystray}/bin/pasystray"
-        else "pasystray";
+        else "/usr/bin/pasystray";
     in "${pasystrayPath} --volume-inc=5 --notify=none --notify=new --notify=sink --notify=source";
   };
 
@@ -68,7 +79,7 @@
     };
     Install.WantedBy = ["graphical-session.target"];
     Service.ExecStart = let
-      # pkgs.solaar needs to have udev rules installed, which the Arch package does
+      # `pkgs.solaar` needs udev rules to work
       solaarPath =
         if config.isNixos
         then "${pkgs.solaar}/bin/solaar"
@@ -85,7 +96,7 @@
     };
     Install.WantedBy = ["graphical-session.target"];
     Service.ExecStart = let
-      # pkgs.i3lock-color fails PAM authentication on non-NixOS
+      # `pkgs.i3lock-color` fails PAM authentication on non-NixOS
       i3lockPath =
         if config.isNixos
         then "${pkgs.i3lock-color}/bin/i3lock-color"

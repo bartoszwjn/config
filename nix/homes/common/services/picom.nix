@@ -19,8 +19,7 @@
       xrender-sync-fence = true;
       log-level = "info";
     };
-    # pkgs.picom fails to find OpenGL drivers on non-NixOS
-    package =
-      lib.mkIf (!config.isNixos) (pkgs.writeShellScriptBin "picom" ''exec /usr/bin/picom "$@"'');
+    # `pkgs.picom` fails to find OpenGL drivers on non-NixOS
+    package = lib.mkIf (!config.isNixos) (config.lib.file.mkSystemWrapper "picom" "picom");
   };
 }
