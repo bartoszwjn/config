@@ -332,6 +332,12 @@
   (set-formatter! 'alejandra "alejandra --quiet" :modes '(nix-mode)))
 
 
+;; ===== NUSHELL =====
+
+(use-package! prog-mode
+  :mode "\\.nu\\'")
+
+
 
 ;; ===== PYTHON =====
 
