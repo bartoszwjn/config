@@ -15,7 +15,10 @@
   lib.file.mkSystemWrapper = pkgName: binName: (
     pkgs.writeTextFile {
       name = "system-${pkgName}";
-      text = ''exec /usr/bin/${binName} "$@"'';
+      text = ''
+        #!${pkgs.runtimeShell}
+        exec /usr/bin/${binName} "$@"
+      '';
       executable = true;
       destination = "/bin/${binName}";
     }
