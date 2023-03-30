@@ -62,8 +62,6 @@ window:
 selection:
   save_to_clipboard: false
 
-alt_send_esc: false
-
 hints:
   enabled:
     - regex: "(mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
