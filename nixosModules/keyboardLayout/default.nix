@@ -3,17 +3,7 @@
   lib,
   pkgs,
   ...
-}: let
-  # include `types/ed` into `types/complete` as there seems no way to use anything other than
-  # `types/complete` with `xorg.conf`
-  customTypesPatch = ./custom-types.patch;
-
-  addPatch = pkg: pkg.overrideAttrs (old: {patches = (old.patches or []) ++ [customTypesPatch];});
-  patch_xkeyboardconfig_custom = xorg: {
-    xkeyboardconfig_custom = args: addPatch (xorg.xkeyboardconfig_custom args);
-  };
-  customTypesOverlay = final: prev: {xorg = prev.xorg // patch_xkeyboardconfig_custom prev.xorg;};
-in {
+}: {
   services.xserver = {
     layout = "ed";
     xkbOptions = "lv3:ralt_switch";
@@ -25,5 +15,13 @@ in {
     };
   };
 
-  nixpkgs.overlays = [customTypesOverlay];
+  # include `types/ed` into `types/complete` as there seems to be no way to use anything other than
+  # `types/complete` with `xorg.conf`
+  nixpkgs.overlays = let
+    updateAttr = name: fn: attrset: attrset // {${name} = fn attrset.${name};};
+    addPatch = xkeyboardconfig_custom: args:
+      (xkeyboardconfig_custom args).overrideAttrs (old: {
+        patches = (old.patches or []) ++ [./custom-types.patch];
+      });
+  in [(final: prev: {xorg = updateAttr "xkeyboardconfig_custom" addPatch prev.xorg;})];
 }
