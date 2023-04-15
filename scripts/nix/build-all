@@ -1,30 +1,58 @@
-#!/usr/bin/env bash
-# Build all packages and nixos configurations of a flake
+#!/usr/bin/env nu
+# -*- mode: prog -*-
 
-set -euo pipefail
+# Builds all packages, NixOS and home-manager configurations of a flake
+def main [
+  flake_ref: string = "." # flake reference
+  --no-link: bool
+  --out-link (-o): string
+  --cores: int
+] {
+  let system = (nix eval --impure --raw --expr builtins.currentSystem)
+  let flake = (nix flake show $flake_ref --json | from json)
 
-system=$(nix eval --impure --raw --expr 'builtins.currentSystem')
-flake=$(nix flake show --json)
+  let packages = (get_packages $flake_ref $flake $system)
+  let nixos_configurations = (get_nixos_configurations $flake_ref $flake)
+  let home_configurations = (get_home_configurations $flake_ref $flake)
 
-function get_packages () {
-    echo "$flake" | jq --raw-output --arg system "$system" '
-        .packages[$system] // {} | keys | .[] |
-         ".#\(.)"
-    '
+  let nix_args = (
+    ["build"] ++ $packages ++ $nixos_configurations ++ $home_configurations
+    ++ (if $no_link { ["--no-link"] } else { [] })
+    ++ (if $out_link != null { ["--out-link" $out_link] } else { [] })
+    ++ (if $cores != null { ["--cores" $cores] } else { [] })
+  )
+  $"(ansi default_bold)nix ($nix_args | str join ' ')(ansi reset)\n"
+  nix $nix_args
 }
 
-packages=$(get_packages)
-
-function get_nixos_systems () {
-    echo "$flake" | jq --raw-output '
-        .nixosConfigurations // {} | keys | .[] |
-        ".#nixosConfigurations.\(.).config.system.build.toplevel"
-    '
+def get_packages [flake_ref: string, flake: record, system: string] {
+  let packages = ($flake | get -i packages | get -i $system)
+  if $packages == null {
+    []
+  } else {
+    $packages | columns | each {|it| $"($flake_ref)#packages.($system).($it)"}
+  }
 }
 
-nixos_systems=$(get_nixos_systems)
+def get_nixos_configurations [flake_ref: string, flake: record] {
+  let nixos_configurations = ($flake | get -i nixosConfigurations)
+  if $nixos_configurations == null {
+    []
+  } else {
+    $nixos_configurations | columns | each {|it|
+      $"($flake_ref)#nixosConfigurations.($it).config.system.build.toplevel"
+    }
+  }
+}
 
-PS4='+> '
-set -x
-
-nix build $packages $nixos_systems "$@"
+def get_home_configurations [flake_ref: string, flake: record] {
+  if "homeConfigurations" in ($flake | columns) {
+    (
+      nix eval $"($flake_ref)#homeConfigurations" --apply builtins.attrNames --json
+      | from json
+      | each {|it| $"($flake_ref)#homeConfigurations.($it).activationPackage"}
+    )
+  } else {
+    []
+  }
+}
