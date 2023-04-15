@@ -49,7 +49,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       packages =
-        import ./nix/packages {inherit pkgs;}
+        import ./packages {inherit pkgs;}
         // {
           inherit (home-manager.packages.${system}) home-manager;
         };
@@ -72,7 +72,7 @@
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
             extraSpecialArgs.flakeInputs = inputs;
             modules = [
-              (./nix/homes + "/${name}/home.nix")
+              (./homeConfigurations + "/${name}/home.nix")
               {nixpkgs.overlays = overlays;}
             ];
           };
@@ -85,7 +85,7 @@
         blue = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./nix/systems/blue/configuration.nix
+            ./nixosConfigurations/blue/configuration.nix
             {_module.args.flakeInputs = inputs;}
             home-manager.nixosModules.home-manager
             {
@@ -94,7 +94,7 @@
                 extraSpecialArgs.flakeInputs = inputs;
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.bartoszwjn = import (./nix/homes + "/bartoszwjn@blue/home.nix");
+                users.bartoszwjn = import (./homeConfigurations + "/bartoszwjn@blue/home.nix");
               };
             }
           ];
@@ -102,13 +102,13 @@
         bootstrap = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./nix/systems/bootstrap/configuration.nix
+            ./nixosConfigurations/bootstrap/configuration.nix
             {_module.args.flakeInputs = inputs;}
           ];
         };
       };
 
-      overlays.default = final: prev: import ./nix/packages {pkgs = final;};
+      overlays.default = final: prev: import ./packages {pkgs = final;};
 
       templates.rust = {
         description = "A flake that builds a Rust crate using fenix and crane";

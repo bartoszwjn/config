@@ -5,7 +5,7 @@
   ...
 }: {
   imports = [
-    ../../modules/keyboardLayout.nix
+    ../../nixosModules/keyboardLayout.nix
   ];
 
   environment.systemPackages = [pkgs.xterm];

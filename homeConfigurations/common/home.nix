@@ -32,7 +32,7 @@ in {
   config = {
     programs.home-manager.enable = true;
 
-    flakeRoot = ../../..;
+    flakeRoot = ../..;
     dirs = {
       configRepoRoot = config.home.homeDirectory + "/repos/config";
       doomEmacsRoot = config.home.homeDirectory + "/repos/doom-emacs";

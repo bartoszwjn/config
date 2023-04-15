@@ -6,7 +6,7 @@
   ...
 }: {
   imports = [
-    ../../modules/base.nix
+    ../../nixosModules/base.nix
     (modulesPath + "/installer/cd-dvd/installation-cd-base.nix")
   ];
 }

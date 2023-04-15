@@ -13,7 +13,7 @@
   };
 
   config = {
-    flakeRoot = ../..;
+    flakeRoot = ../.;
 
     nix = {
       registry.nixpkgs = {

@@ -8,7 +8,7 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../../modules/base.nix
+    ../../nixosModules/base.nix
     ./boot.nix
     ./graphical.nix
     ./hardware.nix
