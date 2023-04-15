@@ -16,8 +16,8 @@ xkb_types = "/usr/share/X11/xkb/types/complete"
 "/etc/X11/xorg.conf.d/10-monitor.conf" = "arch/xorg/10-monitor.conf.TP-XMN"
 "/etc/X11/xorg.conf.d/30-touchpad.conf" = "arch/xorg/30-touchpad.conf.TP-XMN"
 "/usr/share/pixmaps/background" = "misc/background.jpg"
-"/usr/share/X11/xkb/symbols/ed" = "keyboard/xkb/symbols/ed"
-"/usr/share/X11/xkb/types/ed" = "keyboard/xkb/types/ed"
+"/usr/share/X11/xkb/symbols/ed" = "nixosModules/keyboardLayout/symbols/ed"
+"/usr/share/X11/xkb/types/ed" = "nixosModules/keyboardLayout/types/ed"
 
 [services]
 common = [
