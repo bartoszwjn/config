@@ -78,31 +78,30 @@
         "bartek@TP-XMN" = mkHome "bartek@TP-XMN";
       };
 
-      nixosConfigurations = {
-        blue = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./nixosConfigurations/blue/configuration.nix
-            {_module.args.flakeInputs = inputs;}
-            home-manager.nixosModules.home-manager
-            {
-              nixpkgs.overlays = overlays;
-              home-manager = {
-                extraSpecialArgs.flakeInputs = inputs;
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.bartoszwjn = import (./homeConfigurations + "/bartoszwjn@blue/home.nix");
-              };
-            }
-          ];
-        };
-        bootstrap = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./nixosConfigurations/bootstrap/configuration.nix
-            {_module.args.flakeInputs = inputs;}
-          ];
-        };
+      nixosConfigurations = let
+        mkNixos = name: users:
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./nixosConfigurations/${name}/configuration.nix
+              home-manager.nixosModules.home-manager
+              {
+                _module.args.flakeInputs = inputs;
+                nixpkgs.overlays = overlays;
+                home-manager = {
+                  extraSpecialArgs.flakeInputs = inputs;
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users = nixpkgs.lib.genAttrs users (
+                    user: ./homeConfigurations + "/${user}@${name}/home.nix"
+                  );
+                };
+              }
+            ];
+          };
+      in {
+        blue = mkNixos "blue" ["bartoszwjn"];
+        bootstrap = mkNixos "bootstrap" [];
       };
 
       overlays.default = final: prev: import ./packages {pkgs = final;};
