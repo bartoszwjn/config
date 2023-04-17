@@ -102,6 +102,7 @@
       in {
         blue = mkNixos "blue" ["bartoszwjn"];
         bootstrap = mkNixos "bootstrap" [];
+        grey = mkNixos "grey" []; # TODO users
       };
 
       overlays.default = final: prev: import ./packages {pkgs = final;};
