@@ -5,8 +5,6 @@ xkb_types = "/usr/share/X11/xkb/types/complete"
 "~/.config/archman/archman.toml" = "archman.toml"
 
 [copies.common]
-"/etc/default/grub" = "arch/grub/grub.TP-XMN"
-"/etc/grub.d/40_custom" = "arch/grub/40_custom"
 "/etc/lightdm/lightdm-gtk-greeter.conf" = "arch/lightdm-gtk-greeter.conf"
 "/etc/locale.conf" = "arch/locale.conf"
 "/etc/nix/nix.conf" = "arch/nix.conf"
@@ -42,7 +40,6 @@ base = [
     "bluez",
     "dosfstools",
     "efibootmgr",
-    "grub",
     "intel-ucode",
     "linux",
     "linux-firmware",
