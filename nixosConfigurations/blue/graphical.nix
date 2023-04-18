@@ -30,7 +30,7 @@
     videoDrivers = ["nvidia"];
     screenSection = ''
       Monitor "DP-0"
-      Option "metamodes" "DP-0: 1920x1080_240 +1920+0, DVI-I-1: 1920x1200 +0+0"
+      Option "metamodes" "DP-0: 1920x1080_240 +1920+0, DP-2: 1920x1200 +0+0"
     '';
     extraConfig = ''
       Section "Monitor"
