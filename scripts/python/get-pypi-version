@@ -3,14 +3,13 @@
 
 # Fetch the latest version of a pypi package, and show when it was released
 def main [
-    package: string # package name
+  package: string # package name
 ] {
-    let response = (do -c { curl --fail $"https://pypi.org/pypi/($package)/json" })
-    let json = ($response | from json)
-    let latest_version = ($json.info.version)
-    let release_dates = ($json.releases | get $latest_version | $in.upload_time)
-    $"Package: ($json.info.name)"
-    $"Latest version: ($latest_version)"
-    $"Released: ($release_dates)"
-    ""
+  let response = (do -c { curl --fail $"https://pypi.org/pypi/($package)/json" })
+  let json = ($response | from json)
+  let latest_version = ($json.info.version)
+  let release_dates = ($json.releases | get $latest_version | $in.upload_time)
+  print $"Package: ($json.info.name)"
+  print $"Latest version: ($latest_version)"
+  print $"Released: ($release_dates)"
 }

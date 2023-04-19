@@ -8,14 +8,14 @@ def create_left_prompt [] {
     starship prompt --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)'
 }
 
-let-env PROMPT_COMMAND = { create_left_prompt }
+let-env PROMPT_COMMAND = {|| create_left_prompt }
 let-env PROMPT_COMMAND_RIGHT = ""
 
 # The prompt indicators are environmental variables that represent the state of the prompt
-let-env PROMPT_INDICATOR = { "" }
-let-env PROMPT_INDICATOR_VI_INSERT = { ": " }
-let-env PROMPT_INDICATOR_VI_NORMAL = { "〉" }
-let-env PROMPT_MULTILINE_INDICATOR = { "::: " }
+let-env PROMPT_INDICATOR = ""
+let-env PROMPT_INDICATOR_VI_INSERT = ": "
+let-env PROMPT_INDICATOR_VI_NORMAL = "〉"
+let-env PROMPT_MULTILINE_INDICATOR = "::: "
 
 # For more information on defining custom themes, see
 # https://www.nushell.sh/book/coloring_and_theming.html
@@ -29,17 +29,17 @@ let dark_theme = {
     empty: blue
     # Closures can be used to choose colors for specific values.
     # The value (in this case, a bool) is piped into the closure.
-    bool: { if $in { 'light_cyan' } else { 'light_gray' } }
+    bool: {|b| if $b { 'light_cyan' } else { 'light_gray' } }
     int: white
-    filesize: {|e|
-      if $e == 0b {
+    filesize: {|s|
+      if $s == 0b {
         'white'
-      } else if $e < 1mb {
+      } else if $s < 1mb {
         'cyan'
       } else { 'blue' }
     }
     duration: white
-    date: { (date now) - $in |
+    date: {|d| (date now) - $d |
       if $in < 1hr {
         'red3b'
       } else if $in < 6hr {
@@ -231,10 +231,10 @@ let-env config = {
   render_right_prompt_on_last_line: false
 
   hooks: {
-    pre_prompt: [{
+    pre_prompt: [{||
       null  # replace with source code to run before the prompt is shown
     }]
-    pre_execution: [{
+    pre_execution: [{||
       null  # replace with source code to run before the repl input is run
     }]
     env_change: {
@@ -244,7 +244,7 @@ let-env config = {
         null
       }]
     }
-    display_output: {
+    display_output: {||
       if (term size).columns >= 100 { table -e } else { table }
     }
   }
