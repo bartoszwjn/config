@@ -60,7 +60,7 @@ in {
       sessionVariables = {
         CONFIG_REPO_ROOT = config.dirs.configRepoRoot;
         DOOM_EMACS_ROOT = config.dirs.doomEmacsRoot;
-        NIX_PATH = "nixpkgs=${config.dirs.configRepoRoot}/nix/nixpkgs.nix";
+        NIX_PATH = "nixpkgs=flake:nixpkgs";
         NIX_USER_CONF_FILES = lib.concatStringsSep ":" [
           (config.xdg.configHome + "/nix/nix.conf")
           (config.home.homeDirectory + "/keys/nix-github-token.conf")
