@@ -28,12 +28,25 @@
 
   # gnome-keyring-daemon
   home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh";
-  services.gnome-keyring.enable = true;
-  # `pkgs.gnome.gnome-keyring` has wrong capabilities on non-NixOS. There is no
-  # `services.gnome-keyring.package` option.
-  systemd.user.services.gnome-keyring.Service.ExecStart = lib.mkIf (!config.isNixos) (
-    lib.mkForce "/usr/bin/gnome-keyring-daemon --start --foreground"
-  );
+  # `pkgs.gnome.gnome-keyring` doesn't have the right process capabilities. Enabling
+  # `services.gnome.gnome-keyring` in the NixOS configuration makes the daemon autostart without the
+  # ssh component.
+  systemd.user.services.gnome-keyring = {
+    Unit = {
+      Description = "GNOME Keyring";
+      PartOf = ["graphical-session-pre.target"];
+    };
+    Install.WantedBy = ["graphical-session-pre.target"];
+    Service = {
+      ExecStart = let
+        cmd =
+          if config.isNixos
+          then "/run/wrappers/bin/gnome-keyring-daemon"
+          else "/usr/bin/gnome-keyring-daemon";
+      in "${cmd} --start --foreground";
+      Restart = "on-abort";
+    };
+  };
 
   # nextcloud-client
   services.nextcloud-client = {
