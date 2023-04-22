@@ -5,7 +5,7 @@
   ...
 }: {
   services.picom = {
-    enable = !config.isNixos; # TODO reenable on NixOS without crashing
+    enable = true;
     vSync = true;
     settings = {
       detect-client-opacity = true;
