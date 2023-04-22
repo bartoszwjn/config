@@ -18,9 +18,6 @@
       emacs
       feh
       firefox
-      gdb
-      gimp
-      i3lock-color
       isort
       keepassxc
       libreoffice-fresh
@@ -44,7 +41,6 @@
       zathura
       zip
       zsh-completions
-      zsh-syntax-highlighting
       ;
     inherit (pkgs.gnome) seahorse;
     inherit (pkgs.nodePackages) pyright;
