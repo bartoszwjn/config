@@ -11,9 +11,6 @@
 
   isNixos = false;
 
-  # Workaround for https://github.com/nix-community/home-manager/issues/2942
-  nixpkgs.config.allowUnfreePredicate = pkg: true;
-
   home = {
     username = "bart3";
     packages = builtins.attrValues {

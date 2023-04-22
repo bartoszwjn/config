@@ -51,19 +51,21 @@
       bart3 = {
         uid = 1001;
         isNormalUser = true;
-        extraGroups = ["wheel"];
+        extraGroups = ["wheel" "docker"];
         hashedPassword = flakeInputs.private-config.lib.grey.bart3.hashedPassword;
         shell = pkgs.zsh;
       };
       bartoszwjn = {
         uid = 1000;
         isNormalUser = true;
-        extraGroups = ["wheel"];
+        extraGroups = ["wheel" "docker"];
         hashedPassword = flakeInputs.private-config.lib.grey.bartoszwjn.hashedPassword;
         shell = pkgs.zsh;
       };
     };
   };
+
+  virtualisation.docker.enable = true;
 
   system.stateVersion = "23.05";
 }

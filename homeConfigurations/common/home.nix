@@ -39,8 +39,6 @@ in {
     };
 
     nix = {
-      # Already set by the home-manager NixOS module
-      package = lib.mkIf (!config.isNixos) pkgs.nix;
       registry.nixpkgs = {
         from = {
           type = "indirect";
@@ -52,6 +50,8 @@ in {
         experimental-features = ["nix-command" "flakes"];
       };
     };
+    # Workaround for https://github.com/nix-community/home-manager/issues/2942
+    nixpkgs.config.allowUnfreePredicate = pkg: true;
 
     home = {
       homeDirectory = "/home/${config.home.username}";

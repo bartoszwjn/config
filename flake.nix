@@ -70,10 +70,16 @@
             extraSpecialArgs.flakeInputs = inputs;
             modules = [
               (./homeConfigurations + "/${name}/home.nix")
-              {nixpkgs.overlays = overlays;}
+              ({pkgs, ...}: {
+                nix.package = pkgs.nix;
+                nixpkgs.overlays = overlays;
+              })
             ];
           };
       in {
+        "bartoszwjn@blue" = mkHome "bartoszwjn@blue";
+        "bartoszwjn@grey" = mkHome "bartoszwjn@grey";
+        "bart3@grey" = mkHome "bart3@grey";
         "bart3@TP-XMN" = mkHome "bart3@TP-XMN";
         "bartek@TP-XMN" = mkHome "bartek@TP-XMN";
       };
@@ -102,7 +108,7 @@
       in {
         blue = mkNixos "blue" ["bartoszwjn"];
         bootstrap = mkNixos "bootstrap" [];
-        grey = mkNixos "grey" []; # TODO users
+        grey = mkNixos "grey" ["bartoszwjn" "bart3"];
       };
 
       overlays.default = final: prev: import ./packages {pkgs = final;};

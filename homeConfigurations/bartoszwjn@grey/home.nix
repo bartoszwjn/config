@@ -2,19 +2,21 @@
   config,
   lib,
   pkgs,
+  flakeInputs,
   ...
 }: {
   imports = [
     ../common/home.nix
+    ./packages.nix
   ];
 
-  isNixos = false;
+  isNixos = true;
 
   home = {
-    username = "bartek";
-    packages = [pkgs.chatterino2];
+    username = "bartoszwjn";
     file = {
       ".screen-brightness".source = config.flakeRoot + "/scripts/laptop/screen-brightness";
+      ".ssh/config".source = flakeInputs.private-config.lib.grey.bartoszwjn.sshConfig;
       ".Xresources".text = "Xft.dpi: 96";
     };
   };
@@ -27,14 +29,4 @@
   };
 
   services.stalonetray.geometry = "8x1+1728+0";
-
-  systemd.user.services.network-manager-applet = {
-    Unit = {
-      Description = "Applet for managing network connections";
-      After = ["graphical-session-pre.target"];
-      PartOf = ["graphical-session.target"];
-    };
-    Install.WantedBy = ["graphical-session.target"];
-    Service.ExecStart = "/usr/bin/nm-applet";
-  };
 }
