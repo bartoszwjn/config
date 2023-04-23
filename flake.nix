@@ -88,28 +88,32 @@
         mkNixos = name: users:
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            modules = [
-              ./nixosConfigurations/${name}/configuration.nix
-              home-manager.nixosModules.home-manager
-              {
-                _module.args.flakeInputs = inputs;
-                nixpkgs.overlays = overlays;
-                home-manager = {
-                  extraSpecialArgs.flakeInputs = inputs;
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  users = nixpkgs.lib.genAttrs users (
-                    user: ./homeConfigurations + "/${user}@${name}/home.nix"
-                  );
-                };
-              }
-            ];
+            modules =
+              builtins.attrValues self.nixosModules
+              ++ [
+                ./nixosConfigurations/${name}/configuration.nix
+                home-manager.nixosModules.home-manager
+                {
+                  _module.args.flakeInputs = inputs;
+                  nixpkgs.overlays = overlays;
+                  home-manager = {
+                    extraSpecialArgs.flakeInputs = inputs;
+                    useGlobalPkgs = true;
+                    useUserPackages = true;
+                    users = nixpkgs.lib.genAttrs users (
+                      user: ./homeConfigurations + "/${user}@${name}/home.nix"
+                    );
+                  };
+                }
+              ];
           };
       in {
         blue = mkNixos "blue" ["bartoszwjn"];
         bootstrap = mkNixos "bootstrap" [];
         grey = mkNixos "grey" ["bartoszwjn" "bart3"];
       };
+
+      nixosModules = import ./nixosModules;
 
       overlays.default = final: prev: import ./packages {pkgs = final;};
 

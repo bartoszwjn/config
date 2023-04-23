@@ -8,12 +8,16 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../../nixosModules/base.nix
     ./boot.nix
     ./graphical.nix
     ./hardware.nix
     ./network.nix
   ];
+
+  custom = {
+    base.enable = true;
+    keyboardLayout.enable = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
 

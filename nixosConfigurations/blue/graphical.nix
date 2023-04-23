@@ -4,10 +4,6 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ../../nixosModules/keyboardLayout
-  ];
-
   environment.systemPackages = [pkgs.xterm];
 
   services.xserver = {
@@ -15,7 +11,7 @@
     windowManager.xmonad.enable = true;
     displayManager.lightdm = {
       enable = true;
-      background = config.flakeRoot + "/misc/background.jpg";
+      background = config.custom.base.flakeRoot + "/misc/background.jpg";
       greeters.gtk = {
         enable = true;
         theme.package = pkgs.arc-theme;

@@ -4,17 +4,25 @@
   pkgs,
   flakeInputs,
   ...
-}: {
-  options = {
-    # Path to the root of this Nix flake. Files referenced using this path as the base will be
-    # copied to the Nix store when the configuration is evaluated, so changes to these files will
-    # not be reflected until a new generation of the NixOS/home-manager configuration is activated.
-    flakeRoot = lib.mkOption {type = lib.types.path;};
+}: let
+  cfg = config.custom.base;
+in {
+  options.custom.base = {
+    enable = lib.mkEnableOption "basic custom NixOS configuration";
+
+    flakeRoot = lib.mkOption {
+      type = lib.types.path;
+      default = ../.;
+      defaultText = lib.literalExpression "../.";
+      description = ''
+        Path to the root of this Nix flake. Files referenced using this path as the base will be
+        copied to the Nix store when the configuration is evaluated, so changes to these files will
+        not be reflected until a new generation of the NixOS configuration is activated.
+      '';
+    };
   };
 
-  config = {
-    flakeRoot = ../.;
-
+  config = lib.mkIf (cfg.enable) {
     nix = {
       registry.nixpkgs = {
         from = {
@@ -33,7 +41,21 @@
     };
 
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) file git htop hwinfo iftop inetutils iotop lshw lsof ntfs3g openssh vim;
+      inherit
+        (pkgs)
+        file
+        git
+        htop
+        hwinfo
+        iftop
+        inetutils
+        iotop # TODO iotop-c and kernel params, ldns for drill
+        lshw
+        lsof
+        ntfs3g
+        openssh
+        vim
+        ;
       inherit (config.boot.kernelPackages) cpupower;
     };
   };
