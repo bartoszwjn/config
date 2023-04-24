@@ -15,7 +15,7 @@
     packages = [pkgs.chatterino2];
     file = {
       ".screen-brightness".source = config.flakeRoot + "/scripts/laptop/screen-brightness";
-      ".Xresources".text = "Xft.dpi: 96";
+      ".Xresources".text = "Xft.dpi: 96\n";
     };
   };
 

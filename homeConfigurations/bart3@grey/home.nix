@@ -17,6 +17,7 @@
     file = {
       ".screen-brightness".source = config.flakeRoot + "/scripts/laptop/screen-brightness";
       ".ssh/config".source = flakeInputs.private-config.lib.grey.bart3.sshConfig;
+      ".Xresources".text = "Xft.dpi: 96\n";
     };
   };
 
