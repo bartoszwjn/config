@@ -19,6 +19,7 @@
       git-review
       jq
       just
+      libnotify
       nasm
       ncdu
       nerdfonts
