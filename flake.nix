@@ -119,7 +119,7 @@
 
       templates.rust = {
         description = "A flake that builds a Rust crate using fenix and crane";
-        path = ./nix/templates/rust;
+        path = ./templates/rust;
       };
     };
 }
