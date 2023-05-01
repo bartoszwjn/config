@@ -21,7 +21,16 @@
     };
   };
 
-  programs.git.userEmail = "bart3@qed.ai";
+  programs.git.includes = [
+    {
+      condition = "gitdir:~/repos/";
+      contents.user.email = "bartoszwjn@gmail.com";
+    }
+    {
+      condition = "gitdir:~/qed/";
+      contents.user.email = "bart3@qed.ai";
+    }
+  ];
 
   xmobar = {
     showBattery = true;
