@@ -17,6 +17,7 @@
       emacs-all-the-icons-fonts
       fzf
       git-review
+      gnumake
       jq
       just
       libnotify

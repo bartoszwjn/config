@@ -27,6 +27,8 @@
       pasystray
       picom
       playerctl
+      poetry
+      postgresql
       pulsemixer
       python3
       rsync
