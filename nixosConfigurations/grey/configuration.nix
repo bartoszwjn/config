@@ -55,14 +55,14 @@
       bart3 = {
         uid = 1001;
         isNormalUser = true;
-        extraGroups = ["wheel" "docker"];
+        extraGroups = ["wheel" "video" "docker"];
         hashedPassword = flakeInputs.private-config.lib.grey.bart3.hashedPassword;
         shell = pkgs.zsh;
       };
       bartoszwjn = {
         uid = 1000;
         isNormalUser = true;
-        extraGroups = ["wheel" "docker"];
+        extraGroups = ["wheel" "video" "docker"];
         hashedPassword = flakeInputs.private-config.lib.grey.bartoszwjn.hashedPassword;
         shell = pkgs.zsh;
       };

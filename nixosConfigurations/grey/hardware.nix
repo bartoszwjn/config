@@ -31,6 +31,12 @@
         STOP_CHARGE_THRESH_BAT0 = 80;
       };
     };
+    udev.extraRules = lib.concatStringsSep ", " [
+      ''ACTION=="add"''
+      ''SUBSYSTEM=="backlight"''
+      ''RUN+="${pkgs.coreutils}/bin/chgrp video $sys$devpath/brightness"''
+      ''RUN+="${pkgs.coreutils}/bin/chmod g+w $sys$devpath/brightness"''
+    ];
   };
 
   sound.enable = true;
