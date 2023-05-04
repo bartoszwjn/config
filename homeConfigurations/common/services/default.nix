@@ -48,6 +48,14 @@
     };
   };
 
+  # gpg-agent
+  services.gpg-agent = {
+    enable = true;
+    enableScDaemon = false;
+    defaultCacheTtl = 3600; # seconds
+    pinentryFlavor = "curses";
+  };
+
   # nextcloud-client
   services.nextcloud-client = {
     enable = true;
