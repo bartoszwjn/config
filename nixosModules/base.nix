@@ -22,7 +22,7 @@ in {
     };
   };
 
-  config = lib.mkIf (cfg.enable) {
+  config = lib.mkIf cfg.enable {
     nix = {
       registry.nixpkgs = {
         from = {
@@ -49,14 +49,18 @@ in {
         hwinfo
         iftop
         inetutils
-        iotop # TODO iotop-c and kernel params, ldns for drill
+        iotop-c
+        ldns
         lshw
         lsof
         ntfs3g
         openssh
+        pciutils
         vim
         ;
       inherit (config.boot.kernelPackages) cpupower;
     };
+
+    boot.kernel.sysctl."kernel.task_delayacct" = true; # required by iotop-c
   };
 }

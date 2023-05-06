@@ -10,7 +10,7 @@ in {
     enable = lib.mkEnableOption "custom ErgoDox/Moonlander layout for X11";
   };
 
-  config = lib.mkIf (cfg.enable) {
+  config = lib.mkIf cfg.enable {
     services.xserver = {
       layout = "ed";
       xkbOptions = "lv3:ralt_switch";
