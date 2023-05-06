@@ -14,9 +14,9 @@
   qttools,
 }: let
   pname = "chatterino2";
-  version = "2023-04-16";
-  rev = "8124ab439ce34bacc68e9a8cd4c454dc1a2cd2f9";
-  hash = "sha256-y3ariu0o7KZQTWi+ktagXLS6phhYFF+JzVWoCQA7qiA=";
+  version = "2023-05-06";
+  rev = "0eb33eca9013a0f4cb5b063e667accf731aa2892";
+  hash = "sha256-qazR/v01jfWYAwFhtXueohVOslymq3tz8RsvuO+w8TQ=";
 in
   mkDerivation {
     inherit pname version;
