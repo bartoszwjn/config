@@ -78,7 +78,7 @@ myLogHook xmobarPipe = do
   DynamicLog.dynamicLogWithPP $ DynamicLog.xmobarPP
     { DynamicLog.ppOutput = hPutStrLn xmobarPipe
     , DynamicLog.ppTitle  = DynamicLog.xmobarColor arcDarkBlue ""
-                            . DynamicLog.shorten 85
+                            . DynamicLog.shorten 100
     , DynamicLog.ppSep    = " | "
     }
 

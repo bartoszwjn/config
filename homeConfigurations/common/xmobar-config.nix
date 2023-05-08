@@ -35,21 +35,18 @@ in {
       \<fc=#5294e2>| %kbd% | %date% |</fc>"
 
       , commands =
-      [ Run Cpu ["-L","3","-H","50","--high","red","-t","CPU: <total>%"] 10
-      , Run Memory ["-t","RAM: <used>/<total>"] 10
-      , Run DiskU
-            [("/", "Disk: <free>/<size>")]
-            ["-S", "True", "-d", "1"]
-            100
+      [ Run Cpu ["-L","3","-H","50","--high","red","-t"," <total>%"] 10
+      , Run Memory ["-t","󰍛 <usedratio>% <used>MiB"] 10
+      , Run DiskU [("/", "󰉋 <free>")] ["-S", "True", "-d", "1"] 100
     ''
     + optStr config.xmobar.showBattery ''
       , Run Battery
-        [ "-t", "<acstatus>: <left> <timeleft>"
+        [ "-t", "<acstatus> <left> <timeleft>"
         , "-p", "3", "-S", "True", "-d", "2"
         , "-L", "25", "-H", "60"
         , "-l", "red", "-n", "yellow", "-h", "green"
         , "--"
-        , "-O", "CHRG", "-i", "FULL", "-o", "BATT"
+        , "-O", "󰂄", "-i", "󰁹", "-o", "󰁾"
         ]
         100
     ''
