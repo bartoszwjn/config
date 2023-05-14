@@ -4,6 +4,8 @@
   pkgs,
   ...
 }: {
+  custom.dns.enable = true;
+
   networking = {
     hostName = "blue";
     dhcpcd.enable = false;
@@ -15,16 +17,16 @@
     networks = {
       "10-wired" = {
         matchConfig.Name = "enp5s0";
-        networkConfig.DHCP = "yes";
+        networkConfig.DHCP = "ipv4";
+        dhcpV4Config.UseDNS = false;
+        dhcpV6Config.UseDNS = false;
+        ipv6AcceptRAConfig.UseDNS = false;
       };
     };
     wait-online.anyInterface = true;
   };
 
-  services = {
-    resolved.enable = true;
-    tailscale.enable = true;
-  };
+  services.tailscale.enable = true;
   # otherwise tailscale gets stuck on shutdown trying to send logs
   systemd.services.tailscaled = {
     after = ["nss-lookup.target" "network-online.target"];
