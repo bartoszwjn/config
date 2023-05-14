@@ -65,7 +65,6 @@ in {
           (config.xdg.configHome + "/nix/nix.conf")
           (config.home.homeDirectory + "/keys/nix-github-token.conf")
         ];
-        QT_STYLE_OVERRIDE = "kvantum";
       };
       sessionPath = [
         (config.home.homeDirectory + "/.local/bin")
