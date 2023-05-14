@@ -69,7 +69,7 @@
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
             extraSpecialArgs.flakeInputs = inputs;
             modules = [
-              (./homeConfigurations + "/${name}/home.nix")
+              ./homeConfigurations/${name}/home.nix
               ({pkgs, ...}: {
                 nix.package = pkgs.nix;
                 nixpkgs.overlays = overlays;
@@ -101,7 +101,7 @@
                     useGlobalPkgs = true;
                     useUserPackages = true;
                     users = nixpkgs.lib.genAttrs users (
-                      user: ./homeConfigurations + "/${user}@${name}/home.nix"
+                      user: ./homeConfigurations/${"${user}@${name}"}/home.nix
                     );
                   };
                 }
