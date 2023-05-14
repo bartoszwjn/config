@@ -141,5 +141,17 @@ in {
         };
       };
     };
+
+    systemd.network.networks = let
+      networkCfg = config.custom.network;
+    in
+      builtins.listToAttrs (lib.flip map networkCfg.interfaces (iface: {
+        name = networkCfg.interfaceToNetwork.${iface};
+        value = {
+          dhcpV4Config.UseDNS = false;
+          dhcpV6Config.UseDNS = false;
+          ipv6AcceptRAConfig.UseDNS = false;
+        };
+      }));
   };
 }

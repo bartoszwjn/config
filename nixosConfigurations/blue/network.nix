@@ -4,27 +4,15 @@
   pkgs,
   ...
 }: {
-  custom.dns.enable = true;
-
-  networking = {
-    hostName = "blue";
-    dhcpcd.enable = false;
-    firewall.enable = true;
-  };
-
-  systemd.network = {
-    enable = true;
-    networks = {
-      "10-wired" = {
-        matchConfig.Name = "enp5s0";
-        networkConfig.DHCP = "ipv4";
-        dhcpV4Config.UseDNS = false;
-        dhcpV6Config.UseDNS = false;
-        ipv6AcceptRAConfig.UseDNS = false;
-      };
+  custom = {
+    dns.enable = true;
+    network = {
+      enable = true;
+      interfaces = ["enp5s0"];
     };
-    wait-online.anyInterface = true;
   };
+
+  networking.hostName = "blue";
 
   services.tailscale.enable = true;
   # otherwise tailscale gets stuck on shutdown trying to send logs
