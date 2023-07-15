@@ -35,4 +35,9 @@
       EndSection
     '';
   };
+
+  fonts.fontconfig = {
+    enable = true;
+    subpixel.rgba = "rgb";
+  };
 }
