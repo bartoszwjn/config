@@ -71,7 +71,7 @@
             modules =
               builtins.attrValues self.homeModules
               ++ [
-                ./homeConfigurations/${name}/home.nix
+                ./home-manager/homes/${name}/home.nix
                 ({pkgs, ...}: {
                   nix.package = pkgs.nix;
                   nixpkgs.overlays = overlays;
@@ -93,7 +93,7 @@
             modules =
               builtins.attrValues self.nixosModules
               ++ [
-                ./nixosConfigurations/${name}/configuration.nix
+                ./nixos/configurations/${name}/configuration.nix
                 home-manager.nixosModules.home-manager
                 {
                   _module.args.flakeInputs = inputs;
@@ -104,7 +104,7 @@
                     useUserPackages = true;
                     sharedModules = builtins.attrValues self.homeModules;
                     users = nixpkgs.lib.genAttrs users (
-                      user: ./homeConfigurations/${"${user}@${name}"}/home.nix
+                      user: ./home-manager/homes/${"${user}@${name}"}/home.nix
                     );
                   };
                 }
@@ -116,8 +116,8 @@
         grey = mkNixos "grey" ["bartoszwjn" "bart3"];
       };
 
-      nixosModules = import ./nixosModules;
-      homeModules = import ./homeModules;
+      nixosModules = import ./nixos/modules;
+      homeModules = import ./home-manager/modules;
 
       overlays.default = final: prev: import ./packages {pkgs = final;};
 
