@@ -15,14 +15,6 @@
         rust-analyzer-src.follows = ""; # don't need it, no need to clutter the lockfile
       };
     };
-    archman = {
-      url = "github:bartoszwjn/archman";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-        fenix.follows = "fenix";
-      };
-    };
     chemacs2 = {
       url = "github:plexus/chemacs2";
       flake = false;
@@ -36,21 +28,15 @@
     flake-utils,
     home-manager,
     fenix,
-    archman,
-    chemacs2,
     ...
   }: let
-    overlays = [self.overlays.default fenix.overlays.default archman.overlays.default];
+    overlays = [self.overlays.default fenix.overlays.default];
     homeManagerModules = import ./home-manager/modules;
   in
     flake-utils.lib.eachSystem ["x86_64-linux"] (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      packages =
-        import ./packages {inherit pkgs;}
-        // {
-          inherit (home-manager.packages.${system}) home-manager;
-        };
+      packages = import ./packages {inherit pkgs;};
 
       apps = {
         write-bootstrap-image = let
@@ -96,8 +82,6 @@
         "bartoszwjn@blue" = mkHome "bartoszwjn@blue";
         "bartoszwjn@grey" = mkHome "bartoszwjn@grey";
         "bart3@grey" = mkHome "bart3@grey";
-        "bart3@TP-XMN" = mkHome "bart3@TP-XMN";
-        "bartek@TP-XMN" = mkHome "bartek@TP-XMN";
       };
 
       nixosConfigurations = let

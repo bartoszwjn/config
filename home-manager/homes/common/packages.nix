@@ -9,7 +9,6 @@
       (pkgs)
       age
       alejandra
-      archman
       bat
       cargo-edit
       cargo-expand
