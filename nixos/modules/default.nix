@@ -1,6 +1,6 @@
 {
   base = ./base.nix;
   dns = ./dns;
-  keyboardLayout = ./keyboardLayout;
+  keyboard-layout = ./keyboard-layout;
   network = ./network.nix;
 }

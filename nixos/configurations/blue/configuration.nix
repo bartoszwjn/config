@@ -16,7 +16,7 @@
 
   custom = {
     base.enable = true;
-    keyboardLayout.enable = true;
+    keyboard-layout.enable = true;
   };
 
   nixpkgs.config.allowUnfree = true;

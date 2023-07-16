@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  cfg = config.custom.keyboardLayout;
+  cfg = config.custom.keyboard-layout;
 in {
-  options.custom.keyboardLayout = {
+  options.custom.keyboard-layout = {
     enable = lib.mkEnableOption "custom ErgoDox/Moonlander layout for X11";
   };
 
