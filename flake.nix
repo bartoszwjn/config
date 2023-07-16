@@ -41,6 +41,7 @@
     ...
   }: let
     overlays = [self.overlays.default fenix.overlays.default archman.overlays.default];
+    homeManagerModules = import ./home-manager/modules;
   in
     flake-utils.lib.eachSystem ["x86_64-linux"] (system: let
       pkgs = nixpkgs.legacyPackages.${system};
@@ -69,7 +70,7 @@
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
             extraSpecialArgs.flakeInputs = inputs;
             modules =
-              builtins.attrValues self.homeModules
+              builtins.attrValues homeManagerModules
               ++ [
                 ./home-manager/homes/${name}/home.nix
                 ({pkgs, ...}: {
@@ -102,7 +103,7 @@
                     extraSpecialArgs.flakeInputs = inputs;
                     useGlobalPkgs = true;
                     useUserPackages = true;
-                    sharedModules = builtins.attrValues self.homeModules;
+                    sharedModules = builtins.attrValues homeManagerModules;
                     users = nixpkgs.lib.genAttrs users (
                       user: ./home-manager/homes/${"${user}@${name}"}/home.nix
                     );
@@ -117,7 +118,6 @@
       };
 
       nixosModules = import ./nixos/modules;
-      homeModules = import ./home-manager/modules;
 
       overlays.default = final: prev: import ./packages {pkgs = final;};
 
