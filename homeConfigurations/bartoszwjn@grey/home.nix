@@ -12,6 +12,10 @@
 
   isNixos = true;
 
+  custom = {
+    rofi.enable = true;
+  };
+
   home = {
     username = "bartoszwjn";
     file = {

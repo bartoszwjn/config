@@ -68,13 +68,15 @@
           home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
             extraSpecialArgs.flakeInputs = inputs;
-            modules = [
-              ./homeConfigurations/${name}/home.nix
-              ({pkgs, ...}: {
-                nix.package = pkgs.nix;
-                nixpkgs.overlays = overlays;
-              })
-            ];
+            modules =
+              builtins.attrValues self.homeModules
+              ++ [
+                ./homeConfigurations/${name}/home.nix
+                ({pkgs, ...}: {
+                  nix.package = pkgs.nix;
+                  nixpkgs.overlays = overlays;
+                })
+              ];
           };
       in {
         "bartoszwjn@blue" = mkHome "bartoszwjn@blue";
@@ -100,6 +102,7 @@
                     extraSpecialArgs.flakeInputs = inputs;
                     useGlobalPkgs = true;
                     useUserPackages = true;
+                    sharedModules = builtins.attrValues self.homeModules;
                     users = nixpkgs.lib.genAttrs users (
                       user: ./homeConfigurations/${"${user}@${name}"}/home.nix
                     );
@@ -114,6 +117,7 @@
       };
 
       nixosModules = import ./nixosModules;
+      homeModules = import ./homeModules;
 
       overlays.default = final: prev: import ./packages {pkgs = final;};
 

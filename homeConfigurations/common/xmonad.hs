@@ -147,15 +147,13 @@ myKeys conf@XConfig { modMask = modM } = M.fromList $
   -- running and closing programs
   , ((modM              , xK_q     ), kill)
   , ((modM .|. shiftMask, xK_Return), spawn $ terminal conf)
-  , ((modM              , xK_r     ), submap . M.fromList $
+  , ((modM              , xK_r     ), spawn rofi)
+  , ((modM              , xK_o     ), submap . M.fromList $
       [ ((modM, xK_c), spawn "chatterino")
-      , ((modM, xK_d), spawn "discord")
-      , ((modM, xK_r), spawn "dmenu_run")
       , ((modM, xK_e), spawn "emacs")
       , ((modM, xK_f), spawn "firefox")
       , ((modM, xK_k), spawn "keepassxc")
       , ((modM, xK_s), spawn "spotify")
-      , ((modM, xK_t), spawn "thunderbird")
       , ((modM, xK_z), spawn "zathura")
       ])
   ]
@@ -241,6 +239,9 @@ fullscreenWindow :: Window -> WindowSet -> WindowSet
 fullscreenWindow focused = SS.float focused (RationalRect 0 0 1 1)
 
 -- CUSTOM COMMANDS -------------------------------------------------------------
+
+rofi :: String
+rofi = "rofi -modes combi,drun,run,ssh -show combi -combi-modes drun,run,ssh"
 
 volumeCmd, raiseVolume, lowerVolume, toggleVolume :: String
 volumeCmd = "amixer set Master "
