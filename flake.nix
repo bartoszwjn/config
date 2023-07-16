@@ -79,9 +79,9 @@
               ];
           };
       in {
-        "bartoszwjn@blue" = mkHome "bartoszwjn@blue";
-        "bartoszwjn@grey" = mkHome "bartoszwjn@grey";
-        "bart3@grey" = mkHome "bart3@grey";
+        "blue/bartoszwjn" = mkHome "blue/bartoszwjn";
+        "grey/bartoszwjn" = mkHome "grey/bartoszwjn";
+        "grey/bart3" = mkHome "grey/bart3";
       };
 
       nixosConfigurations = let
@@ -102,7 +102,7 @@
                     useUserPackages = true;
                     sharedModules = builtins.attrValues homeManagerModules;
                     users = nixpkgs.lib.genAttrs users (
-                      user: ./home-manager/homes/${"${user}@${name}"}/home.nix
+                      user: ./home-manager/homes/${name}/${user}/home.nix
                     );
                   };
                 }
