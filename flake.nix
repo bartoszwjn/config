@@ -52,8 +52,21 @@
           inherit (home-manager.packages.${system}) home-manager;
         };
 
+      apps = {
+        write-bootstrap-image = let
+          inherit (self.nixosConfigurations.bootstrap.config.system.build) isoImage;
+          isoPath = "${isoImage}/iso/${isoImage.isoName}";
+        in
+          flake-utils.lib.mkApp {
+            drv = pkgs.writeShellScriptBin "write-bootstrap-image" ''
+              if [[ "$#" -ne 1 ]]; then echo "Usage: $0 <device>"; exit 1; fi
+              exec ${pkgs.coreutils}/bin/dd bs=64K status=progress if=${isoPath} of="$1"
+            '';
+          };
+      };
+
       formatter = pkgs.writeShellScriptBin "format-nix" ''
-        ${pkgs.alejandra}/bin/alejandra "$@" 2>/dev/null;
+        ${pkgs.alejandra}/bin/alejandra "$@" 2>/dev/null
       '';
 
       checks = {
