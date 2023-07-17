@@ -10,22 +10,6 @@
     ./stalonetray.nix
   ];
 
-  # Creates a package with a wrapper script that calls a program in `/usr/bin`. Used to override
-  # the program used by services when the version from nixpkgs doesn't work on a non-NixOS system.
-  lib.file.mkSystemWrapper = pkgName: binName: (
-    pkgs.writeTextFile {
-      name = "system-${pkgName}";
-      text = ''
-        #!${pkgs.runtimeShell}
-        exec /usr/bin/${binName} "$@"
-      '';
-      executable = true;
-      destination = "/bin/${binName}";
-    }
-  );
-
-  systemd.user.systemctlPath = lib.mkIf (!config.isNixos) "/usr/bin/systemctl";
-
   # gnome-keyring-daemon
   home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh";
   # `pkgs.gnome.gnome-keyring` doesn't have the right process capabilities. Enabling
@@ -38,12 +22,7 @@
     };
     Install.WantedBy = ["graphical-session-pre.target"];
     Service = {
-      ExecStart = let
-        cmd =
-          if config.isNixos
-          then "/run/wrappers/bin/gnome-keyring-daemon"
-          else "/usr/bin/gnome-keyring-daemon";
-      in "${cmd} --start --foreground";
+      ExecStart = "/run/wrappers/bin/gnome-keyring-daemon --start --foreground";
       Restart = "on-abort";
     };
   };
@@ -60,10 +39,6 @@
   services.nextcloud-client = {
     enable = true;
     startInBackground = true;
-    # `pkgs.nextcloud-client` fails to find OpenGL drivers on non-NixOS
-    package = lib.mkIf (!config.isNixos) (
-      config.lib.file.mkSystemWrapper "nextcloud-client" "nextcloud"
-    );
   };
   systemd.user.services.nextcloud-client.Unit.After = ["tray.target"];
 
@@ -76,11 +51,8 @@
     };
     Install.WantedBy = ["graphical-session.target"];
     Service.ExecStart = let
-      pasystrayPath =
-        if config.isNixos
-        then "${pkgs.pasystray}/bin/pasystray"
-        else "/usr/bin/pasystray";
-    in "${pasystrayPath} --volume-inc=5 --notify=none --notify=new --notify=sink --notify=source";
+      cmd = "${pkgs.pasystray}/bin/pasystray";
+    in "${cmd} --volume-inc=5 --notify=none --notify=new --notify=sink --notify=source";
   };
 
   # signal-desktop
@@ -102,13 +74,7 @@
       PartOf = ["graphical-session.target"];
     };
     Install.WantedBy = ["graphical-session.target"];
-    Service.ExecStart = let
-      # `pkgs.solaar` needs udev rules to work
-      solaarPath =
-        if config.isNixos
-        then "${pkgs.solaar}/bin/solaar"
-        else "/usr/bin/solaar";
-    in "${solaarPath} --window hide";
+    Service.ExecStart = "${pkgs.solaar}/bin/solaar --window hide";
   };
 
   # xss-lock
@@ -120,12 +86,7 @@
     };
     Install.WantedBy = ["graphical-session.target"];
     Service.ExecStart = let
-      # `pkgs.i3lock-color` fails PAM authentication on non-NixOS
-      i3lockPath =
-        if config.isNixos
-        then "${pkgs.i3lock-color}/bin/i3lock-color"
-        else "/usr/bin/i3lock";
-      lockCmd = "${i3lockPath} -n -e -c 000000";
+      lockCmd = "${pkgs.i3lock-color}/bin/i3lock-color -n -e -c 000000";
     in ''${pkgs.xss-lock}/bin/xss-lock -s "$XDG_SESSION_ID" -- ${lockCmd}'';
   };
 }

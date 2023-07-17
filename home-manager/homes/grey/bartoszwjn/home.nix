@@ -10,8 +10,6 @@
     ./packages.nix
   ];
 
-  isNixos = true;
-
   custom = {
     dev-tools = {
       general = true;

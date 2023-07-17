@@ -24,8 +24,8 @@
       # NixOS rebinds arrows from "^[[A" to "^[OA", etc
       # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/programs/zsh/zinputrc
       # https://wiki.archlinux.org/title/Zsh#Key_bindings
-      searchUpKey = lib.mkIf config.isNixos "^[OA";
-      searchDownKey = lib.mkIf config.isNixos "^[OB";
+      searchUpKey = "^[OA";
+      searchDownKey = "^[OB";
     };
 
     localVariables = {

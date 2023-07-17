@@ -9,10 +9,7 @@
     if config.xmobar.ultrawideDisplay
     then "Static { xpos = 0, ypos = 0, width = 3248, height = 24 }"
     else "TopSize L 90 24";
-  font =
-    if config.isNixos
-    then "SauceCodePro Nerd Font"
-    else "Source Code Pro";
+  font = "SauceCodePro Nerd Font";
 in {
   options.xmobar = {
     ultrawideDisplay = lib.mkOption {type = lib.types.bool;};
