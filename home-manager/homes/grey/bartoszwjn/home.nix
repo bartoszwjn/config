@@ -13,6 +13,12 @@
   isNixos = true;
 
   custom = {
+    dev-tools = {
+      general = true;
+      nix = true;
+      python = true;
+      rust = true;
+    };
     rofi.enable = true;
   };
 

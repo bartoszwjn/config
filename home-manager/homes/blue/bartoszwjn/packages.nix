@@ -10,25 +10,20 @@
       alacritty
       arc-icon-theme
       arc-theme
-      black
       chatterino2
-      cmake
       discord
       dmenu
       emacs
       feh
       firefox
-      isort
       keepassxc
       libreoffice-fresh
       mlocate
-      mypy
       nextcloud-client
       pasystray
       picom
       playerctl
       pulsemixer
-      python3
       rsync
       scrot
       solaar
@@ -43,8 +38,6 @@
       zsh-completions
       ;
     inherit (pkgs.gnome) seahorse;
-    inherit (pkgs.nodePackages) pyright;
-    inherit (pkgs.python3Packages) ipython;
     inherit (pkgs.xorg) xev xrandr xmodmap xinit;
   };
 }

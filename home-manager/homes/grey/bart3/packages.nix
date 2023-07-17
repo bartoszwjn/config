@@ -11,26 +11,20 @@
       arc-icon-theme
       arc-theme
       awscli2
-      black
-      cmake
       dmenu
       emacs
       feh
       firefox
       google-cloud-sdk
-      isort
       keepassxc
       libreoffice-fresh
       mlocate
-      mypy
       nextcloud-client
       pasystray
       picom
       playerctl
-      poetry
       postgresql
       pulsemixer
-      python3
       rsync
       scrot
       slack
@@ -48,8 +42,6 @@
       zsh-completions
       ;
     inherit (pkgs.gnome) seahorse;
-    inherit (pkgs.nodePackages) pyright;
-    inherit (pkgs.python3Packages) ipython;
     inherit (pkgs.xorg) xev xrandr xmodmap xinit;
   };
 }
