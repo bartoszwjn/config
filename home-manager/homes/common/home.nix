@@ -11,7 +11,6 @@ in {
     ./packages.nix
     ./services
     ./xmobar-config.nix
-    ./zsh.nix
   ];
 
   options = {

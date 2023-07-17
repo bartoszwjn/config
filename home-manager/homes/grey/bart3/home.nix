@@ -18,6 +18,7 @@
       rust = true;
     };
     rofi.enable = true;
+    zsh.enable = true;
   };
 
   home = {

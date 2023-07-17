@@ -17,7 +17,6 @@
       nasm
       ncdu
       nerdfonts
-      nix-zsh-completions
       nushell
       rclone
       ripgrep
