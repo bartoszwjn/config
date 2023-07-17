@@ -118,9 +118,15 @@
 
       overlays.default = final: prev: import ./packages {pkgs = final;};
 
-      templates.rust = {
-        description = "A flake that builds a Rust crate using fenix and crane";
-        path = ./templates/rust;
+      templates = {
+        python = {
+          description = "A flake that builds a Python Poetry project using poetry2nix";
+          path = ./templates/python;
+        };
+        rust = {
+          description = "A flake that builds a Rust crate using fenix and crane";
+          path = ./templates/rust;
+        };
       };
     };
 }

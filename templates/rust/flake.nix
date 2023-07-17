@@ -48,7 +48,7 @@
         inherit src;
       };
 
-      nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
+      nix-fmt-check = pkgs.runCommandLocal "nix-fmt-check" {} ''
         ${pkgs.alejandra}/bin/alejandra --check ${self} 2>/dev/null
         touch $out
       '';
@@ -59,8 +59,8 @@
       outputs = mkOutputs pkgs;
     in {
       packages = {
-        inherit (outputs) mypackage;
         default = outputs.mypackage;
+        inherit (outputs) mypackage;
       };
 
       checks = {inherit (outputs) mypackage mypackage-clippy mypackage-fmt nix-fmt-check;};
