@@ -10,6 +10,7 @@
   ];
 
   custom = {
+    base.enable = true;
     dev-tools = {
       general = true;
       nix = true;
@@ -23,6 +24,7 @@
 
   home = {
     username = "bartoszwjn";
+    stateVersion = "22.05";
     file = {
       ".ssh/config".source = flakeInputs.private-config.lib.blue.bartoszwjn.sshConfig;
     };

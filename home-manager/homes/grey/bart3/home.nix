@@ -10,6 +10,7 @@
   ];
 
   custom = {
+    base.enable = true;
     dev-tools = {
       general = true;
       nix = true;
@@ -23,8 +24,10 @@
 
   home = {
     username = "bart3";
+    stateVersion = "22.05";
     file = {
-      ".screen-brightness".source = config.flakeRoot + "/scripts/laptop/screen-brightness";
+      ".screen-brightness".source =
+        config.custom.base.flakeRoot + "/scripts/laptop/screen-brightness";
       ".ssh/config".source = flakeInputs.private-config.lib.grey.bart3.sshConfig;
       ".Xresources".text = "Xft.dpi: 96\n";
     };
