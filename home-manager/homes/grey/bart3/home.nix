@@ -7,7 +7,6 @@
 }: {
   imports = [
     ../../common/home.nix
-    ./packages.nix
   ];
 
   custom = {
@@ -27,6 +26,9 @@
       ".screen-brightness".source = config.flakeRoot + "/scripts/laptop/screen-brightness";
       ".ssh/config".source = flakeInputs.private-config.lib.grey.bart3.sshConfig;
       ".Xresources".text = "Xft.dpi: 96\n";
+    };
+    packages = builtins.attrValues {
+      inherit (pkgs) awscli2 google-cloud-sdk postgresql slack teams terraform;
     };
   };
 

@@ -7,7 +7,6 @@
 }: {
   imports = [
     ../../common/home.nix
-    ./packages.nix
   ];
 
   custom = {
@@ -25,6 +24,9 @@
     username = "bartoszwjn";
     file = {
       ".ssh/config".source = flakeInputs.private-config.lib.blue.bartoszwjn.sshConfig;
+    };
+    packages = builtins.attrValues {
+      inherit (pkgs) chatterino2 discord;
     };
   };
 
