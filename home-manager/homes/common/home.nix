@@ -20,7 +20,6 @@ in {
     nixpkgs.config.allowUnfreePredicate = pkg: true;
 
     home.file = {
-      ".cargo/config".source = ./cargo-config.toml;
       ".doom.d".source = mkOutOfStoreSymlink (config.custom.base.configRepoRoot + "/doom-emacs");
       ".emacs-profile".text = "doom";
       ".emacs-profiles.el".text = ''

@@ -33,6 +33,27 @@ in {
         });
 
       sessionPath = lib.optional cfg.rust (config.home.homeDirectory + "/.cargo/bin");
+
+      file = lib.optionalAttrs cfg.rust {
+        ".cargo/config".source = (pkgs.formats.toml {}).generate "cargo-config.toml" {
+          alias = {
+            b = "build";
+            br = "build --release";
+            c = "check";
+            ca = "check --all-targets";
+            d = "doc --document-private-items --no-deps";
+            do = "doc --document-private-items --no-deps --open";
+            r = "run";
+            rr = "run --release";
+            t = "test";
+          };
+          cargo-new = {
+            name = "Bartosz Wojno";
+            email = "bartoszwjn@gmail.com";
+            vcs = "git";
+          };
+        };
+      };
     };
   };
 }
