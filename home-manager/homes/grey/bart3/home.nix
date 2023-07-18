@@ -16,6 +16,7 @@
       python = true;
       rust = true;
     };
+    nushell.enable = true;
     rofi.enable = true;
     zsh.enable = true;
   };

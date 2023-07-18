@@ -85,10 +85,6 @@ in {
 
     xdg.configFile = {
       "alacritty/alacritty.yml".source = ./alacritty.yml;
-      "nushell" = {
-        recursive = true;
-        source = ./nushell;
-      };
       "zathura/zathurarc".source = ./zathurarc;
     };
 

@@ -28,7 +28,6 @@
       ncdu
       nerdfonts
       nextcloud-client
-      nushell
       pasystray
       picom
       playerctl
