@@ -19,6 +19,11 @@
     };
     nushell.enable = true;
     rofi.enable = true;
+    xmonad = {
+      enable = true;
+      xmobar.showBattery = false;
+      stalonetray.geometry = "8x1-0+0";
+    };
     zsh.enable = true;
   };
 
@@ -34,11 +39,4 @@
   };
 
   programs.git.userEmail = "bartoszwjn@gmail.com";
-
-  xmobar = {
-    showBattery = false;
-    ultrawideDisplay = false;
-  };
-
-  services.stalonetray.geometry = "8x1-0+0";
 }

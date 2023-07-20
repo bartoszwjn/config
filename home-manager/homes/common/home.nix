@@ -10,7 +10,6 @@ in {
   imports = [
     ./packages.nix
     ./services
-    ./xmobar-config.nix
   ];
 
   config = {
@@ -38,18 +37,6 @@ in {
     xdg.dataFile = {
       "icons".source = config.home.path + "/share/icons";
       "themes".source = config.home.path + "/share/themes";
-    };
-
-    xsession = {
-      enable = true;
-      windowManager.xmonad = {
-        enable = true;
-        config = ./xmonad.hs;
-        extraPackages = haskellPackages: [haskellPackages.xmonad-contrib];
-      };
-      initExtra = ''
-        SHLVL=0
-      '';
     };
 
     fonts.fontconfig.enable = true;

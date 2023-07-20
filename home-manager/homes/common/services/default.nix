@@ -7,7 +7,6 @@
   imports = [
     ./dunst.nix
     ./picom.nix
-    ./stalonetray.nix
   ];
 
   # gnome-keyring-daemon
