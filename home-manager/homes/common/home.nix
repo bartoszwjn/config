@@ -39,16 +39,6 @@
       theme.package = pkgs.arc-theme;
     };
 
-    programs = {
-      git = {
-        enable = true;
-        userName = "Bartosz Wojno";
-        extraConfig = {
-          advice.detachedHead = false;
-          pull.ff = "only";
-        };
-      };
-      gpg.enable = true;
-    };
+    programs.gpg.enable = true;
   };
 }

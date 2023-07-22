@@ -16,6 +16,13 @@
       nix = true;
       python = true;
       rust = true;
+      git = {
+        enable = true;
+        userEmail = {
+          "~/repos/" = "bartoszwjn@gmail.com";
+          "~/qed/" = "bart3@qed.ai";
+        };
+      };
     };
     doom-emacs.enable = true;
     nushell.enable = true;
@@ -41,15 +48,4 @@
       inherit (pkgs) awscli2 git-review google-cloud-sdk postgresql slack teams terraform;
     };
   };
-
-  programs.git.includes = [
-    {
-      condition = "gitdir:~/repos/";
-      contents.user.email = "bartoszwjn@gmail.com";
-    }
-    {
-      condition = "gitdir:~/qed/";
-      contents.user.email = "bart3@qed.ai";
-    }
-  ];
 }

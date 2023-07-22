@@ -16,6 +16,10 @@
       nix = true;
       python = true;
       rust = true;
+      git = {
+        enable = true;
+        userEmail = "bartoszwjn@gmail.com";
+      };
     };
     doom-emacs.enable = true;
     nushell.enable = true;
@@ -38,6 +42,4 @@
       inherit (pkgs) chatterino2 discord;
     };
   };
-
-  programs.git.userEmail = "bartoszwjn@gmail.com";
 }
