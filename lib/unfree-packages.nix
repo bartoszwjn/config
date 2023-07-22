@@ -4,6 +4,7 @@
       "discord"
       "nvidia-settings"
       "nvidia-x11"
+      "obsidian"
       "slack"
       "spotify"
       "teams"

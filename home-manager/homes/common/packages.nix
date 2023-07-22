@@ -28,6 +28,7 @@
       ncdu
       nerdfonts
       nextcloud-client
+      obsidian
       pasystray
       picom
       playerctl
