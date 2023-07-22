@@ -30,4 +30,8 @@ in
     };
     nativeBuildInputs = [pkg-config cmake];
     buildInputs = [boost libsecret openssl qtbase qtimageformats qtmultimedia qtsvg qttools];
+
+    meta = {
+      license = lib.licenses.mit;
+    };
   }

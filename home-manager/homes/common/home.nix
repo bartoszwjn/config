@@ -15,9 +15,6 @@ in {
   config = {
     programs.home-manager.enable = true;
 
-    # Workaround for https://github.com/nix-community/home-manager/issues/2942
-    nixpkgs.config.allowUnfreePredicate = pkg: true;
-
     home.file = {
       ".doom.d".source = mkOutOfStoreSymlink (config.custom.base.configRepoRoot + "/doom-emacs");
       ".emacs-profile".text = "doom";

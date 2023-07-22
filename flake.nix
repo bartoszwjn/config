@@ -74,6 +74,7 @@
                 ./home-manager/homes/${name}/home.nix
                 ({pkgs, ...}: {
                   nix.package = pkgs.nix;
+                  nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
                   nixpkgs.overlays = overlays;
                 })
               ];
@@ -95,6 +96,7 @@
                 home-manager.nixosModules.home-manager
                 {
                   _module.args.flakeInputs = inputs;
+                  nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
                   nixpkgs.overlays = overlays;
                   home-manager = {
                     extraSpecialArgs.flakeInputs = inputs;
@@ -115,6 +117,8 @@
       };
 
       nixosModules = import ./nixos/modules;
+
+      lib = import ./lib {inherit (nixpkgs) lib;};
 
       overlays.default = final: prev: import ./packages {pkgs = final;};
 
