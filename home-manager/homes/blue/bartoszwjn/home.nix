@@ -17,6 +17,7 @@
       python = true;
       rust = true;
     };
+    doom-emacs.enable = true;
     nushell.enable = true;
     rofi.enable = true;
     xmonad = {

@@ -31,25 +31,15 @@ in {
         immediately, without switching to a new generation of the config.
       '';
     };
-
-    doomEmacsRoot = lib.mkOption {
-      type = lib.types.path;
-      default = config.home.homeDirectory + "/repos/doom-emacs";
-      defaultText = lib.literalExpression ''config.home.homeDirectory + "/repos/doom-emacs"'';
-    };
   };
 
   config = lib.mkIf cfg.enable {
     home = {
       homeDirectory = "/home/${config.home.username}";
       keyboard = null;
-      sessionPath = [
-        (config.home.homeDirectory + "/.local/bin")
-        (cfg.doomEmacsRoot + "/bin")
-      ];
+      sessionPath = [(config.home.homeDirectory + "/.local/bin")];
       sessionVariables = {
         CONFIG_REPO_ROOT = cfg.configRepoRoot;
-        DOOM_EMACS_ROOT = cfg.doomEmacsRoot;
         NIX_PATH = "nixpkgs=flake:nixpkgs";
         NIX_USER_CONF_FILES = lib.concatStringsSep ":" [
           (config.xdg.configHome + "/nix/nix.conf")

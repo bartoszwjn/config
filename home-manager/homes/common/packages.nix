@@ -13,8 +13,6 @@
       arc-theme
       bat
       dmenu
-      emacs
-      emacs-all-the-icons-fonts
       fd
       feh
       firefox

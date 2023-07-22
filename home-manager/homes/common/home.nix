@@ -4,9 +4,7 @@
   pkgs,
   flakeInputs,
   ...
-}: let
-  inherit (config.lib.file) mkOutOfStoreSymlink;
-in {
+}: {
   imports = [
     ./packages.nix
     ./services
@@ -14,17 +12,6 @@ in {
 
   config = {
     programs.home-manager.enable = true;
-
-    home.file = {
-      ".doom.d".source = mkOutOfStoreSymlink (config.custom.base.configRepoRoot + "/doom-emacs");
-      ".emacs-profile".text = "doom";
-      ".emacs-profiles.el".text = ''
-        (("doom" . ((user-emacs-directory . "${config.custom.base.doomEmacsRoot}")
-                    (env . (("DOOMDIR" . "~/.doom.d"))))))
-      '';
-      ".emacs.d".source = flakeInputs.chemacs2;
-      "org".source = mkOutOfStoreSymlink (config.home.homeDirectory + "/Nextcloud/org");
-    };
 
     xdg.configFile = {
       "alacritty/alacritty.yml".source = ./alacritty.yml;
