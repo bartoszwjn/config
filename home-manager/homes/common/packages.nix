@@ -15,6 +15,7 @@
       dmenu
       emacs
       emacs-all-the-icons-fonts
+      fd
       feh
       firefox
       fzf
