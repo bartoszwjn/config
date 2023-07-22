@@ -23,6 +23,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    home.packages = [pkgs.haskellPackages.xmobar];
+
     xsession = {
       enable = true;
       windowManager.xmonad = {

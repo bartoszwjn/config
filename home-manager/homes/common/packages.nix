@@ -12,17 +12,13 @@
       arc-icon-theme
       arc-theme
       bat
-      dmenu
       fd
       feh
       firefox
-      fzf
-      git-review
       jq
       keepassxc
       libnotify
       libreoffice-fresh
-      mlocate
       nasm
       ncdu
       nerdfonts
@@ -48,10 +44,8 @@
       xss-lock
       zathura
       zip
-      zsh-completions
       ;
     inherit (pkgs.gnome) seahorse;
-    inherit (pkgs.haskellPackages) xmobar;
     inherit (pkgs.xorg) xev xrandr xmodmap xinit;
   };
 }

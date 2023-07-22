@@ -11,6 +11,11 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    home.packages = [
+      pkgs.fzf # zoxide
+      pkgs.zsh-completions
+    ];
+
     programs.zsh = {
       enable = true;
       enableAutosuggestions = true;
