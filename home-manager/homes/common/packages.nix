@@ -22,18 +22,13 @@
       nasm
       ncdu
       nerdfonts
-      nextcloud-client
       obsidian
-      pasystray
-      picom
       playerctl
       pulsemixer
       rclone
       ripgrep
       rsync
       scrot
-      signal-desktop
-      solaar
       sops
       spotify
       tree
@@ -41,7 +36,6 @@
       vim
       wally-cli
       xournalpp
-      xss-lock
       zathura
       zip
       ;

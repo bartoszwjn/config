@@ -25,6 +25,7 @@
     gpg.enable = true;
     nushell.enable = true;
     rofi.enable = true;
+    services.enableAll = true;
     xmonad = {
       enable = true;
       xmobar.showBattery = false;

@@ -5,6 +5,7 @@
   gpg = ./gpg.nix;
   nushell = ./nushell;
   rofi = ./rofi.nix;
+  services = ./services;
   xmonad = ./xmonad;
   zsh = ./zsh.nix;
 }
