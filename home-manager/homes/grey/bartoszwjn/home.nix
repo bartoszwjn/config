@@ -10,6 +10,7 @@
   ];
 
   custom = {
+    alacritty.enable = true;
     base.enable = true;
     dev-tools = {
       general = true;

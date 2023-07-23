@@ -8,7 +8,6 @@
     inherit
       (pkgs)
       age
-      alacritty
       arc-icon-theme
       arc-theme
       bat

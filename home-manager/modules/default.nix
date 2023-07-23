@@ -1,4 +1,5 @@
 {
+  alacritty = ./alacritty;
   base = ./base.nix;
   dev-tools = ./dev-tools.nix;
   doom-emacs = ./doom-emacs.nix;
