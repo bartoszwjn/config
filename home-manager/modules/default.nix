@@ -7,6 +7,7 @@
   nushell = ./nushell;
   rofi = ./rofi.nix;
   services = ./services;
+  styling = ./styling.nix;
   xmonad = ./xmonad;
   zathura = ./zathura;
   zsh = ./zsh.nix;

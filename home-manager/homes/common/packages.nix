@@ -8,8 +8,6 @@
     inherit
       (pkgs)
       age
-      arc-icon-theme
-      arc-theme
       bat
       fd
       feh
@@ -20,7 +18,6 @@
       libreoffice-fresh
       nasm
       ncdu
-      nerdfonts
       obsidian
       playerctl
       pulsemixer

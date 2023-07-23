@@ -30,6 +30,7 @@
     nushell.enable = true;
     rofi.enable = true;
     services.enableAll = true;
+    styling.enable = true;
     xmonad = {
       enable = true;
       xmobar.showBattery = true;
