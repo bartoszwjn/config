@@ -5,10 +5,6 @@
   flakeInputs,
   ...
 }: {
-  imports = [
-    ../../common/home.nix
-  ];
-
   custom = {
     alacritty.enable = true;
     base.enable = true;
@@ -25,6 +21,7 @@
     doom-emacs.enable = true;
     gpg.enable = true;
     nushell.enable = true;
+    packages.enable = true;
     rofi.enable = true;
     services.enableAll = true;
     styling.enable = true;

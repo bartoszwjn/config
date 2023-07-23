@@ -5,6 +5,7 @@
   doom-emacs = ./doom-emacs.nix;
   gpg = ./gpg.nix;
   nushell = ./nushell;
+  packages = ./packages.nix;
   rofi = ./rofi.nix;
   services = ./services;
   styling = ./styling.nix;
