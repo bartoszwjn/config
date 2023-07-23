@@ -22,6 +22,7 @@
       };
     };
     doom-emacs.enable = true;
+    gpg.enable = true;
     nushell.enable = true;
     rofi.enable = true;
     xmonad = {

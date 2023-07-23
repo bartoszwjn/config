@@ -38,7 +38,5 @@
       theme.name = "Arc-Dark";
       theme.package = pkgs.arc-theme;
     };
-
-    programs.gpg.enable = true;
   };
 }
