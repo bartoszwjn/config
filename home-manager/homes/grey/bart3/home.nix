@@ -35,6 +35,7 @@
       xmobar.showBattery = true;
       stalonetray.geometry = "8x1+1728+0";
     };
+    zathura.enable = true;
     zsh.enable = true;
   };
 

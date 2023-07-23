@@ -12,10 +12,6 @@
   config = {
     programs.home-manager.enable = true;
 
-    xdg.configFile = {
-      "zathura/zathurarc".source = ./zathurarc;
-    };
-
     xdg.dataFile = {
       "icons".source = config.home.path + "/share/icons";
       "themes".source = config.home.path + "/share/themes";

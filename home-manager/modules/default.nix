@@ -8,5 +8,6 @@
   rofi = ./rofi.nix;
   services = ./services;
   xmonad = ./xmonad;
+  zathura = ./zathura;
   zsh = ./zsh.nix;
 }

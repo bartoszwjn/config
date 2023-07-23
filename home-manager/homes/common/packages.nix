@@ -35,7 +35,6 @@
       vim
       wally-cli
       xournalpp
-      zathura
       zip
       ;
     inherit (pkgs.gnome) seahorse;
