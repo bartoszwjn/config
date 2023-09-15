@@ -50,8 +50,8 @@
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
 
-(package! jenkinsfile-mode :pin "1d90c1ff8edc7ea88844af92a206e7c5f083b568")
+(package! jenkinsfile-mode :pin "568865ee419e0592de0dd0717d6769a66d9df111")
 (package! just-mode :pin "d7f52eab8fa3828106f80acb1e2176e5877b7191")
 (package! nasm-mode :pin "65ca6546fc395711fac5b3b4299e76c2303d43a8")
-(package! olivetti :pin "8d287a80c5e3d72ac01b56c8afe60b01f18500b4")
+(package! olivetti :pin "a644ee9d24c7283435ce42e11498951e100608c9")
 (package! systemd :pin "8742607120fbc440821acbc351fda1e8e68a8806")
