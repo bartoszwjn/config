@@ -335,7 +335,7 @@
 (use-package! nix-mode
   :hook (nix-mode . (lambda () (doom/set-indent-width 2)))
   :config
-  (set-formatter! 'alejandra "alejandra --quiet" :modes '(nix-mode)))
+  (set-formatter! 'alejandra '("alejandra" "--quiet") :modes '(nix-mode)))
 
 
 ;; ===== NUSHELL =====
