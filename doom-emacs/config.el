@@ -160,6 +160,10 @@
   :config
   (setq! epa-file-select-keys t))
 
+(use-package! vertico
+  :config
+  (setq! vertico-sort-function #'vertico-sort-alpha))
+
 
 
 ;; ===== COMPLETION ============================================================
