@@ -17,6 +17,7 @@
   custom = {
     base.enable = true;
     keyboard-layout.enable = true;
+    printing.enable = true;
   };
 
   console = {
