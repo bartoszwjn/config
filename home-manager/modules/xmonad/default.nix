@@ -66,7 +66,7 @@ in {
           Run Memory ["-t", "󰍛 <usedratio>% <used>MiB"] 10,
           Run DiskU [("/", "󰉋 <free>")] ["-S", "True", "-d", "1"] 100,
           ${batteryCommand}
-          Run Date "%a %d-%m-%Y | %H:%M:%S" "date" 10,
+          Run Date "%a %Y-%m-%d | %H:%M:%S" "date" 10,
           Run Kbd [("us", "US"), ("pl", "PL"), ("pl(dvp)", "DV")],
           Run StdinReader
         ]
