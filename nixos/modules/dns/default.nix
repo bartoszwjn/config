@@ -14,9 +14,20 @@
 in {
   options.custom.dns = {
     enable = lib.mkEnableOption "DNS configuration";
+    disableWithSpecialisation = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Whether to create a specialisation that disables the custom DNS configuration";
+    };
   };
 
   config = lib.mkIf cfg.enable {
+    specialisation = lib.mkIf cfg.disableWithSpecialisation {
+      normal-dns.configuration = {
+        custom.dns.enable = lib.mkOverride 99 false; # between mkForce (50) and no override (100)
+      };
+    };
+
     assertions = let
       systemdCfg = config.systemd.services.dnscrypt-proxy2.serviceConfig;
       dirs = ["CacheDirectory" "LogsDirectory" "RuntimeDirectory" "StateDirectory"];
