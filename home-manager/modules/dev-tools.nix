@@ -29,7 +29,7 @@ in {
     home = {
       packages =
         lib.optionals cfg.general (builtins.attrValues {
-          inherit (pkgs) cmake gnumake just;
+          inherit (pkgs) cmake gnumake just shellcheck;
         })
         ++ lib.optionals cfg.nix (builtins.attrValues {
           inherit (pkgs) alejandra nix-diff nix-prefetch-git nix-prefetch-github;
