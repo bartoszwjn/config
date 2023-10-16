@@ -47,7 +47,7 @@
       ".Xresources".text = "Xft.dpi: 96\n";
     };
     packages = builtins.attrValues {
-      inherit (pkgs) awscli2 git-review google-cloud-sdk postgresql slack teams terraform;
+      inherit (pkgs) awscli2 git-review google-cloud-sdk postgresql slack;
     };
   };
 }

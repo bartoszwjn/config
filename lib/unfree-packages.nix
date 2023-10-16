@@ -7,6 +7,5 @@
       "obsidian"
       "slack"
       "spotify"
-      "teams"
     ];
 }
