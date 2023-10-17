@@ -74,6 +74,7 @@ in {
       userEmail = lib.mkIf (builtins.isString cfg.git.userEmail) cfg.git.userEmail;
       extraConfig = {
         advice.detachedHead = false;
+        init.defaultBranch = "main";
         pull.ff = "only";
       };
       includes = lib.mkIf (builtins.isAttrs cfg.git.userEmail) (
