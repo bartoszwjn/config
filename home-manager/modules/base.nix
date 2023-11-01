@@ -60,5 +60,7 @@ in {
         experimental-features = ["nix-command" "flakes"];
       };
     };
+
+    sops.age.keyFile = config.home.homeDirectory + "/keys/sops-nix.agekey";
   };
 }

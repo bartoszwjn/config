@@ -40,6 +40,8 @@ in {
       };
     };
 
+    sops.age.keyFile = "/root/sops-nix.agekey";
+
     environment = {
       systemPackages = builtins.attrValues {
         inherit

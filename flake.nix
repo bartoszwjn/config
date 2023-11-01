@@ -8,11 +8,18 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "";
+      };
+    };
     fenix = {
       url = "github:nix-community/fenix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        rust-analyzer-src.follows = ""; # don't need it, no need to clutter the lockfile
+        rust-analyzer-src.follows = "";
       };
     };
     chemacs2 = {
@@ -27,6 +34,7 @@
     nixpkgs,
     flake-utils,
     home-manager,
+    sops-nix,
     fenix,
     ...
   }: let
@@ -72,6 +80,7 @@
               builtins.attrValues homeManagerModules
               ++ [
                 ./home-manager/homes/${name}/home.nix
+                sops-nix.homeManagerModules.sops
                 ({pkgs, ...}: {
                   nix.package = pkgs.nix;
                   nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
@@ -94,6 +103,7 @@
               ++ [
                 ./nixos/configurations/${name}/configuration.nix
                 home-manager.nixosModules.home-manager
+                sops-nix.nixosModules.sops
                 {
                   _module.args.flakeInputs = inputs;
                   nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
@@ -102,7 +112,8 @@
                     extraSpecialArgs.flakeInputs = inputs;
                     useGlobalPkgs = true;
                     useUserPackages = true;
-                    sharedModules = builtins.attrValues homeManagerModules;
+                    sharedModules =
+                      builtins.attrValues homeManagerModules ++ [sops-nix.homeManagerModules.sops];
                     users = nixpkgs.lib.genAttrs users (
                       user: ./home-manager/homes/${name}/${user}/home.nix
                     );
