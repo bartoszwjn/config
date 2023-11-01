@@ -4,7 +4,9 @@
   pkgs,
   flakeInputs,
   ...
-}: {
+}: let
+  privateConfig = flakeInputs.private-config.lib.blue.bartoszwjn;
+in {
   custom = {
     alacritty.enable = true;
     base.enable = true;
@@ -25,6 +27,10 @@
     rofi.enable = true;
     services.enableAll = true;
     styling.enable = true;
+    syncthing = {
+      enable = true;
+      inherit (privateConfig.syncthing) certFile encryptedKeyFile;
+    };
     xmonad = {
       enable = true;
       xmobar.showBattery = false;
@@ -38,7 +44,7 @@
     username = "bartoszwjn";
     stateVersion = "22.05";
     file = {
-      ".ssh/config".source = flakeInputs.private-config.lib.blue.bartoszwjn.sshConfig;
+      ".ssh/config".source = privateConfig.sshConfig;
     };
     packages = builtins.attrValues {
       inherit (pkgs) chatterino2 discord;
