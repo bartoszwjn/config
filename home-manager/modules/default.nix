@@ -9,6 +9,7 @@
   rofi = ./rofi.nix;
   services = ./services;
   styling = ./styling.nix;
+  syncthing = ./syncthing.nix;
   xmonad = ./xmonad;
   zathura = ./zathura;
   zsh = ./zsh.nix;
