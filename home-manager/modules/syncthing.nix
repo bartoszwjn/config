@@ -9,6 +9,12 @@ in {
   options.custom.syncthing = {
     enable = lib.mkEnableOption "Syncthing with custom configuration";
 
+    guiAddress = lib.mkOption {
+      type = lib.types.str;
+      default = "127.0.0.1:8384";
+      description = "The address to serve the web interface at";
+    };
+
     homeDir = lib.mkOption {
       type = lib.types.path;
       default = "${config.xdg.configHome}/syncthing";
@@ -40,6 +46,7 @@ in {
         "--no-upgrade"
         "--skip-port-probing"
         "--home=${cfg.homeDir}"
+        "--gui-address=${cfg.guiAddress}"
       ];
       tray.enable = true;
     };

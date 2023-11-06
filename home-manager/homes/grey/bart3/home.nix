@@ -4,7 +4,9 @@
   pkgs,
   flakeInputs,
   ...
-}: {
+}: let
+  privateConfig = flakeInputs.private-config.lib.grey.bart3;
+in {
   custom = {
     alacritty.enable = true;
     base.enable = true;
@@ -28,6 +30,11 @@
     rofi.enable = true;
     services.enableAll = true;
     styling.enable = true;
+    syncthing = {
+      enable = true;
+      guiAddress = "127.0.0.1:8385";
+      inherit (privateConfig.syncthing) certFile encryptedKeyFile;
+    };
     xmonad = {
       enable = true;
       xmobar.showBattery = true;
@@ -43,7 +50,7 @@
     file = {
       ".screen-brightness".source =
         config.custom.base.flakeRoot + "/scripts/laptop/screen-brightness";
-      ".ssh/config".source = flakeInputs.private-config.lib.grey.bart3.sshConfig;
+      ".ssh/config".source = privateConfig.sshConfig;
       ".Xresources".text = "Xft.dpi: 96\n";
     };
     packages = builtins.attrValues {
