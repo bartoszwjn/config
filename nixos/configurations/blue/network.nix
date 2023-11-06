@@ -12,7 +12,13 @@
     };
   };
 
-  networking.hostName = "blue";
+  networking = {
+    hostName = "blue";
+    firewall.interfaces.tailscale0 = {
+      allowedTCPPorts = [22000]; # syncthing
+      allowedUDPPorts = [22000]; # syncthing
+    };
+  };
 
   services.tailscale.enable = true;
   # otherwise tailscale gets stuck on shutdown trying to send logs
