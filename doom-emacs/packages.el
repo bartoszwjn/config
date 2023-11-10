@@ -51,6 +51,7 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! jenkinsfile-mode :pin "568865ee419e0592de0dd0717d6769a66d9df111")
+(package! jsonnet-mode :pin "7c9961b084b1ea352555317076bc27a512dd341f")
 (package! just-mode :pin "d7f52eab8fa3828106f80acb1e2176e5877b7191")
 (package! nasm-mode :pin "65ca6546fc395711fac5b3b4299e76c2303d43a8")
 (package! olivetti :pin "a644ee9d24c7283435ce42e11498951e100608c9")

@@ -298,6 +298,26 @@
 
 
 
+;; ===== JSONNET =====
+
+(use-package! jsonnet-mode
+  :after lsp-mode
+  :config
+  ;; https://github.com/grafana/jsonnet-language-server/blob/main/editor/emacs/jsonnet-language-server.el
+  (add-to-list 'lsp-language-id-configuration '(jsonnet-mode . "jsonnet"))
+  (lsp-register-client
+   (make-lsp-client
+    :server-id 'jsonnet
+    :new-connection (lsp-stdio-connection "jsonnet-language-server")
+    :activation-fn (lsp-activate-on "jsonnet")
+    :initialized-fn (lambda (workspace)
+                      (with-lsp-workspace workspace
+                        (lsp--set-configuration
+                         (ht-get (lsp-configuration-section "jsonnet") "jsonnet"))))))
+  (add-hook 'jsonnet-mode-hook #'lsp-deferred))
+
+
+
 ;; ===== LISP =====
 
 (use-package! lispy
