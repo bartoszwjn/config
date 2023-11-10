@@ -8,6 +8,7 @@
 in {
   options.custom.dev-tools = {
     general = lib.mkEnableOption "general dev tools";
+    jsonnet = lib.mkEnableOption "jsonnet dev tools";
     nix = lib.mkEnableOption "Nix dev tools";
     python = lib.mkEnableOption "Python dev tools";
     rust = lib.mkEnableOption "Rust dev tools";
@@ -30,6 +31,9 @@ in {
       packages =
         lib.optionals cfg.general (builtins.attrValues {
           inherit (pkgs) cmake gnumake just shellcheck;
+        })
+        ++ lib.optionals cfg.jsonnet (builtins.attrValues {
+          inherit (pkgs) go-jsonnet jsonnet-bundler jsonnet-language-server;
         })
         ++ lib.optionals cfg.nix (builtins.attrValues {
           inherit (pkgs) alejandra nix-diff nix-prefetch-git nix-prefetch-github;

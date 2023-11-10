@@ -12,6 +12,7 @@ in {
     base.enable = true;
     dev-tools = {
       general = true;
+      jsonnet = true;
       nix = true;
       python = true;
       rust = true;
