@@ -32,6 +32,12 @@ in
     nativeBuildInputs = [pkg-config cmake wrapQtAppsHook];
     buildInputs = [boost libsecret openssl qtbase qtimageformats qtmultimedia qtsvg qttools];
 
+    env = {
+      GIT_RELEASE = version;
+      GIT_COMMIT = rev;
+      GIT_HASH = rev;
+    };
+
     meta = {
       license = lib.licenses.mit;
     };
