@@ -38,7 +38,7 @@ in {
       }));
 
     networking = {
-      dhcpcd.enable = false;
+      useNetworkd = true;
       firewall.enable = true;
 
       wireless = lib.mkIf cfg.enableWireless {
