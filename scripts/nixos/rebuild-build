@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
-# Run `nixos-rebuild build`
+# Build the NixOS configuration for the current host
 
 set -euo pipefail
 
+PS4='+> '
+set -x
 
-tmp_dir=$(mktemp --directory --tmpdir nixos-rebuild-build.XXXXXXXXXX)
-trap 'rm -rf "${tmp_dir}"' EXIT
-
-(
-    cd "${tmp_dir}"
-    PS4='+> '
-    set -x
-    nixos-rebuild build --flake "${CONFIG_REPO_ROOT}" "$@"
-)
+nix build \
+    "git+file://${CONFIG_REPO_ROOT}#nixosConfigurations.${HOSTNAME}.config.system.build.toplevel" \
+    --no-link \
+    "$@"
