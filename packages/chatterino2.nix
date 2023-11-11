@@ -32,6 +32,8 @@ in
     nativeBuildInputs = [pkg-config cmake wrapQtAppsHook];
     buildInputs = [boost libsecret openssl qtbase qtimageformats qtmultimedia qtsvg qttools];
 
+    cmakeFlags = [(lib.strings.cmakeBool "CHATTERINO_UPDATER" false)];
+
     env = {
       GIT_RELEASE = version;
       GIT_COMMIT = rev;
