@@ -54,5 +54,5 @@
 (package! jsonnet-mode :pin "7c9961b084b1ea352555317076bc27a512dd341f")
 (package! just-mode :pin "d7f52eab8fa3828106f80acb1e2176e5877b7191")
 (package! nasm-mode :pin "65ca6546fc395711fac5b3b4299e76c2303d43a8")
-(package! olivetti :pin "a644ee9d24c7283435ce42e11498951e100608c9")
+(package! olivetti :pin "1f8b3d5cb155f7497083001037a09a972befab21")
 (package! systemd :pin "8742607120fbc440821acbc351fda1e8e68a8806")
