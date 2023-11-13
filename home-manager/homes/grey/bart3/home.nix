@@ -5,7 +5,8 @@
   flakeInputs,
   ...
 }: let
-  privateConfig = flakeInputs.private-config.lib.grey.bart3;
+  systemPrivateConfig = flakeInputs.private-config.lib.grey;
+  userPrivateConfig = systemPrivateConfig.bart3;
 in {
   custom = {
     alacritty.enable = true;
@@ -34,7 +35,11 @@ in {
     syncthing = {
       enable = true;
       guiAddress = "127.0.0.1:8385";
-      inherit (privateConfig.syncthing) certFile encryptedKeyFile;
+      inherit (userPrivateConfig.syncthing) certFile encryptedKeyFile;
+      settings = {
+        options.listenAddresses = ["tcp://${systemPrivateConfig.tailscale.ipv4}:22001"];
+        folders.bartoszwjn-main.devices = ["arnold"];
+      };
     };
     xmonad = {
       enable = true;
@@ -51,7 +56,7 @@ in {
     file = {
       ".screen-brightness".source =
         config.custom.base.flakeRoot + "/scripts/laptop/screen-brightness";
-      ".ssh/config".source = privateConfig.sshConfig;
+      ".ssh/config".source = userPrivateConfig.sshConfig;
       ".Xresources".text = "Xft.dpi: 96\n";
     };
     packages = builtins.attrValues {
