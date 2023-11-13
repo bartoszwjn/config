@@ -119,6 +119,8 @@ in {
         announceLANAddresses = false;
       };
 
+      gui.address = cfg.guiAddress;
+
       devices = let
         privateConfig = flakeInputs.private-config.lib;
       in {
