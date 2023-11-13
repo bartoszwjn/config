@@ -12,7 +12,6 @@ in {
     enableAll = lib.mkEnableOption "all custom user services";
 
     gnome-keyring.enable = lib.mkEnableOption "gnome-keyring user service";
-    nextcloud-client.enable = lib.mkEnableOption "nextcloud-client user service";
     pasystray.enable = lib.mkEnableOption "pasystray user service";
     picom.enable = lib.mkEnableOption "picom user service";
     signal-desktop.enable = lib.mkEnableOption "signal-desktop user service";
@@ -25,7 +24,6 @@ in {
       custom.services = {
         dunst.enable = true;
         gnome-keyring.enable = true;
-        nextcloud-client.enable = true;
         pasystray.enable = true;
         picom.enable = true;
         signal-desktop.enable = true;
@@ -50,15 +48,6 @@ in {
           Restart = "on-abort";
         };
       };
-    })
-
-    (lib.mkIf cfg.nextcloud-client.enable {
-      home.packages = [pkgs.nextcloud-client];
-      services.nextcloud-client = {
-        enable = true;
-        startInBackground = true;
-      };
-      systemd.user.services.nextcloud-client.Unit.After = ["tray.target"];
     })
 
     (lib.mkIf cfg.pasystray.enable {
