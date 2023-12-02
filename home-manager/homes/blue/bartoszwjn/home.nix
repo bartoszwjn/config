@@ -34,7 +34,7 @@ in {
       inherit (userPrivateConfig.syncthing) certFile encryptedKeyFile;
       settings = {
         options.listenAddresses = ["tcp://${systemPrivateConfig.tailscale.ipv4}:22000"];
-        folders.bartoszwjn-main.devices = ["arnold"];
+        folders.bartoszwjn-main.devices = ["arnold" "red"];
       };
     };
     xmonad = {
