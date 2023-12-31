@@ -38,6 +38,7 @@ in {
         unzip
         vim
         wally-cli
+        xclip
         xournalpp
         zip
         ;
