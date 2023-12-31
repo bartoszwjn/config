@@ -1,0 +1,40 @@
+(
+    // modifiers:
+    // - bits: 0  NONE
+    // - bits: 1  SHIFT
+    // - bits: 2  CONTROL
+
+    open_help: Some((code: F(1), modifiers: (bits: 0))),
+
+    move_left: Some((code: Char('h'), modifiers: (bits: 0))),
+    move_right: Some((code: Char('l'), modifiers: (bits: 0))),
+    tree_collapse_recursive: Some((code: Char('H'), modifiers: (bits: 1))),
+    tree_expand_recursive: Some((code: Char('L'), modifiers: (bits: 1))),
+    home: Some((code: Char('g'), modifiers: (bits: 0))),
+    end: Some((code: Char('G'), modifiers: (bits: 1))),
+
+    move_up: Some((code: Char('k'), modifiers: (bits: 0))),
+    move_down: Some((code: Char('j'), modifiers: (bits: 0))),
+    popup_up: Some((code: Char('k'), modifiers: (bits: 2))),
+    popup_down: Some((code: Char('j'), modifiers: (bits: 2))),
+    page_up: Some((code: Char('b'), modifiers: (bits: 2))),
+    page_down: Some((code: Char('f'), modifiers: (bits: 2))),
+    shift_up: Some((code: Char('K'), modifiers: (bits: 1))),
+    shift_down: Some((code: Char('J'), modifiers: (bits: 1))),
+
+    file_history: Some((code: Char('h'), modifiers: (bits: 2))),
+    stash_open: Some((code: Char('l'), modifiers: (bits: 0))),
+    // a.k.a. toggle hooks
+    toggle_verify: Some((code: Char('h'), modifiers: (bits: 2))),
+
+    // Remap all 'find' operations to '/'
+    log_find: Some((code: Char('/'), modifiers: (bits: 0))),
+    file_find: Some((code: Char('/'), modifiers: (bits: 0))),
+    branch_find: Some((code: Char('/'), modifiers: (bits: 0))),
+
+    // Swap 'f' and 'S-F' bindings, so that fetch is under 'f', pull is under 'S-F', and other
+    // bindings don't conflict with that
+    fetch: Some((code: Char('f'), modifiers: (bits: 0))),
+    pull: Some((code: Char('F'), modifiers: (bits: 1))),
+    open_file_tree: Some((code: Char('f'), modifiers: (bits: 0))),
+)

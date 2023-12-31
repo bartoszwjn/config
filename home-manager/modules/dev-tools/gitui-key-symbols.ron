@@ -1,0 +1,16 @@
+(
+    enter: Some("<Enter>"),
+    backspace: Some("<BS>"),
+    home: Some("<Home>"),
+    end: Some("<End>"),
+    page_up: Some("<PageUp>"),
+    page_down: Some("<PageDown>"),
+    tab: Some("<Tab>"),
+    back_tab: Some("<BTab>"),
+    delete: Some("<Del>"),
+    insert: Some("<Insert>"),
+    esc: Some("<Esc>"),
+    control: Some("C-"),
+    shift: Some("S-"),
+    alt: Some("A-"),
+)

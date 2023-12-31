@@ -46,6 +46,9 @@ in {
         ++ lib.optionals cfg.rust (builtins.attrValues {
           inherit (pkgs) cargo-edit cargo-expand cargo-outdated rust-analyzer;
           inherit (pkgs.fenix.stable) defaultToolchain;
+        })
+        ++ lib.optionals cfg.git.enable (builtins.attrValues {
+          inherit (pkgs) gitui;
         });
 
       sessionPath = lib.optional cfg.rust (config.home.homeDirectory + "/.cargo/bin");
@@ -87,6 +90,11 @@ in {
           contents.user.email = email;
         })
       );
+    };
+
+    xdg.configFile = lib.mkIf cfg.git.enable {
+      "gitui/key_bindings.ron".source = ./gitui-key-bindings.ron;
+      "gitui/key_symbols.ron".source = ./gitui-key-symbols.ron;
     };
   };
 }

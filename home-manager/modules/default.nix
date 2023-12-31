@@ -1,7 +1,7 @@
 {
   alacritty = ./alacritty;
   base = ./base.nix;
-  dev-tools = ./dev-tools.nix;
+  dev-tools = ./dev-tools;
   doom-emacs = ./doom-emacs.nix;
   gpg = ./gpg.nix;
   nushell = ./nushell;
