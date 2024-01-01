@@ -4,6 +4,7 @@
   dev-tools = ./dev-tools;
   doom-emacs = ./doom-emacs.nix;
   gpg = ./gpg.nix;
+  neovim = ./neovim.nix;
   nushell = ./nushell;
   packages = ./packages.nix;
   rofi = ./rofi.nix;

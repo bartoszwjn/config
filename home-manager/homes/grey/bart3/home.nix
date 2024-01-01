@@ -27,6 +27,7 @@ in {
     };
     doom-emacs.enable = true;
     gpg.enable = true;
+    neovim.enable = true;
     nushell.enable = true;
     packages.enable = true;
     rofi.enable = true;
