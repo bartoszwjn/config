@@ -59,9 +59,7 @@
           };
       };
 
-      formatter = pkgs.writeShellScriptBin "format-nix" ''
-        ${pkgs.alejandra}/bin/alejandra "$@" 2>/dev/null
-      '';
+      formatter = pkgs.alejandra;
 
       checks = {
         nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
