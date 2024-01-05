@@ -1,10 +1,21 @@
-{neovim}:
-neovim.override {
-  withPython3 = false;
-  withRuby = false;
-  configure = {
-    customRC = ''
-      source ${./config.lua}
-    '';
+{
+  neovim,
+  vimUtils,
+}: let
+  config = vimUtils.buildVimPlugin {
+    name = "config";
+    src = ../neovim;
   };
-}
+in
+  neovim.override {
+    withPython3 = false;
+    withRuby = false;
+    configure = {
+      customRC = ''
+        source ${config}/init.lua
+      '';
+      packages.custom.start = builtins.attrValues {
+        inherit config;
+      };
+    };
+  }
