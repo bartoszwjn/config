@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Remove all noncurrent generations of the home-manager profile
+
+# shellcheck shell=bash enable=all
+
+set -euo pipefail
+
+PS4='+> '
+set -x
+
+nix profile wipe-history --profile ~/.local/state/nix/profiles/home-manager
