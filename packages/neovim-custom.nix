@@ -1,5 +1,6 @@
 {
   neovim,
+  vimPlugins,
   vimUtils,
 }: let
   config = vimUtils.buildVimPlugin {
@@ -16,6 +17,7 @@ in
       '';
       packages.custom.start = builtins.attrValues {
         inherit config;
+        inherit (vimPlugins) edge;
       };
     };
   }
