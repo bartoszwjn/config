@@ -14,20 +14,16 @@
   qtsvg,
   qttools,
 }: let
-  pname = "chatterino2";
-  version = "2.4.6-unstable-2023-12-03";
-  rev = "44abe6b487272ec11f0e5f2cd05e7bd635b0bddc";
-  hash = "sha256-JZTBbo3tJg2h0OjEK2rhHQeIAE8a9psUS7YltxE5lOw=";
+  source = builtins.fromJSON (builtins.readFile ./source.json);
+  version = "unstable-${source.commitDate}";
 in
   mkDerivation {
-    inherit pname version;
+    pname = "chatterino2";
+    inherit version;
     src = fetchFromGitHub {
-      owner = "Chatterino";
-      repo = pname;
-      inherit rev hash;
-      fetchSubmodules = true;
+      inherit (source) owner repo rev hash fetchSubmodules;
       # use the same store path as `nix-prefetch-github`
-      name = "${pname}-${builtins.substring 0 7 rev}";
+      name = "${source.repo}-${builtins.substring 0 7 source.rev}";
     };
     nativeBuildInputs = [pkg-config cmake wrapQtAppsHook];
     buildInputs = [boost libsecret openssl qtbase qtimageformats qtmultimedia qtsvg qttools];
@@ -36,8 +32,8 @@ in
 
     env = {
       GIT_RELEASE = version;
-      GIT_COMMIT = rev;
-      GIT_HASH = rev;
+      GIT_COMMIT = source.rev;
+      GIT_HASH = source.rev;
     };
 
     meta = {
