@@ -82,6 +82,8 @@
                 ({pkgs, ...}: {
                   nix.package = pkgs.nix;
                   nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
+                  # TODO: remove once no longer needed by obsidian
+                  nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0"];
                   nixpkgs.overlays = overlays;
                 })
               ];
@@ -105,6 +107,8 @@
                 {
                   _module.args.flakeInputs = inputs;
                   nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
+                  # TODO: remove once no longer needed by obsidian
+                  nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0"];
                   nixpkgs.overlays = overlays;
                   home-manager = {
                     extraSpecialArgs.flakeInputs = inputs;
