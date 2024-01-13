@@ -1,0 +1,68 @@
+[colors.footer_bar]
+background = "#c6c6c6"
+foreground = "#101214"
+
+[colors.normal]
+black = "#000000"
+blue = "#5294e2"
+cyan = "#16a8aa"
+green = "#00cc00"
+magenta = "#a540ab"
+red = "#cc0000"
+white = "#d8d8d8"
+yellow = "#e2a052"
+
+[colors.primary]
+background = "#171920"
+foreground = "#cccccc"
+
+[colors.search.matches]
+background = "#86b9ec"
+foreground = "CellBackground"
+
+[font]
+size = 11.5
+
+[font.normal]
+family = "SauceCodePro Nerd Font"
+style = "Regular"
+
+[[hints.enabled]]
+regex = """
+(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)\
+[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"""
+command = "xdg-open"
+post_processing = true
+binding = { key = "U", mods = "Control|Shift" }
+mouse = { enabled = true, mods = "Control" }
+
+[keyboard]
+bindings = [
+    # Pass `Alt + <key>` as `ESC + <key>`
+    { key = "A", mods = "Alt", chars = "\u001Ba" },
+    { key = "B", mods = "Alt", chars = "\u001Bb" },
+    { key = "C", mods = "Alt", chars = "\u001Bc" },
+    { key = "D", mods = "Alt", chars = "\u001Bd" },
+    { key = "E", mods = "Alt", chars = "\u001Be" },
+    { key = "F", mods = "Alt", chars = "\u001Bf" },
+    { key = "G", mods = "Alt", chars = "\u001Bg" },
+    { key = "H", mods = "Alt", chars = "\u001Bh" },
+    { key = "I", mods = "Alt", chars = "\u001Bi" },
+    { key = "J", mods = "Alt", chars = "\u001Bj" },
+    { key = "K", mods = "Alt", chars = "\u001Bk" },
+    { key = "L", mods = "Alt", chars = "\u001Bl" },
+    { key = "M", mods = "Alt", chars = "\u001Bm" },
+    { key = "N", mods = "Alt", chars = "\u001Bn" },
+    { key = "O", mods = "Alt", chars = "\u001Bo" },
+    { key = "P", mods = "Alt", chars = "\u001Bp" },
+    { key = "Q", mods = "Alt", chars = "\u001Bq" },
+    { key = "R", mods = "Alt", chars = "\u001Br" },
+    { key = "S", mods = "Alt", chars = "\u001Bs" },
+    { key = "T", mods = "Alt", chars = "\u001Bt" },
+    { key = "U", mods = "Alt", chars = "\u001Bu" },
+    { key = "V", mods = "Alt", chars = "\u001Bv" },
+    { key = "W", mods = "Alt", chars = "\u001Bw" },
+    { key = "X", mods = "Alt", chars = "\u001Bx" },
+    { key = "Y", mods = "Alt", chars = "\u001By" },
+    { key = "Z", mods = "Alt", chars = "\u001Bz" },
+]

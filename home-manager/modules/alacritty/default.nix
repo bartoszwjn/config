@@ -13,7 +13,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = [pkgs.alacritty];
     xdg.configFile = {
-      "alacritty/alacritty.yml".source = ./alacritty.yml;
+      "alacritty/alacritty.toml".source = ./alacritty.toml;
     };
   };
 }
