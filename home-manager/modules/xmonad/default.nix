@@ -5,6 +5,11 @@
   ...
 }: let
   cfg = config.custom.xmonad;
+
+  # colors
+  edgeDarkBlue = "#6cb6eb";
+  edgeDarkFg = "#c5cdd9";
+  edgeDarkBlack = "#202023";
 in {
   options.custom.xmonad = {
     enable = lib.mkEnableOption "xmonad with custom config";
@@ -40,8 +45,8 @@ in {
     xdg.configFile."xmobar/xmobarrc".text = let
       ifBattery = lib.optionalString cfg.xmobar.showBattery;
 
-      template = ''"%StdinReader% }{ ${statusTemplate} <fc=#5294e2>| %kbd% | %date% |</fc>"'';
-      statusTemplate = "%cpu% | %memory% | %disku%${ifBattery " | %battery%"}";
+      template = ''"%StdinReader% }{ ${status} <fc=${edgeDarkBlue}>| %kbd% | %date% |</fc>"'';
+      status = "%cpu% | %memory% | %disku%${ifBattery " | %battery%"}";
 
       batteryCommand = ifBattery "Run Battery [${batteryArgs}] 100,";
       batteryArgs = lib.concatMapStringsSep ", " (s: ''"${s}"'') (lib.flatten [
@@ -54,8 +59,8 @@ in {
     in ''
       Config {
         font = "xft:SauceCodePro Nerd Font-10",
-        bgColor = "#1c1e25",
-        fgColor = "#cccccc",
+        bgColor = "${edgeDarkBlack}",
+        fgColor = "${edgeDarkFg}",
         position = TopSize L 90 24,
         lowerOnStart = True,
         sepChar = "%",
@@ -76,7 +81,7 @@ in {
     services.stalonetray = {
       enable = true;
       config = {
-        background = "#1c1e25";
+        background = edgeDarkBlack;
         geometry = cfg.stalonetray.geometry;
         grow_gravity = "NE";
         icon_gravity = "NE";

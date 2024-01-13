@@ -1,24 +1,39 @@
+[colors]
+# https://github.com/sainnhe/edge/
+
 [colors.footer_bar]
-background = "#c6c6c6"
-foreground = "#101214"
+background = "#c5cdd9" # fg
+foreground = "#2c2e34" # bg0
+
+[colors.hints.start]
+background = "#deb974" # yellow
+foreground = "CellBackground"
+
+[colors.hints.end]
+background = "#6cb6eb" # blue
+foreground = "CellBackground"
 
 [colors.normal]
-black = "#000000"
-blue = "#5294e2"
-cyan = "#16a8aa"
-green = "#00cc00"
-magenta = "#a540ab"
-red = "#cc0000"
-white = "#d8d8d8"
-yellow = "#e2a052"
+black = "#202023" # black
+blue = "#6cb6eb" # blue
+cyan = "#5dbbc1" # cyan
+green = "#a0c980" # green
+magenta = "#d38aea" # purple
+red = "#ec7279" # red
+white = "#c5cdd9" # fg
+yellow = "#deb974" # yellow
 
 [colors.primary]
-background = "#171920"
-foreground = "#cccccc"
+background = "#2c2e34" # bg0
+foreground = "#c5cdd9" # fg
+
+[colors.search.focused_match]
+background = "#deb974" # yellow
+foreground = "CellBackground"
 
 [colors.search.matches]
-background = "#86b9ec"
-foreground = "CellBackground"
+background = "#4e432f" # diff_yellow
+foreground = "CellForeground"
 
 [font]
 size = 11.5
