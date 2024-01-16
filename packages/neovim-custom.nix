@@ -17,7 +17,7 @@ in
       '';
       packages.custom.start = builtins.attrValues {
         inherit config;
-        inherit (vimPlugins) edge;
+        inherit (vimPlugins) onedark-nvim;
       };
     };
   }

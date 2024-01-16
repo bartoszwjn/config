@@ -40,8 +40,8 @@ main = do
                , logHook            = myLogHook xmobarPipe
                , modMask            = mod4Mask
                , borderWidth        = myBorderWidth
-               , normalBorderColor  = edgeDarkBg0
-               , focusedBorderColor = edgeDarkBlue
+               , normalBorderColor  = colorBg
+               , focusedBorderColor = colorAccent
                , keys               = myKeys
                }
 
@@ -77,7 +77,7 @@ myLogHook xmobarPipe = do
   EwhmDesktops.ewmhDesktopsLogHook
   DynamicLog.dynamicLogWithPP $ DynamicLog.xmobarPP
     { DynamicLog.ppOutput = hPutStrLn xmobarPipe
-    , DynamicLog.ppTitle  = DynamicLog.xmobarColor edgeDarkBlue ""
+    , DynamicLog.ppTitle  = DynamicLog.xmobarColor colorAccent ""
                             . DynamicLog.shorten 100
     , DynamicLog.ppSep    = " | "
     }
@@ -280,6 +280,6 @@ restartXmonad = spawn "xmonad --restart"
 
 -- COLORS ----------------------------------------------------------------------
 
-edgeDarkBlue, edgeDarkBg0 :: String
-edgeDarkBlue = "#6cb6eb"
-edgeDarkBg0  = "#2c2e34"
+colorAccent, colorBg :: String
+colorAccent = "#61afef"
+colorBg = "#282c34"

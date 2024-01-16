@@ -1,39 +1,50 @@
 [colors]
-# https://github.com/sainnhe/edge/
+# https://github.com/alacritty/alacritty-theme/blob/master/themes/onedark.toml
+draw_bold_text_with_bright_colors = false
+
+[colors.primary]
+background = "#282c34"
+foreground = "#abb2bf"
+
+[colors.normal]
+black = "#1e2127"
+blue = "#61afef"
+cyan = "#56b6c2"
+green = "#98c379"
+magenta = "#c678dd"
+red = "#e06c75"
+white = "#abb2bf"
+yellow = "#d19a66"
+
+[colors.bright]
+black = "#5b5e64"
+blue = "#80ceff"
+cyan = "#75d5e1"
+green = "#b7e298"
+magenta = "#e597fc"
+red = "#ff8b94"
+white = "#cad1de"
+yellow = "#f0b985"
 
 [colors.footer_bar]
-background = "#c5cdd9" # fg
-foreground = "#2c2e34" # bg0
+background = "#abb2bf"
+foreground = "#282c34"
 
 [colors.hints.start]
-background = "#deb974" # yellow
+background = "#d19a66"
 foreground = "CellBackground"
 
 [colors.hints.end]
-background = "#6cb6eb" # blue
+background = "#61afef"
 foreground = "CellBackground"
 
-[colors.normal]
-black = "#202023" # black
-blue = "#6cb6eb" # blue
-cyan = "#5dbbc1" # cyan
-green = "#a0c980" # green
-magenta = "#d38aea" # purple
-red = "#ec7279" # red
-white = "#c5cdd9" # fg
-yellow = "#deb974" # yellow
-
-[colors.primary]
-background = "#2c2e34" # bg0
-foreground = "#c5cdd9" # fg
-
 [colors.search.focused_match]
-background = "#deb974" # yellow
+background = "#d19a66"
 foreground = "CellBackground"
 
 [colors.search.matches]
-background = "#4e432f" # diff_yellow
-foreground = "CellForeground"
+background = "#ebd09c"
+foreground = "CellBackground"
 
 [font]
 size = 11.5
