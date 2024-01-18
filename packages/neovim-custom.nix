@@ -17,7 +17,7 @@ in
       '';
       packages.custom.start = builtins.attrValues {
         inherit config;
-        inherit (vimPlugins) onedark-nvim;
+        inherit (vimPlugins) onedark-nvim plenary-nvim telescope-nvim;
       };
     };
   }
