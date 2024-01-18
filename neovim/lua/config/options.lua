@@ -14,6 +14,12 @@ vim.opt.listchars = {
     nbsp = "␣",
 }
 
+-- formatting
+vim.o.textwidth = 100
+-- do not autowrap text even though 'textwidth' is set
+vim.opt.formatoptions:remove("t")
+vim.opt.formatoptions:remove("c")
+
 -- wrapping
 vim.o.wrap = true
 vim.o.breakindent = true
@@ -21,6 +27,9 @@ vim.opt.breakindentopt = { "sbr", "list:-1" }
 vim.o.showbreak = "+++"
 vim.o.formatlistpat = [[^\s*\(\d\+[:.)]\|[-+*]\s\)\s*]]
 vim.o.sidescroll = 10 -- in case of `:set nowrap`
+
+-- folding
+vim.o.foldlevel = 99 -- open all folds
 
 -- tabs and indentation
 vim.o.expandtab = true
