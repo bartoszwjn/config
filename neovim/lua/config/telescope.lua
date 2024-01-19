@@ -31,10 +31,11 @@ telescope.setup {
   },
 }
 
-local function nmap(binding, description, action)
-  vim.keymap.set("n", binding, action, { desc = description })
+local function nmap(lhs, description, rhs)
+  vim.keymap.set("n", lhs, rhs, { desc = description })
 end
 
+nmap("<Leader>s", "[s]earch", "<Nop>")
 nmap("<Leader>s:", "[s]earch [:] commands", builtin.commands)
 nmap("<Leader>sb", "[s]earch [b]uffers", function()
   builtin.buffers { sort_mru = true }
@@ -44,6 +45,16 @@ nmap("<Leader>sc", "[s]earch [c]urrent buffer", function()
 end)
 nmap("<Leader>sd", "[s]earch current [d]irectory", function()
   builtin.live_grep { cwd = utils.buffer_dir() }
+end)
+nmap("<Leader>sD", "[s]earch [D]irectory", function()
+  local success, dir_or_err = pcall(vim.fn.input, {
+    prompt = "Search in directory: ",
+    default = utils.buffer_dir(),
+    completion = "file",
+  })
+  if success and dir_or_err ~= "" then
+    builtin.live_grep { cwd = dir_or_err }
+  end
 end)
 nmap("<Leader>sf", "[s]earch [f]iles", function()
   builtin.find_files { hidden = true }

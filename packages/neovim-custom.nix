@@ -17,7 +17,13 @@ in
       '';
       packages.custom.start = builtins.attrValues {
         inherit config;
-        inherit (vimPlugins) onedark-nvim plenary-nvim telescope-nvim;
+        inherit
+          (vimPlugins)
+          nvim-lspconfig
+          onedark-nvim
+          plenary-nvim # required by telescope-nvim
+          telescope-nvim
+          ;
       };
     };
   }
