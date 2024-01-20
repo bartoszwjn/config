@@ -1,6 +1,26 @@
+local fidget = require("fidget")
 local lspconfig = require("lspconfig")
+local neodev = require("neodev")
 local tb = require("telescope.builtin")
 
+fidget.setup {}
+
+neodev.setup {
+  override = function(root_dir, options)
+    local config_repo_root = vim.env.CONFIG_REPO_ROOT
+    if config_repo_root ~= nil then
+      local config_root = vim.fs.normalize(config_repo_root .. "/neovim", { expand_env = false })
+      if root_dir:find(config_root, 1, true) == 1 then
+        options.enabled = true
+        options.runtime = true
+        options.types = true
+        options.plugins = true
+      end
+    end
+  end,
+}
+
+lspconfig.lua_ls.setup {}
 lspconfig.nushell.setup {}
 lspconfig.pyright.setup {}
 lspconfig.rust_analyzer.setup {}

@@ -9,6 +9,7 @@ in {
   options.custom.dev-tools = {
     general = lib.mkEnableOption "general dev tools";
     jsonnet = lib.mkEnableOption "jsonnet dev tools";
+    lua = lib.mkEnableOption "Lua dev tools";
     nix = lib.mkEnableOption "Nix dev tools";
     python = lib.mkEnableOption "Python dev tools";
     rust = lib.mkEnableOption "Rust dev tools";
@@ -34,6 +35,9 @@ in {
         })
         ++ lib.optionals cfg.jsonnet (builtins.attrValues {
           inherit (pkgs) go-jsonnet jsonnet-bundler jsonnet-language-server;
+        })
+        ++ lib.optionals cfg.lua (builtins.attrValues {
+          inherit (pkgs) lua-language-server;
         })
         ++ lib.optionals cfg.nix (builtins.attrValues {
           inherit (pkgs) alejandra nix-diff nix-prefetch-git nix-prefetch-github;

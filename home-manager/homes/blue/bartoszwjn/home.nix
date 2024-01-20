@@ -14,6 +14,7 @@ in {
     dev-tools = {
       general = true;
       jsonnet = true;
+      lua = true;
       nix = true;
       python = true;
       rust = true;

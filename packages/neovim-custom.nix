@@ -19,6 +19,8 @@ in
         inherit config;
         inherit
           (vimPlugins)
+          fidget-nvim
+          neodev-nvim
           nvim-lspconfig
           onedark-nvim
           plenary-nvim # required by telescope-nvim
