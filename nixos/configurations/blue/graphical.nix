@@ -11,7 +11,7 @@
     windowManager.xmonad.enable = true;
     displayManager.lightdm = {
       enable = true;
-      background = config.custom.base.flakeRoot + "/misc/background.jpg";
+      background = config.custom.repo.flakeRoot + "/misc/background.jpg";
       greeters.gtk = {
         enable = true;
         theme.package = pkgs.arc-theme;

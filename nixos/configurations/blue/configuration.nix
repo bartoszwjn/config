@@ -15,8 +15,9 @@
   ];
 
   custom = {
-    base.enable = true;
+    admin-tools.enable = true;
     keyboard-layout.enable = true;
+    nix.enable = true;
     printing.enable = true;
   };
 
@@ -45,6 +46,8 @@
     enableBashCompletion = true;
   };
   services.gnome.gnome-keyring.enable = true;
+
+  sops.age.keyFile = "/root/sops-nix.agekey";
 
   time.timeZone = "Europe/Warsaw";
 

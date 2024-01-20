@@ -10,7 +10,6 @@
 in {
   custom = {
     alacritty.enable = true;
-    base.enable = true;
     dev-tools = {
       general = true;
       jsonnet = true;
@@ -25,7 +24,9 @@ in {
     };
     doom-emacs.enable = true;
     gpg.enable = true;
+    home.enable = true;
     neovim.enable = true;
+    nix.enable = true;
     nushell.enable = true;
     packages.enable = true;
     rofi.enable = true;

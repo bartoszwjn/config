@@ -10,7 +10,6 @@
 in {
   custom = {
     alacritty.enable = true;
-    base.enable = true;
     dev-tools = {
       general = true;
       jsonnet = true;
@@ -28,7 +27,9 @@ in {
     };
     doom-emacs.enable = true;
     gpg.enable = true;
+    home.enable = true;
     neovim.enable = true;
+    nix.enable = true;
     nushell.enable = true;
     packages.enable = true;
     rofi.enable = true;
@@ -57,7 +58,7 @@ in {
     stateVersion = "23.11";
     file = {
       ".screen-brightness".source =
-        config.custom.base.flakeRoot + "/scripts/laptop/screen-brightness";
+        config.custom.repo.flakeRoot + "/scripts/laptop/screen-brightness";
       ".ssh/config".source = userPrivateConfig.sshConfig;
       ".Xresources".text = "Xft.dpi: 96\n";
     };

@@ -2,14 +2,9 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
   ...
-}: let
-  cfg = config.custom.base;
-in {
-  options.custom.base = {
-    enable = lib.mkEnableOption "basic custom home-manager configuration";
-
+}: {
+  options.custom.repo = {
     flakeRoot = lib.mkOption {
       type = lib.types.path;
       default = ../..;
@@ -31,36 +26,5 @@ in {
         immediately, without switching to a new generation of the config.
       '';
     };
-  };
-
-  config = lib.mkIf cfg.enable {
-    home = {
-      homeDirectory = "/home/${config.home.username}";
-      keyboard = null;
-      sessionPath = [(config.home.homeDirectory + "/.local/bin")];
-      sessionVariables = {
-        CONFIG_REPO_ROOT = cfg.configRepoRoot;
-        NIX_PATH = "nixpkgs=flake:nixpkgs";
-        NIX_USER_CONF_FILES = lib.concatStringsSep ":" [
-          (config.xdg.configHome + "/nix/nix.conf")
-          (config.home.homeDirectory + "/keys/nix-github-token.conf")
-        ];
-      };
-    };
-
-    nix = {
-      registry.nixpkgs = {
-        from = {
-          type = "indirect";
-          id = "nixpkgs";
-        };
-        flake = flakeInputs.nixpkgs;
-      };
-      settings = {
-        experimental-features = ["nix-command" "flakes"];
-      };
-    };
-
-    sops.age.keyFile = config.home.homeDirectory + "/keys/sops-nix.agekey";
   };
 }

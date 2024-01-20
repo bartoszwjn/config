@@ -41,7 +41,7 @@ in {
       };
 
       localVariables = {
-        sd = config.custom.base.configRepoRoot + "/scripts";
+        sd = config.custom.repo.configRepoRoot + "/scripts";
       };
       shellAliases = {
         ls = "ls --color=auto";

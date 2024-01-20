@@ -9,5 +9,8 @@
     (modulesPath + "/installer/cd-dvd/installation-cd-base.nix")
   ];
 
-  custom.base.enable = true;
+  custom = {
+    admin-tools.enable = true;
+    nix.enable = true;
+  };
 }

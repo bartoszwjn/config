@@ -31,7 +31,7 @@ in {
       file = let
         inherit (config.lib.file) mkOutOfStoreSymlink;
       in {
-        ".doom.d".source = mkOutOfStoreSymlink (config.custom.base.configRepoRoot + "/doom-emacs");
+        ".doom.d".source = mkOutOfStoreSymlink (config.custom.repo.configRepoRoot + "/doom-emacs");
         ".emacs-profile".text = "doom";
         ".emacs-profiles.el".text = ''
           (("doom" . ((user-emacs-directory . "${cfg.doomEmacsRoot}")
