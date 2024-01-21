@@ -23,6 +23,7 @@ end
 
 cmp.setup {
   snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
+  preselect = cmp.PreselectMode.None,
   mapping = {
     ["<C-j>"] = { i = if_visible(cmp.select_next_item) },
     ["<C-k>"] = { i = if_visible(cmp.select_prev_item) },
