@@ -3,6 +3,7 @@ vim.g.maplocalleader = " "
 
 require("config.autocommands")
 require("config.colors")
+require("config.comments")
 require("config.completion")
 require("config.diagnostics")
 require("config.keymap")

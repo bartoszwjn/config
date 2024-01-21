@@ -24,6 +24,7 @@ in
           cmp-nvim-lsp-signature-help
           cmp-path
           cmp_luasnip
+          comment-nvim
           fidget-nvim
           friendly-snippets
           luasnip
