@@ -1,7 +1,11 @@
+local autopairs = require("nvim-autopairs")
 local cmp = require("cmp")
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 local luasnip = require("luasnip")
 
 require("luasnip.loaders.from_vscode").lazy_load()
+
+autopairs.setup {}
 
 luasnip.config.setup {}
 
@@ -88,3 +92,5 @@ cmp.setup.cmdline(":", {
     { name = "cmdline" },
   },
 })
+
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())

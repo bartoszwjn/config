@@ -28,6 +28,7 @@ in
           friendly-snippets
           luasnip
           neodev-nvim
+          nvim-autopairs
           nvim-cmp
           nvim-lspconfig
           onedark-nvim
