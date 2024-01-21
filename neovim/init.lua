@@ -2,6 +2,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 require("config.autocommands")
+require("config.autopairs")
 require("config.colors")
 require("config.comments")
 require("config.completion")
