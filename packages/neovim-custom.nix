@@ -19,8 +19,16 @@ in
         inherit config;
         inherit
           (vimPlugins)
+          cmp-cmdline
+          cmp-nvim-lsp
+          cmp-nvim-lsp-signature-help
+          cmp-path
+          cmp_luasnip
           fidget-nvim
+          friendly-snippets
+          luasnip
           neodev-nvim
+          nvim-cmp
           nvim-lspconfig
           onedark-nvim
           plenary-nvim # required by telescope-nvim

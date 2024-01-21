@@ -56,6 +56,7 @@ nmap("<Leader>sD", "[s]earch [D]irectory", function()
     builtin.live_grep { cwd = dir_or_err }
   end
 end)
+nmap("<Leader>se", "[s]earch [e]rrors", builtin.diagnostics)
 nmap("<Leader>sf", "[s]earch [f]iles", function()
   builtin.find_files { hidden = true }
 end)

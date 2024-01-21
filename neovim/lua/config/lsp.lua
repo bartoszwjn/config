@@ -1,3 +1,4 @@
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local fidget = require("fidget")
 local lspconfig = require("lspconfig")
 local neodev = require("neodev")
@@ -20,10 +21,13 @@ neodev.setup {
   end,
 }
 
-lspconfig.lua_ls.setup {}
-lspconfig.nushell.setup {}
-lspconfig.pyright.setup {}
-lspconfig.rust_analyzer.setup {}
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+
+lspconfig.lua_ls.setup { capabilities = capabilities }
+lspconfig.nushell.setup { capabilities = capabilities }
+lspconfig.pyright.setup { capabilities = capabilities }
+lspconfig.rust_analyzer.setup { capabilities = capabilities }
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("LspUserConfig", { clear = true }),
@@ -45,6 +49,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     nmap("<C-k>", "show symbol signature information (LSP)", vim.lsp.buf.signature_help)
 
     nmap("<Leader>c", "[c]ode (LSP)", "<Nop>")
+    vmap("<Leader>c", "[c]ode (LSP)", "<Nop>")
     nmap("<Leader>ca", "[c]ode [a]ction (LSP)", vim.lsp.buf.code_action)
     vmap("<Leader>ca", "[c]ode [a]ction (LSP)", vim.lsp.buf.code_action)
     nmap("<Leader>cf", "[c]ode [f]ormat (LSP)", vim.lsp.buf.format)

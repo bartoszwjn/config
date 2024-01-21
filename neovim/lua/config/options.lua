@@ -6,12 +6,12 @@ vim.o.signcolumn = "yes"
 -- whitespace
 vim.o.list = true
 vim.opt.listchars = {
-    tab = "› ",
-    trail = "␣",
-    extends = "…",
-    precedes = "…",
-    conceal = "…",
-    nbsp = "␣",
+  tab = "› ",
+  trail = "␣",
+  extends = "…",
+  precedes = "…",
+  conceal = "…",
+  nbsp = "␣",
 }
 
 -- formatting
