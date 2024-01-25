@@ -17,7 +17,6 @@ in {
       sessionPath = [(config.home.homeDirectory + "/.local/bin")];
       sessionVariables = {
         CONFIG_REPO_ROOT = config.custom.repo.configRepoRoot;
-        NIX_PATH = "nixpkgs=flake:nixpkgs";
         NIX_USER_CONF_FILES = lib.concatStringsSep ":" [
           (config.xdg.configHome + "/nix/nix.conf")
           (config.home.homeDirectory + "/keys/nix-github-token.conf")

@@ -25,6 +25,7 @@ in {
         experimental-features = ["nix-command" "flakes"];
         keep-derivations = true;
         keep-outputs = true;
+        nix-path = ["nixpkgs=flake:nixpkgs"];
         trusted-users = ["root" "@wheel"];
       };
     };
