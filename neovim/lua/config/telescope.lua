@@ -71,4 +71,6 @@ nmap("<Leader>sm", "[s]earch [m]arks", builtin.marks)
 nmap("<Leader>so", "[s]earch [o]ptions", builtin.vim_options)
 nmap("<Leader>sr", "[s]earch [r]ecent files", builtin.oldfiles)
 nmap("<Leader>sR", "[s]earch [R]egisters", builtin.registers)
-nmap("<Leader>ss", "[s]earch for [s]tring", builtin.live_grep)
+nmap("<Leader>ss", "[s]earch for [s]tring", function()
+  builtin.live_grep { additional_args = { "--hidden" } }
+end)
