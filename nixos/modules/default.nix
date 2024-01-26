@@ -6,4 +6,5 @@
   nix = ./nix.nix;
   printing = ./printing.nix;
   repo = ./repo.nix;
+  virtualisation = ./virtualisation.nix;
 }
