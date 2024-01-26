@@ -48,7 +48,8 @@ in {
         ll = "ls -lh --group-directories-first";
         l = "ls -lhA --group-directories-first";
 
-        pacman = "pacman --color=auto";
+        gl = "git log --all --oneline --graph";
+
         sctl = "systemctl";
         btctl = "bluetoothctl";
         j = "just";
