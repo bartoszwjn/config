@@ -27,6 +27,8 @@ in
           comment-nvim
           fidget-nvim
           friendly-snippets
+          indent-blankline-nvim
+          leap-nvim
           luasnip
           neodev-nvim
           nvim-autopairs
