@@ -42,7 +42,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     nmap("gd", "[g]o to [d]efinition (LSP)", function()
-      tb.lsp_definitions { jump_type = "tab drop", reuse_win = true }
+      tb.lsp_definitions { reuse_win = true }
     end)
     nmap("gD", "[g]o to [D]eclaration (LSP)", vim.lsp.buf.declaration)
     nmap("K", "show symbol hover information (LSP)", vim.lsp.buf.hover)
@@ -54,13 +54,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vmap("<Leader>ca", "[c]ode [a]ction (LSP)", vim.lsp.buf.code_action)
     nmap("<Leader>cf", "[c]ode: [f]ormat (LSP)", vim.lsp.buf.format)
     nmap("<Leader>ci", "[c]ode: go to [i]mplementations (LSP)", function()
-      tb.lsp_implementations { jump_type = "tab drop", reuse_win = true }
+      tb.lsp_implementations { jump_type = "never", reuse_win = true }
     end)
     nmap("<Leader>cr", "[c]ode: [r]ename (LSP)", vim.lsp.buf.rename)
     nmap("<Leader>cs", "[c]ode: go to document [s]ymbols (LSP)", tb.lsp_document_symbols)
     nmap("<Leader>cS", "[c]ode: go to workspace [S]ymbols (LSP)", tb.lsp_workspace_symbols)
     nmap("<Leader>ct", "[c]ode: go to [t]ype definition (LSP)", function()
-      tb.lsp_type_definitions { jump_type = "tab drop", reuse_win = true }
+      tb.lsp_type_definitions { reuse_win = true }
     end)
     nmap("<Leader>cu", "[c]ode: go to [u]ses (LSP)", function()
       tb.lsp_references { include_declaration = false, jump_type = "never" }
