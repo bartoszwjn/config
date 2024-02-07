@@ -26,6 +26,7 @@ in {
         nasm
         ncdu
         obsidian
+        optipng
         playerctl
         pulsemixer
         rclone

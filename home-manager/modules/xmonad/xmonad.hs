@@ -148,6 +148,8 @@ myKeys conf@XConfig { modMask = modM } = M.fromList $
   , ((modM              , xK_q     ), kill)
   , ((modM .|. shiftMask, xK_Return), spawn $ terminal conf)
   , ((modM              , xK_r     ), spawn rofi)
+  , ((modM              , xK_y     ), spawn scrotSelect)
+  , ((modM .|. shiftMask, xK_y     ), spawn scrotFull)
   , ((modM              , xK_o     ), submap . M.fromList $
       [ ((modM, xK_c), spawn "chatterino")
       , ((modM, xK_e), spawn "emacs")
@@ -242,6 +244,11 @@ fullscreenWindow focused = SS.float focused (RationalRect 0 0 1 1)
 
 rofi :: String
 rofi = "rofi -modes combi,drun,run,ssh -show combi -combi-modes drun,run,ssh"
+
+scrotBase, scrotSelect, scrotFull :: String
+scrotBase = "scrot --file ~/screenshots/%Y-%m-%d_%H:%M:%S.png --exec optipng"
+scrotSelect = scrotBase ++ " --freeze --select"
+scrotFull = scrotBase
 
 volumeCmd, raiseVolume, lowerVolume, toggleVolume :: String
 volumeCmd = "amixer set Master "
