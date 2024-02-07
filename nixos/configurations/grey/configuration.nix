@@ -16,6 +16,7 @@
 
   custom = {
     admin-tools.enable = true;
+    documentation.enable = true;
     keyboard-layout.enable = true;
     nix.enable = true;
     printing.enable = true;
