@@ -7,5 +7,5 @@ end
 nmap("<Leader>cf", "[c]ode [f]ormat", function()
   local pos = vim.fn.getcursorcharpos()
   vim.cmd("%!alejandra --quiet")
-  vim.fn.setcursorcharpos({pos[2], pos[3], pos[4], pos[5]})
+  vim.fn.setcursorcharpos({ pos[2], pos[3], pos[4], pos[5] })
 end)
