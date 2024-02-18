@@ -34,6 +34,7 @@ in
           nvim-autopairs
           nvim-cmp
           nvim-lspconfig
+          nvim-surround
           onedark-nvim
           plenary-nvim # required by telescope-nvim
           telescope-nvim
