@@ -17,5 +17,10 @@ in {
         EDITOR = "nvim";
       };
     };
+
+    systemd.user.tmpfiles.rules = [
+      #Type Path    Mode User Group Age Argument
+      "d    %C/nvim 0755 -    -     -   -"
+    ];
   };
 }
