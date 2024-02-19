@@ -11,9 +11,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    services.xserver = {
+    services.xserver.xkb = {
       layout = "ed";
-      xkbOptions = "lv3:ralt_switch";
+      options = "lv3:ralt_switch";
       extraLayouts.ed = {
         description = "Custom ED layout";
         languages = ["eng" "pol"];
