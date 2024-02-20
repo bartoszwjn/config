@@ -37,6 +37,7 @@ in
           nvim-surround
           onedark-nvim
           plenary-nvim # required by telescope-nvim
+          substitute-nvim
           telescope-nvim
           ;
       };
