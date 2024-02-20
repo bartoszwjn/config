@@ -25,20 +25,22 @@ in
           cmp-path
           cmp_luasnip
           comment-nvim
+          diffview-nvim # required by neogit
           fidget-nvim
           friendly-snippets
           indent-blankline-nvim
           leap-nvim
           luasnip
           neodev-nvim
+          neogit
           nvim-autopairs
           nvim-cmp
           nvim-lspconfig
           nvim-surround
           onedark-nvim
-          plenary-nvim # required by telescope-nvim
+          plenary-nvim # required by neogit, telescope-nvim
           substitute-nvim
-          telescope-nvim
+          telescope-nvim # required by neogit
           ;
       };
     };
