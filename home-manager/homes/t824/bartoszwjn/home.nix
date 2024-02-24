@@ -32,15 +32,14 @@ in {
     rofi.enable = true;
     services.enableAll = true;
     styling.enable = true;
-    # TODO
-    # syncthing = {
-    #   enable = true;
-    #   inherit (userPrivateConfig.syncthing) certFile encryptedKeyFile;
-    #   settings = {
-    #     options.listenAddresses = ["tcp://${systemPrivateConfig.tailscale.ipv4}:22000"];
-    #     folders.bartoszwjn-main.devices = ["arnold" "red"];
-    #   };
-    # };
+    syncthing = {
+      enable = true;
+      inherit (userPrivateConfig.syncthing) certFile encryptedKeyFile;
+      settings = {
+        options.listenAddresses = ["tcp://${systemPrivateConfig.tailscale.ipv4}:22000"];
+        folders.bartoszwjn-main.devices = ["arnold" "red"];
+      };
+    };
     xmonad = {
       enable = true;
       xmobar.showBattery = true;
