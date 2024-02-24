@@ -92,6 +92,8 @@
         "blue/bartoszwjn" = mkHome "blue/bartoszwjn";
         "grey/bartoszwjn" = mkHome "grey/bartoszwjn";
         "grey/bart3" = mkHome "grey/bart3";
+        "t824/bartoszwjn" = mkHome "t824/bartoszwjn";
+        "t824/bart3" = mkHome "t824/bart3";
       };
 
       nixosConfigurations = let
@@ -127,6 +129,7 @@
         blue = mkNixos "blue" ["bartoszwjn"];
         bootstrap = mkNixos "bootstrap" [];
         grey = mkNixos "grey" ["bartoszwjn" "bart3"];
+        t824 = mkNixos "t824" ["bartoszwjn" "bart3"];
       };
 
       nixosModules = import ./nixos/modules;
