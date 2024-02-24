@@ -3,7 +3,6 @@
   lib,
   pkgs,
   modulesPath,
-  flakeInputs,
   ...
 }: {
   imports = [
@@ -12,6 +11,7 @@
     ./graphical.nix
     ./hardware.nix
     ./network.nix
+    ./users.nix
   ];
 
   custom = {
@@ -55,26 +55,6 @@
   sops.age.keyFile = "/root/sops-nix.agekey";
 
   time.timeZone = "Europe/Warsaw";
-
-  users = {
-    mutableUsers = false;
-    users = {
-      bart3 = {
-        uid = 1001;
-        isNormalUser = true;
-        extraGroups = ["wheel" "video" "docker" "libvirtd"];
-        hashedPassword = flakeInputs.private-config.lib.grey.bart3.hashedPassword;
-        shell = pkgs.zsh;
-      };
-      bartoszwjn = {
-        uid = 1000;
-        isNormalUser = true;
-        extraGroups = ["wheel" "video" "docker" "libvirtd"];
-        hashedPassword = flakeInputs.private-config.lib.grey.bartoszwjn.hashedPassword;
-        shell = pkgs.zsh;
-      };
-    };
-  };
 
   system.stateVersion = "23.11";
 }

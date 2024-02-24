@@ -3,7 +3,6 @@
   lib,
   pkgs,
   modulesPath,
-  flakeInputs,
   ...
 }: {
   imports = [
@@ -12,6 +11,7 @@
     ./graphical.nix
     ./hardware.nix
     ./network.nix
+    ./users.nix
   ];
 
   custom = {
@@ -51,17 +51,6 @@
   sops.age.keyFile = "/root/sops-nix.agekey";
 
   time.timeZone = "Europe/Warsaw";
-
-  users = {
-    mutableUsers = false;
-    users.bartoszwjn = {
-      uid = 1000;
-      isNormalUser = true;
-      extraGroups = ["wheel"];
-      hashedPassword = flakeInputs.private-config.lib.blue.bartoszwjn.hashedPassword;
-      shell = pkgs.zsh;
-    };
-  };
 
   system.stateVersion = "23.11";
 }
