@@ -48,7 +48,13 @@
   };
   services.gnome.gnome-keyring.enable = true;
 
-  sops.age.keyFile = "/root/sops-nix.agekey";
+  sops = {
+    age = {
+      keyFile = "/root/sops-nix.agekey";
+      sshKeyPaths = [];
+    };
+    gnupg.sshKeyPaths = [];
+  };
 
   time.timeZone = "Europe/Warsaw";
 
