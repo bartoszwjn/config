@@ -14,7 +14,8 @@ in {
     fonts.fontconfig.enable = true;
 
     home.packages = builtins.attrValues {
-      inherit (pkgs) arc-icon-theme arc-theme nerdfonts;
+      inherit (pkgs) arc-icon-theme arc-theme;
+      nerdfonts = pkgs.nerdfonts.override {fonts = ["SourceCodePro"];};
     };
 
     xdg.dataFile = {
