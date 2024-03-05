@@ -40,7 +40,7 @@ in {
           inherit (pkgs) lua-language-server;
         })
         ++ lib.optionals cfg.nix (builtins.attrValues {
-          inherit (pkgs) alejandra nix-diff nix-prefetch-git nix-prefetch-github;
+          inherit (pkgs) alejandra nix-diff nix-prefetch-git nix-prefetch-github nvd;
         })
         ++ lib.optionals cfg.python (builtins.attrValues {
           inherit (pkgs) black isort mypy poetry python3;
