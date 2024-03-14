@@ -29,5 +29,7 @@ in {
         trusted-users = ["root" "@wheel"];
       };
     };
+
+    programs.command-not-found.enable = false;
   };
 }
