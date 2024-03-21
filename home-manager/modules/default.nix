@@ -4,6 +4,7 @@
   doom-emacs = ./doom-emacs.nix;
   gpg = ./gpg.nix;
   home = ./home.nix;
+  hyprland = ./hyprland.nix;
   neovim = ./neovim.nix;
   nix = ./nix.nix;
   nushell = ./nushell;
