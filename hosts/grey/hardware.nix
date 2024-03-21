@@ -17,7 +17,6 @@
     cpu.intel.updateMicrocode = true;
     keyboard.zsa.enable = true;
     logitech.wireless.enable = true;
-    pulseaudio.enable = true;
   };
 
   powerManagement.cpuFreqGovernor = "powersave";
@@ -38,6 +37,4 @@
       ''RUN+="${lib.getExe' pkgs.coreutils "chmod"} g+w $sys$devpath/brightness"''
     ];
   };
-
-  sound.enable = true;
 }

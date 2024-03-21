@@ -9,6 +9,8 @@
   jsonFormat = pkgs.formats.json {};
 
   cfg = config.custom.syncthing;
+
+  trayCfg = config.services.syncthing.tray;
 in {
   options.custom.syncthing = {
     enable = lib.mkEnableOption "Syncthing with custom configuration";
@@ -193,6 +195,21 @@ in {
         '';
       Unit.After = ["sops-nix.service"];
     };
+
+    systemd.user.services.${trayCfg.package.pname} =
+      lib.mkIf (config.custom.hyprland.enable && config.custom.hyprland.waybar.enable)
+      {
+        # Make it look like syncthingtray starts immediately, but actually delay it for a few seconds.
+        # We need to make systemd think it already started, so that hyprland can finish starting
+        # `graphical-session.target`, after which it starts `xdg-desktop-portal.service`. Once the
+        # desktop portal is started, waybar can finally finish initializing the tray, and at that
+        # point syncthingtray can start without crashing.
+        Service.ExecStart = lib.mkForce (pkgs.writeShellScript "syncthingtray-delayed" ''
+          set -euo pipefail
+          ${lib.getExe' pkgs.coreutils "sleep"} 3
+          exec ${lib.getExe' trayCfg.package trayCfg.command}
+        '');
+      };
 
     sops.secrets."syncthing-key.pem" = {
       sopsFile = cfg.encryptedKeyFile;

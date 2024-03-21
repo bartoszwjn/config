@@ -13,6 +13,7 @@
     ./gpg.nix
     ./gui-services.nix
     ./home.nix
+    ./hyprland
     ./neovim.nix
     ./nix.nix
     ./nushell

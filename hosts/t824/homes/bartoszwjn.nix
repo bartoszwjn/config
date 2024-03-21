@@ -27,14 +27,21 @@ in {
     gpg.enable = true;
     gui-services.enableAll = true;
     home.enable = true;
+    hyprland = {
+      enable = true;
+      monitorsConfig = [
+        # TODO eDP-1?
+        "desc:Dell Inc. DELL S2522HG GQ6L1C3, 1920x1080@120, -1920x0, 1"
+        ", preferred, auto, 1"
+      ];
+      waybar.monitors = ["eDP-1" "HDMI-A-1"]; # TODO
+      waybar.showBattery = true;
+    };
     neovim.enable = true;
     nix.enable = true;
     nushell.enable = true;
-    packages = {
-      cli = true;
-      gui = true;
-      x11 = true;
-    };
+    packages.cli = true;
+    packages.gui = true;
     rofi.enable = true;
     styling.enable = true;
     syncthing = {
@@ -44,12 +51,6 @@ in {
         options.listenAddresses = ["tcp://${systemPrivateConfig.tailscale.ipv4}:22000"];
         folders.bartoszwjn-main.devices = ["arnold" "red"];
       };
-    };
-    x11-services.enableAll = true;
-    xmonad = {
-      enable = true;
-      xmobar.showBattery = true;
-      stalonetray.geometry = "8x1-0+0";
     };
     zathura.enable = true;
     zsh.enable = true;
@@ -62,7 +63,6 @@ in {
       ".screen-brightness".source =
         config.custom.repo.flakeRoot + "/scripts/laptop/screen-brightness";
       ".ssh/config".source = userPrivateConfig.sshConfig;
-      ".Xresources".text = "Xft.dpi: 96\n";
     };
     packages = builtins.attrValues {
       inherit (pkgs) chatterino2 discord;

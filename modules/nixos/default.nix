@@ -10,6 +10,7 @@
     ./dns
     ./documentation.nix
     ./home-manager.nix
+    ./hyprland.nix
     ./keyboard-layout
     ./network.nix
     ./nix.nix

@@ -13,12 +13,9 @@
     keyboard.zsa.enable = true;
     logitech.wireless.enable = true;
     nvidia.modesetting.enable = true;
-    pulseaudio.enable = true;
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
 
   services.fstrim.enable = true;
-
-  sound.enable = true;
 }

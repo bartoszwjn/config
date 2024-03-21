@@ -11,6 +11,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
     fonts.fontconfig.enable = true;
 
     home.packages = builtins.attrValues {

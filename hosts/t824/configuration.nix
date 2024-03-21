@@ -12,13 +12,13 @@
     ./hardware.nix
     ./network.nix
     ./users.nix
-    ./x11.nix
   ];
 
   custom = {
     admin-tools.enable = true;
     documentation.enable = true;
     home-manager.enable = true;
+    hyprland.enable = true;
     keyboard-layout.enable = true;
     nix.enable = true;
     printing.enable = true;

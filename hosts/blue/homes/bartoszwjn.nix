@@ -27,14 +27,20 @@ in {
     gpg.enable = true;
     gui-services.enableAll = true;
     home.enable = true;
+    hyprland = {
+      enable = true;
+      monitorsConfig = [
+        "desc:Dell Inc. DELL S2522HG GQ6L1C3, 1920x1080@240, 0x0, 1"
+        "desc:Dell Inc. DELL U2412M YPPY089G14FB, 1920x1200@60, -1920x0, 1"
+        ", preferred, auto, 1"
+      ];
+      waybar.monitors = ["DP-1"];
+    };
     neovim.enable = true;
     nix.enable = true;
     nushell.enable = true;
-    packages = {
-      cli = true;
-      gui = true;
-      x11 = true;
-    };
+    packages.cli = true;
+    packages.gui = true;
     rofi.enable = true;
     styling.enable = true;
     syncthing = {
@@ -44,12 +50,6 @@ in {
         options.listenAddresses = ["tcp://${systemPrivateConfig.tailscale.ipv4}:22000"];
         folders.bartoszwjn-main.devices = ["arnold" "red"];
       };
-    };
-    x11-services.enableAll = true;
-    xmonad = {
-      enable = true;
-      xmobar.showBattery = false;
-      stalonetray.geometry = "8x1-0+0";
     };
     zathura.enable = true;
     zsh.enable = true;
