@@ -39,7 +39,6 @@
     ...
   }: let
     overlays = [self.overlays.default fenix.overlays.default];
-    homeManagerModules = import ./home-manager/modules;
   in
     flake-utils.lib.eachSystem ["x86_64-linux"] (system: let
       pkgs = nixpkgs.legacyPackages.${system};
@@ -69,57 +68,28 @@
       };
     })
     // {
-      homeConfigurations = let
-        mkHome = name:
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.x86_64-linux;
-            extraSpecialArgs.flakeInputs = inputs;
-            modules =
-              builtins.attrValues homeManagerModules
-              ++ [
-                ./home-manager/homes/${name}/home.nix
-                sops-nix.homeManagerModules.sops
-                ({pkgs, ...}: {
-                  nix.package = pkgs.nix;
-                  nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
-                  nixpkgs.overlays = overlays;
-                })
-              ];
-          };
-      in {
-        "blue/bartoszwjn" = mkHome "blue/bartoszwjn";
-        "grey/bartoszwjn" = mkHome "grey/bartoszwjn";
-        "grey/bart3" = mkHome "grey/bart3";
-        "t824/bartoszwjn" = mkHome "t824/bartoszwjn";
-        "t824/bart3" = mkHome "t824/bart3";
-      };
-
       nixosConfigurations = let
         mkNixos = name: users:
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            modules =
-              builtins.attrValues self.nixosModules
-              ++ [
-                ./nixos/configurations/${name}/configuration.nix
-                home-manager.nixosModules.home-manager
-                sops-nix.nixosModules.sops
-                {
-                  _module.args.flakeInputs = inputs;
-                  nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
-                  nixpkgs.overlays = overlays;
-                  home-manager = {
-                    extraSpecialArgs.flakeInputs = inputs;
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
-                    sharedModules =
-                      builtins.attrValues homeManagerModules ++ [sops-nix.homeManagerModules.sops];
-                    users = nixpkgs.lib.genAttrs users (
-                      user: ./home-manager/homes/${name}/${user}/home.nix
-                    );
-                  };
-                }
-              ];
+            modules = [
+              ./hosts/${name}/configuration.nix
+              ./modules/nixos
+              home-manager.nixosModules.home-manager
+              sops-nix.nixosModules.sops
+              {
+                _module.args.flakeInputs = inputs;
+                nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
+                nixpkgs.overlays = overlays;
+                home-manager = {
+                  extraSpecialArgs.flakeInputs = inputs;
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  sharedModules = [./modules/home-manager sops-nix.homeManagerModules.sops];
+                  users = nixpkgs.lib.genAttrs users (user: ./hosts/${name}/homes/${user}.nix);
+                };
+              }
+            ];
           };
       in {
         blue = mkNixos "blue" ["bartoszwjn"];
@@ -127,8 +97,6 @@
         grey = mkNixos "grey" ["bartoszwjn" "bart3"];
         t824 = mkNixos "t824" ["bartoszwjn" "bart3"];
       };
-
-      nixosModules = import ./nixos/modules;
 
       lib = import ./lib {inherit (nixpkgs) lib;};
 
