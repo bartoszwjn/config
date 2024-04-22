@@ -30,6 +30,14 @@ in {
       };
     };
 
+    nixpkgs = {
+      config.allowUnfreePredicate = flakeInputs.self.lib.unfree-packages.isAllowed;
+      overlays = [
+        flakeInputs.self.overlays.default
+        flakeInputs.fenix.overlays.default
+      ];
+    };
+
     programs.command-not-found.enable = false;
   };
 }

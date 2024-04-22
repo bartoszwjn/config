@@ -7,6 +7,7 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    ../../modules/nixos
     ./boot.nix
     ./graphical.nix
     ./hardware.nix
@@ -17,6 +18,7 @@
   custom = {
     admin-tools.enable = true;
     documentation.enable = true;
+    home-manager.enable = true;
     keyboard-layout.enable = true;
     nix.enable = true;
     printing.enable = true;
@@ -26,6 +28,8 @@
     font = "Lat2-Terminus16";
     keyMap = "pl";
   };
+
+  home-manager.users.bartoszwjn = ./homes/bartoszwjn.nix;
 
   i18n = {
     defaultLocale = "en_US.UTF-8";

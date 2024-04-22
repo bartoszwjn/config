@@ -7,6 +7,7 @@
 }: {
   imports = [
     (modulesPath + "/installer/cd-dvd/installation-cd-base.nix")
+    ../../modules/nixos
   ];
 
   custom = {

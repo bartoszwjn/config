@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  flakeInputs,
   ...
 }: {
   imports = [
@@ -22,5 +23,6 @@
     ./xmonad
     ./zathura
     ./zsh.nix
+    flakeInputs.sops-nix.homeManagerModules.sops
   ];
 }

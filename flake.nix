@@ -33,13 +33,8 @@
     self,
     nixpkgs,
     flake-utils,
-    home-manager,
-    sops-nix,
-    fenix,
     ...
-  }: let
-    overlays = [self.overlays.default fenix.overlays.default];
-  in
+  }:
     flake-utils.lib.eachSystem ["x86_64-linux"] (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
@@ -69,33 +64,17 @@
     })
     // {
       nixosConfigurations = let
-        mkNixos = name: users:
+        mkNixos = name:
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            modules = [
-              ./hosts/${name}/configuration.nix
-              ./modules/nixos
-              home-manager.nixosModules.home-manager
-              sops-nix.nixosModules.sops
-              {
-                _module.args.flakeInputs = inputs;
-                nixpkgs.config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
-                nixpkgs.overlays = overlays;
-                home-manager = {
-                  extraSpecialArgs.flakeInputs = inputs;
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  sharedModules = [./modules/home-manager sops-nix.homeManagerModules.sops];
-                  users = nixpkgs.lib.genAttrs users (user: ./hosts/${name}/homes/${user}.nix);
-                };
-              }
-            ];
+            specialArgs.flakeInputs = inputs;
+            modules = [./hosts/${name}/configuration.nix];
           };
       in {
-        blue = mkNixos "blue" ["bartoszwjn"];
-        bootstrap = mkNixos "bootstrap" [];
-        grey = mkNixos "grey" ["bartoszwjn" "bart3"];
-        t824 = mkNixos "t824" ["bartoszwjn" "bart3"];
+        blue = mkNixos "blue";
+        bootstrap = mkNixos "bootstrap";
+        grey = mkNixos "grey";
+        t824 = mkNixos "t824";
       };
 
       lib = import ./lib {inherit (nixpkgs) lib;};
