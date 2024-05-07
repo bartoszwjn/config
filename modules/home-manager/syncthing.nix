@@ -182,7 +182,7 @@ in {
     systemd.user.services.syncthing = {
       Service.ExecStartPre = let
         install = "${pkgs.coreutils}/bin/install";
-        keyFile = "$XDG_RUNTIME_DIR/secrets/syncthing-key.pem";
+        keyFile = config.sops.secrets."syncthing-key.pem".path;
       in
         pkgs.writeShellScript "syncthing-copy-keys" ''
           set -euo pipefail
