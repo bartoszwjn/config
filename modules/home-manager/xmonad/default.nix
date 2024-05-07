@@ -45,7 +45,7 @@ in {
     xdg.configFile."xmobar/xmobarrc".text = let
       ifBattery = lib.optionalString cfg.xmobar.showBattery;
 
-      template = ''"%StdinReader% }{ ${status} <fc=${colorAccent}>| %kbd% | %date% |</fc>"'';
+      template = ''"%StdinReader% }{ ${status} <fc=${colorAccent}>| %date% |</fc>"'';
       status = "%cpu% | %memory% | %disku%${ifBattery " | %battery%"}";
 
       batteryCommand = ifBattery "Run Battery [${batteryArgs}] 100,";
@@ -72,7 +72,6 @@ in {
           Run DiskU [("/", "󰉋 <free>")] ["-S", "True", "-d", "1"] 100,
           ${batteryCommand}
           Run Date "%a %Y-%m-%d | %H:%M:%S" "date" 10,
-          Run Kbd [("us", "US"), ("pl", "PL"), ("pl(dvp)", "DV")],
           Run StdinReader
         ]
       }
