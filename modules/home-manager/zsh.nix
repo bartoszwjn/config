@@ -59,10 +59,6 @@ in {
 
       envExtra = ''
         typeset -U PATH path
-
-        if command -v pyenv &>/dev/null; then
-          PATH="$(pyenv root)/shims:$PATH"
-        fi
       '';
 
       initExtra = ''
@@ -79,11 +75,6 @@ in {
         key[Control-Right]="''${terminfo[kRIT5]}"
         [[ -n "''${key[Control-Left]}" ]] && bindkey -- "''${key[Control-Left]}" backward-word
         [[ -n "''${key[Control-Right]}" ]] && bindkey -- "''${key[Control-Right]}" forward-word
-
-        if command -v pyenv &>/dev/null; then
-          eval "$(pyenv init -)"
-          export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-        fi
 
         function dup () {
             if (( $# > 1 )) then
