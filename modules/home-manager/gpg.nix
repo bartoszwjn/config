@@ -17,7 +17,7 @@ in {
       enable = true;
       enableScDaemon = false;
       defaultCacheTtl = 3600; # seconds
-      pinentryFlavor = "curses";
+      pinentryPackage = pkgs.pinentry-curses;
     };
   };
 }

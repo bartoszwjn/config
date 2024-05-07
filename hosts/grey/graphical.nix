@@ -38,20 +38,20 @@
         Option "Position" "0 0"
       EndSection
     '';
+  };
 
-    libinput = {
-      enable = true;
-      touchpad = {
-        clickMethod = "clickfinger";
-        disableWhileTyping = true;
-        horizontalScrolling = true;
-        middleEmulation = false;
-        naturalScrolling = true;
-        scrollMethod = "twofinger";
-        tapping = true;
-        tappingButtonMap = "lrm";
-        tappingDragLock = true;
-      };
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      clickMethod = "clickfinger";
+      disableWhileTyping = true;
+      horizontalScrolling = true;
+      middleEmulation = false;
+      naturalScrolling = true;
+      scrollMethod = "twofinger";
+      tapping = true;
+      tappingButtonMap = "lrm";
+      tappingDragLock = true;
     };
   };
 
