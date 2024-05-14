@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  cfg = config.custom.services.dunst;
+  cfg = config.custom.dunst;
 
   arcIconTheme = {
     package = pkgs.arc-icon-theme;
@@ -27,7 +27,7 @@
     "status"
   ];
 in {
-  options.custom.services.dunst = {
+  options.custom.dunst = {
     enable = lib.mkEnableOption "dunst user service";
   };
 

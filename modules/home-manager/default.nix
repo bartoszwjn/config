@@ -9,7 +9,9 @@
     ./alacritty
     ./dev-tools
     ./doom-emacs.nix
+    ./dunst.nix
     ./gpg.nix
+    ./gui-services.nix
     ./home.nix
     ./neovim.nix
     ./nix.nix
@@ -17,9 +19,9 @@
     ./packages.nix
     ./repo.nix
     ./rofi.nix
-    ./services
     ./styling.nix
     ./syncthing.nix
+    ./x11-services.nix
     ./xmonad
     ./zathura
     ./zsh.nix

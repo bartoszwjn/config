@@ -26,14 +26,15 @@ in {
       };
     };
     doom-emacs.enable = true;
+    dunst.enable = true;
     gpg.enable = true;
+    gui-services.enableAll = true;
     home.enable = true;
     neovim.enable = true;
     nix.enable = true;
     nushell.enable = true;
     packages.enable = true;
     rofi.enable = true;
-    services.enableAll = true;
     styling.enable = true;
     syncthing = {
       enable = true;
@@ -44,6 +45,7 @@ in {
         folders.bartoszwjn-main.devices = ["arnold" "red"];
       };
     };
+    x11-services.enableAll = true;
     xmonad = {
       enable = true;
       xmobar.showBattery = true;
