@@ -20,6 +20,11 @@ in {
       };
     };
     stalonetray = {
+      enable =
+        lib.mkEnableOption "stalonetray with custom config"
+        // {
+          default = true;
+        };
       geometry = lib.mkOption {
         type = lib.types.str;
         description = "Value for the `geometry` setting for stalonetray";
@@ -77,7 +82,7 @@ in {
       }
     '';
 
-    services.stalonetray = {
+    services.stalonetray = lib.mkIf cfg.stalonetray.enable {
       enable = true;
       config = {
         background = colorBg;
