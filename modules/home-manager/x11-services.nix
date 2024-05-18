@@ -50,8 +50,8 @@ in {
         };
         Install.WantedBy = ["graphical-session.target"];
         Service.ExecStart = let
-          lockCmd = "${pkgs.i3lock-color}/bin/i3lock-color -n -e -c 000000";
-        in ''${pkgs.xss-lock}/bin/xss-lock -s "$XDG_SESSION_ID" -- ${lockCmd}'';
+          lockCmd = "${lib.getExe' pkgs.i3lock-color "i3lock-color"} -n -e -c 000000";
+        in ''${lib.getExe' pkgs.xss-lock "xss-lock"} -s "$XDG_SESSION_ID" -- ${lockCmd}'';
       };
     })
   ];

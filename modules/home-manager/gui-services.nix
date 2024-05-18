@@ -53,8 +53,8 @@ in {
         };
         Install.WantedBy = ["graphical-session.target"];
         Service.ExecStart = let
-          cmd = "${pkgs.pasystray}/bin/pasystray";
-        in "${cmd} --volume-inc=5 --notify=none --notify=new --notify=sink --notify=source";
+          pasystray = lib.getExe' pkgs.pasystray "pasystray";
+        in "${pasystray} --volume-inc=5 --notify=none --notify=new --notify=sink --notify=source";
       };
     })
 
@@ -68,8 +68,8 @@ in {
         };
         Install.WantedBy = ["graphical-session.target"];
         Service.ExecStart = let
-          cmd = "${pkgs.signal-desktop}/bin/signal-desktop";
-        in "${cmd} --use-tray-icon --start-in-tray";
+          signal-desktop = lib.getExe' pkgs.signal-desktop "signal-desktop";
+        in "${signal-desktop} --use-tray-icon --start-in-tray";
       };
     })
 
@@ -82,7 +82,7 @@ in {
           PartOf = ["graphical-session.target"];
         };
         Install.WantedBy = ["graphical-session.target"];
-        Service.ExecStart = "${pkgs.solaar}/bin/solaar --window hide";
+        Service.ExecStart = "${lib.getExe' pkgs.solaar "solaar"} --window hide";
       };
     })
   ];

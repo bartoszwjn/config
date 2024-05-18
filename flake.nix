@@ -36,6 +36,7 @@
     ...
   }:
     flake-utils.lib.eachSystem ["x86_64-linux"] (system: let
+      inherit (nixpkgs) lib;
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       packages = import ./packages {inherit pkgs;};
@@ -48,7 +49,7 @@
           flake-utils.lib.mkApp {
             drv = pkgs.writeShellScriptBin "write-bootstrap-image" ''
               if [[ "$#" -ne 1 ]]; then echo "Usage: $0 <device>"; exit 1; fi
-              exec ${pkgs.coreutils}/bin/dd bs=64K status=progress if=${isoPath} of="$1"
+              exec ${lib.getExe' pkgs.coreutils "dd"} bs=64K status=progress if=${isoPath} of="$1"
             '';
           };
       };
@@ -57,7 +58,7 @@
 
       checks = {
         nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
-          ${pkgs.alejandra}/bin/alejandra --check ${self} 2>/dev/null
+          ${lib.getExe' pkgs.alejandra "alejandra"} --check ${self} 2>/dev/null
           touch $out
         '';
       };

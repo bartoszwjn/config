@@ -34,8 +34,8 @@
     udev.extraRules = lib.concatStringsSep ", " [
       ''ACTION=="add"''
       ''SUBSYSTEM=="backlight"''
-      ''RUN+="${pkgs.coreutils}/bin/chgrp video $sys$devpath/brightness"''
-      ''RUN+="${pkgs.coreutils}/bin/chmod g+w $sys$devpath/brightness"''
+      ''RUN+="${lib.getExe' pkgs.coreutils "chgrp"} video $sys$devpath/brightness"''
+      ''RUN+="${lib.getExe' pkgs.coreutils "chmod"} g+w $sys$devpath/brightness"''
     ];
   };
 

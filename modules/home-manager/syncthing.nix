@@ -181,7 +181,7 @@ in {
 
     systemd.user.services.syncthing = {
       Service.ExecStartPre = let
-        install = "${pkgs.coreutils}/bin/install";
+        install = lib.getExe' pkgs.coreutils "install";
         keyFile = config.sops.secrets."syncthing-key.pem".path;
       in
         pkgs.writeShellScript "syncthing-copy-keys" ''
@@ -224,48 +224,55 @@ in {
         Type = "oneshot";
         RemainAfterExit = true;
         RuntimeDirectory = "syncthing-config";
-        ExecStart = pkgs.writeShellScript "syncthing-update-config" ''
-          set -euo pipefail
-          umask 0077
+        ExecStart = let
+          cat = lib.getExe' pkgs.coreutils "cat";
+          curl = lib.getExe' pkgs.curl "curl";
+          jq = lib.getExe' pkgs.jq "jq";
+          sleep = lib.getExe' pkgs.coreutils "sleep";
+          xmllint = lib.getExe' pkgs.libxml2 "xmllint";
+        in
+          pkgs.writeShellScript "syncthing-update-config" ''
+            set -euo pipefail
+            umask 0077
 
-          while
-            ! ${pkgs.libxml2}/bin/xmllint \
-              --xpath 'string(configuration/gui/apikey)' \
-              ${cfg.homeDir}/config.xml \
-              > "$RUNTIME_DIRECTORY/api_key"
-          do ${pkgs.coreutils}/bin/sleep 1; done
+            while
+              ! ${xmllint} \
+                --xpath 'string(configuration/gui/apikey)' \
+                ${cfg.homeDir}/config.xml \
+                > "$RUNTIME_DIRECTORY/api_key"
+            do ${sleep} 1; done
 
-          # Keep the old API key to not break things like syncthingtray
-          ${pkgs.jq}/bin/jq --compact-output --rawfile apiKey "$RUNTIME_DIRECTORY/api_key" \
-            '. * {"gui": {"apiKey": ($apiKey | rtrimstr("\n"))}}' \
-            <<< ${lib.escapeShellArg (builtins.toJSON newConfig)} \
-            > "$RUNTIME_DIRECTORY/new_config"
+            # Keep the old API key to not break things like syncthingtray
+            ${jq} --compact-output --rawfile apiKey "$RUNTIME_DIRECTORY/api_key" \
+              '. * {"gui": {"apiKey": ($apiKey | rtrimstr("\n"))}}' \
+              <<< ${lib.escapeShellArg (builtins.toJSON newConfig)} \
+              > "$RUNTIME_DIRECTORY/new_config"
 
-          (
-            printf "X-API-Key: "
-            ${pkgs.coreutils}/bin/cat "$RUNTIME_DIRECTORY/api_key"
-          ) > "$RUNTIME_DIRECTORY/headers"
+            (
+              printf "X-API-Key: "
+              ${cat} "$RUNTIME_DIRECTORY/api_key"
+            ) > "$RUNTIME_DIRECTORY/headers"
 
-          function curl () {
-            ${pkgs.curl}/bin/curl --fail --silent --show-error --location --insecure \
-              --header "@$RUNTIME_DIRECTORY/headers" \
-              --retry 100 --retry-delay 1 --retry-connrefused \
-              "$@"
-          }
+            function curl () {
+              ${curl} --fail --silent --show-error --location --insecure \
+                --header "@$RUNTIME_DIRECTORY/headers" \
+                --retry 100 --retry-delay 1 --retry-connrefused \
+                "$@"
+            }
 
-          curl -X PUT --data "@$RUNTIME_DIRECTORY/new_config" \
-            --header "Content-Type: application/json" \
-            ${curlAddr "/rest/config"}
+            curl -X PUT --data "@$RUNTIME_DIRECTORY/new_config" \
+              --header "Content-Type: application/json" \
+              ${curlAddr "/rest/config"}
 
-          restart_required=$(
-            curl ${curlAddr "/rest/config/restart-required"} | ${pkgs.jq}/bin/jq .requiresRestart
-          )
-          case "$restart_required" in
-            true) curl -X POST ${curlAddr "/rest/system/restart"} ;;
-            false) ;;
-            *) echo "Unexpected value of requiresRestart: $restart_required"; exit 1 ;;
-          esac
-        '';
+            restart_required=$(
+              curl ${curlAddr "/rest/config/restart-required"} | ${jq} .requiresRestart
+            )
+            case "$restart_required" in
+              true) curl -X POST ${curlAddr "/rest/system/restart"} ;;
+              false) ;;
+              *) echo "Unexpected value of requiresRestart: $restart_required"; exit 1 ;;
+            esac
+          '';
       };
     };
   };
