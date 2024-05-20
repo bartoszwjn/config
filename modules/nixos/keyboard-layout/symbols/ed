@@ -17,531 +17,197 @@ default xkb_symbols "ed" {
 
 
 
-    key <NMLK> {
-        type    = "ONE_LEVEL",
-        symbols = [ Num_Lock       ]
-    };
+    key.type = "ONE_LEVEL";
+    key <NMLK> { [ Num_Lock ] };
 
 
 
-    key <LCTL> {
-        type    = "PC_CONTROL_LEVEL2",
-        symbols = [ Control_L      , ISO_Prev_Group ]
-    };
-    key <RCTL> {
-        type    = "PC_CONTROL_LEVEL2",
-        symbols = [ Control_R      , ISO_Next_Group ]
-    };
-    key <LFSH> {
-        type    = "ONE_LEVEL",
-        symbols = [ Shift_L        ]
-    };
-    key <RTSH> {
-        type    = "ONE_LEVEL",
-        symbols = [ Shift_R        ]
-    };
-    key <LALT> {
-        type    = "ONE_LEVEL",
-        symbols = [ Alt_L          ]
-    };
-    key <RALT> {
-        type    = "ONE_LEVEL",
-        symbols = [ ISO_Level3_Shift ]
-    };
-    key <LWIN> {
-        type    = "ONE_LEVEL",
-        symbols = [ Super_L        ]
-    };
-    key <RWIN> {
-        type    = "ONE_LEVEL",
-        symbols = [ Super_R        ]
-    };
-    key <COMP> {
-        type    = "ONE_LEVEL",
-        symbols = [ Super_R        ]
-    };
+    key.type = "PC_CONTROL_LEVEL2";
+    key <LCTL> { [ Control_L, ISO_Prev_Group ] };
+    key <RCTL> { [ Control_R, ISO_Next_Group ] };
+
+    key.type = "ONE_LEVEL";
+    key <LFSH> { [ Shift_L          ] };
+    key <RTSH> { [ Shift_R          ] };
+    key <LALT> { [ Alt_L            ] };
+    key <RALT> { [ ISO_Level3_Shift ] };
+    key <LWIN> { [ Super_L          ] };
+    key <RWIN> { [ Super_R          ] };
+    key <COMP> { [ Super_R          ] };
 
 
 
-    key <CAPS> {
-        type    = "ONE_LEVEL",
-        symbols = [ ISO_Level5_Shift ]
-    };
-    key  <ESC> {
-        type    = "ONE_LEVEL",
-        symbols = [ Escape         ]
-    };
-    key <SPCE> {
-        type    = "TWO_LEVEL_FN",
-        symbols = [ Space          , underscore     ]
-    };
-    key <BKSP> {
-        type    = "TWO_LEVEL",
-        symbols = [ BackSpace      , BackSpace      ]
-    };
-    key  <TAB> {
-        type    = "TWO_LEVEL",
-        symbols = [ Tab            , ISO_Left_Tab   ]
-    };
-    key <RTRN> {
-        type    = "ONE_LEVEL",
-        symbols = [ Return         ]
-    };
+    key.type = "ONE_LEVEL";
+    key <CAPS> { [ ISO_Level5_Shift ] };
+    key <ESC>  { [ Escape           ] };
+
+    key.type = "TWO_LEVEL_FN";
+    key <SPCE> { [ Space, underscore ] };
+
+    key.type = "TWO_LEVEL";
+    key <BKSP> { [ BackSpace, BackSpace    ] };
+    key <TAB>  { [ Tab      , ISO_Left_Tab ] };
+
+    key.type = "ONE_LEVEL";
+    key <RTRN> { [ Return ] };
 
 
 
-    key <PRSC> {
-        type    = "PC_ALT_LEVEL2",
-        symbols = [ Print          , Sys_Req        ]
-    };
-    key <PGUP> {
-        type    = "ONE_LEVEL",
-        symbols = [ Prior          ]
-    };
-    key <PGDN> {
-        type    = "ONE_LEVEL",
-        symbols = [ Next           ]
-    };
-    key <HOME> {
-        type    = "ONE_LEVEL",
-        symbols = [ Home           ]
-    };
-    key  <END> {
-        type    = "ONE_LEVEL",
-        symbols = [ End            ]
-    };
-    key <DELE> {
-        type    = "ONE_LEVEL",
-        symbols = [ Delete         ]
-    };
+    key.type = "PC_ALT_LEVEL2";
+    key <PRSC> { [ Print, Sys_Req ] };
+
+    key.type = "ONE_LEVEL";
+    key <PGUP> { [ Prior  ] };
+    key <PGDN> { [ Next   ] };
+    key <HOME> { [ Home   ] };
+    key <END>  { [ End    ] };
+    key <DELE> { [ Delete ] };
 
 
 
-    key <SCLK> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ ampersand      , ampersand      , NoSymbol       , NoSymbol       , NoSymbol       ]
-    };
-    key  <INS> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ dollar         , dollar         , NoSymbol       , NoSymbol       , NoSymbol       ]
-    };
-    key <PAUS> {
-        type    = "ONE_LEVEL",
-        symbols = [ Caps_Lock      ]
-    };
-    key <FK13> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ asterisk       , asterisk       , NoSymbol       , NoSymbol       , NoSymbol       ]
-    };
-    key <FK14> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ equal          , equal          , NoSymbol       , NoSymbol       , NoSymbol       ]
-    };
+    key.type = "ALPHABETIC_UNICODE_FN";
+    key <SCLK> { [ ampersand, ampersand, NoSymbol, NoSymbol, NoSymbol ] };
+    key <INS>  { [ dollar   , dollar   , NoSymbol, NoSymbol, NoSymbol ] };
+
+    key.type = "ONE_LEVEL";
+    key <PAUS> { [ Caps_Lock ] };
+
+    key.type = "ALPHABETIC_UNICODE_FN";
+    key <FK13> { [ asterisk, asterisk, NoSymbol, NoSymbol, NoSymbol ] };
+    key <FK14> { [ equal   , equal   , NoSymbol, NoSymbol, NoSymbol ] };
 
 
 
-    key <TLDE> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ grave          , asciitilde     , NoSymbol       , NoSymbol       , NoSymbol       ]
-    };
-    key <AE01> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 1              , 1              , NoSymbol       , NoSymbol       , F1             ]
-    };
-    key <AE02> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 2              , 2              , NoSymbol       , NoSymbol       , F2             ]
-    };
-    key <AE03> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 3              , 3              , NoSymbol       , NoSymbol       , F3             ]
-    };
-    key <AE04> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 4              , 4              , NoSymbol       , NoSymbol       , F4             ]
-    };
-    key <AE05> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 5              , 5              , NoSymbol       , NoSymbol       , F5             ]
-    };
-    key <AE06> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 6              , 6              , NoSymbol       , NoSymbol       , F6             ]
-    };
-    key <AE07> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 7              , 7              , NoSymbol       , NoSymbol       , F7             ]
-    };
-    key <AE08> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 8              , 8              , NoSymbol       , NoSymbol       , F8             ]
-    };
-    key <AE09> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 9              , 9              , NoSymbol       , NoSymbol       , F9             ]
-    };
-    key <AE10> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ 0              , 0              , NoSymbol       , NoSymbol       , F10            ]
-    };
-    key <AE11> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ numbersign     , numbersign     , NoSymbol       , NoSymbol       , F11            ]
-    };
-    key <AE12> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ percent        , percent        , NoSymbol       , NoSymbol       , F12            ]
-    };
+    key.type = "ALPHABETIC_UNICODE_FN";
+    key <TLDE> { [ grave     , asciitilde, NoSymbol, NoSymbol, NoSymbol ] };
+    key <AE01> { [ 1         , 1         , NoSymbol, NoSymbol, F1       ] };
+    key <AE02> { [ 2         , 2         , NoSymbol, NoSymbol, F2       ] };
+    key <AE03> { [ 3         , 3         , NoSymbol, NoSymbol, F3       ] };
+    key <AE04> { [ 4         , 4         , NoSymbol, NoSymbol, F4       ] };
+    key <AE05> { [ 5         , 5         , NoSymbol, NoSymbol, F5       ] };
+    key <AE06> { [ 6         , 6         , NoSymbol, NoSymbol, F6       ] };
+    key <AE07> { [ 7         , 7         , NoSymbol, NoSymbol, F7       ] };
+    key <AE08> { [ 8         , 8         , NoSymbol, NoSymbol, F8       ] };
+    key <AE09> { [ 9         , 9         , NoSymbol, NoSymbol, F9       ] };
+    key <AE10> { [ 0         , 0         , NoSymbol, NoSymbol, F10      ] };
+    key <AE11> { [ numbersign, numbersign, NoSymbol, NoSymbol, F11      ] };
+    key <AE12> { [ percent   , percent   , NoSymbol, NoSymbol, F12      ] };
 
 
 
-    key <AD01> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ q              , Q              , Greek_alpha    , Greek_ALPHA    , XF86AudioRaiseVolume ]
-    };
-    key <AD02> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ w              , W              , Greek_omega    , Greek_OMEGA    , NoSymbol       ]
-    };
-    key <AD03> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ e              , E              , eogonek        , Eogonek        , Up             ]
-    };
-    key <AD04> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ r              , R              , Greek_rho      , Greek_RHO      , NoSymbol       ]
-    };
-    key <AD05> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ t              , T              , Greek_tau      , Greek_TAU      , NoSymbol       ]
-    };
-    key <AD06> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ y              , Y              , multiply       , periodcentered , asterisk       ]
-    };
-    key <AD07> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ u              , U              , logicalor      , union          , plus           ]
-    };
-    key <AD08> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ i              , I              , logicaland     , intersection   , bracketleft    ]
-    };
-    key <AD09> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ o              , O              , oacute         , Oacute         , bracketright   ]
-    };
-    key <AD10> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ p              , P              , Greek_pi       , Greek_PI       , ampersand      ]
-    };
-    key <AD11> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ percent        , percent        , NoSymbol       , NoSymbol       , NoSymbol       ]
-    };
-    key <AD12> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ numbersign     , numbersign     , NoSymbol       , NoSymbol       , NoSymbol       ]
-    };
-    key <BKSL> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ backslash      , bar            , NoSymbol       , NoSymbol       , percent        ]
-    };
+    key.type = "ALPHABETIC_UNICODE_FN";
+    key <AD01> { [ q         , Q         , Greek_alpha, Greek_ALPHA   , XF86AudioRaiseVolume ] };
+    key <AD02> { [ w         , W         , Greek_omega, Greek_OMEGA   , NoSymbol             ] };
+    key <AD03> { [ e         , E         , eogonek    , Eogonek       , Up                   ] };
+    key <AD04> { [ r         , R         , Greek_rho  , Greek_RHO     , NoSymbol             ] };
+    key <AD05> { [ t         , T         , Greek_tau  , Greek_TAU     , NoSymbol             ] };
+    key <AD06> { [ y         , Y         , multiply   , periodcentered, asterisk             ] };
+    key <AD07> { [ u         , U         , logicalor  , union         , plus                 ] };
+    key <AD08> { [ i         , I         , logicaland , intersection  , bracketleft          ] };
+    key <AD09> { [ o         , O         , oacute     , Oacute        , bracketright         ] };
+    key <AD10> { [ p         , P         , Greek_pi   , Greek_PI      , ampersand            ] };
+    key <AD11> { [ percent   , percent   , NoSymbol   , NoSymbol      , NoSymbol             ] };
+    key <AD12> { [ numbersign, numbersign, NoSymbol   , NoSymbol      , NoSymbol             ] };
+    key <BKSL> { [ backslash , bar       , NoSymbol   , NoSymbol      , percent              ] };
 
 
 
-    key <AC01> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ a              , A              , aogonek        , Aogonek        , XF86AudioLowerVolume ]
-    };
-    key <AC02> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ s              , S              , sacute         , Sacute         , Left           ]
-    };
-    key <AC03> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ d              , D              , Greek_delta    , Greek_DELTA    , Down           ]
-    };
-    key <AC04> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ f              , F              , Greek_phi      , Greek_PHI      , Right          ]
-    };
-    key <AC05> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ g              , G              , Greek_gamma    , Greek_GAMMA    , NoSymbol       ]
-    };
-    key <AC06> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ h              , H              , identical      , notequal       , equal          ]
-    };
-    key <AC07> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ j              , J              , leftarrow      , downarrow      , minus          ]
-    };
-    key <AC08> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ k              , K              , rightarrow     , uparrow        , parenleft      ]
-    };
-    key <AC09> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ l              , L              , lstroke        , Lstroke        , parenright     ]
-    };
-    key <AC10> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ semicolon      , colon          , U2200          , U2203          , dollar         ]
-    };
-    key <AC11> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ apostrophe     , quotedbl       , NoSymbol       , NoSymbol       , numbersign     ]
-    };
+    key.type = "ALPHABETIC_UNICODE_FN";
+    key <AC01> { [ a         , A       , aogonek    , Aogonek    , XF86AudioLowerVolume ] };
+    key <AC02> { [ s         , S       , sacute     , Sacute     , Left                 ] };
+    key <AC03> { [ d         , D       , Greek_delta, Greek_DELTA, Down                 ] };
+    key <AC04> { [ f         , F       , Greek_phi  , Greek_PHI  , Right                ] };
+    key <AC05> { [ g         , G       , Greek_gamma, Greek_GAMMA, NoSymbol             ] };
+    key <AC06> { [ h         , H       , identical  , notequal   , equal                ] };
+    key <AC07> { [ j         , J       , leftarrow  , downarrow  , minus                ] };
+    key <AC08> { [ k         , K       , rightarrow , uparrow    , parenleft            ] };
+    key <AC09> { [ l         , L       , lstroke    , Lstroke    , parenright           ] };
+    key <AC10> { [ semicolon , colon   , U2200      , U2203      , dollar               ] };
+    key <AC11> { [ apostrophe, quotedbl, NoSymbol   , NoSymbol   , numbersign           ] };
 
 
 
-    key <AB01> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ z              , Z              , zabovedot      , Zabovedot      , XF86AudioMute  ]
-    };
-    key <AB02> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ x              , X              , zacute         , Zacute         , XF86AudioPrev  ]
-    };
-    key <AB03> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ c              , C              , cacute         , Cacute         , XF86AudioPlay  ]
-    };
-    key <AB04> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ v              , V              , Greek_lambda   , Greek_LAMBDA   , XF86AudioNext  ]
-    };
-    key <AB05> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ b              , B              , Greek_beta     , Greek_BETA     , NoSymbol       ]
-    };
-    key <AB06> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ n              , N              , nacute         , Nacute         , at             ]
-    };
-    key <AB07> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ m              , M              , elementof      , notelementof   , asciicircum    ]
-    };
-    key <AB08> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ comma          , less           , lessthanequal  , U2286          , braceleft      ]
-    };
-    key <AB09> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ period         , greater        , greaterthanequal , U2287        , braceright     ]
-    };
-    key <AB10> {
-        type    = "ALPHABETIC_UNICODE_FN",
-        symbols = [ slash          , question       , ellipsis       , infinity       , exclam         ]
-    };
+    key.type = "ALPHABETIC_UNICODE_FN";
+    key <AB01> { [ z     , Z       , zabovedot       , Zabovedot   , XF86AudioMute ] };
+    key <AB02> { [ x     , X       , zacute          , Zacute      , XF86AudioPrev ] };
+    key <AB03> { [ c     , C       , cacute          , Cacute      , XF86AudioPlay ] };
+    key <AB04> { [ v     , V       , Greek_lambda    , Greek_LAMBDA, XF86AudioNext ] };
+    key <AB05> { [ b     , B       , Greek_beta      , Greek_BETA  , NoSymbol      ] };
+    key <AB06> { [ n     , N       , nacute          , Nacute      , at            ] };
+    key <AB07> { [ m     , M       , elementof       , notelementof, asciicircum   ] };
+    key <AB08> { [ comma , less    , lessthanequal   , U2286       , braceleft     ] };
+    key <AB09> { [ period, greater , greaterthanequal, U2287       , braceright    ] };
+    key <AB10> { [ slash , question, ellipsis        , infinity    , exclam        ] };
 
 
 
-    key <FK01> {
-        type    = "CTRL+ALT",
-        symbols = [ F1             , F1             , F1             , F1             , XF86Switch_VT_1 ]
-    };
-    key <FK02> {
-        type    = "CTRL+ALT",
-        symbols = [ F2             , F2             , F2             , F2             , XF86Switch_VT_2 ]
-    };
-    key <FK03> {
-        type    = "CTRL+ALT",
-        symbols = [ F3             , F3             , F3             , F3             , XF86Switch_VT_3 ]
-    };
-    key <FK04> {
-        type    = "CTRL+ALT",
-        symbols = [ F4             , F4             , F4             , F4             , XF86Switch_VT_4 ]
-    };
-    key <FK05> {
-        type    = "CTRL+ALT",
-        symbols = [ F5             , F5             , F5             , F5             , XF86Switch_VT_5 ]
-    };
-    key <FK06> {
-        type    = "CTRL+ALT",
-        symbols = [ F6             , F6             , F6             , F6             , XF86Switch_VT_6 ]
-    };
-    key <FK07> {
-        type    = "CTRL+ALT",
-        symbols = [ F7             , F7             , F7             , F7             , XF86Switch_VT_7 ]
-    };
-    key <FK08> {
-        type    = "CTRL+ALT",
-        symbols = [ F8             , F8             , F8             , F8             , XF86Switch_VT_8 ]
-    };
-    key <FK09> {
-        type    = "CTRL+ALT",
-        symbols = [ F9             , F9             , F9             , F9             , XF86Switch_VT_9 ]
-    };
-    key <FK10> {
-        type    = "CTRL+ALT",
-        symbols = [ F10            , F10            , F10            , F10            , XF86Switch_VT_10 ]
-    };
-    key <FK11> {
-        type    = "CTRL+ALT",
-        symbols = [ F11            , F11            , F11            , F11            , XF86Switch_VT_11 ]
-    };
-    key <FK12> {
-        type    = "CTRL+ALT",
-        symbols = [ F12            , F12            , F12            , F12            , XF86Switch_VT_12 ]
-    };
+    key.type = "CTRL+ALT";
+    key <FK01> { [ F1 , F1 , F1 , F1 , XF86Switch_VT_1  ] };
+    key <FK02> { [ F2 , F2 , F2 , F2 , XF86Switch_VT_2  ] };
+    key <FK03> { [ F3 , F3 , F3 , F3 , XF86Switch_VT_3  ] };
+    key <FK04> { [ F4 , F4 , F4 , F4 , XF86Switch_VT_4  ] };
+    key <FK05> { [ F5 , F5 , F5 , F5 , XF86Switch_VT_5  ] };
+    key <FK06> { [ F6 , F6 , F6 , F6 , XF86Switch_VT_6  ] };
+    key <FK07> { [ F7 , F7 , F7 , F7 , XF86Switch_VT_7  ] };
+    key <FK08> { [ F8 , F8 , F8 , F8 , XF86Switch_VT_8  ] };
+    key <FK09> { [ F9 , F9 , F9 , F9 , XF86Switch_VT_9  ] };
+    key <FK10> { [ F10, F10, F10, F10, XF86Switch_VT_10 ] };
+    key <FK11> { [ F11, F11, F11, F11, XF86Switch_VT_11 ] };
+    key <FK12> { [ F12, F12, F12, F12, XF86Switch_VT_12 ] };
 
 
 
-    key <KPEN> {
-        type    = "ONE_LEVEL",
-        symbols = [ KP_Enter       ]
-    };
-    key <KPAD> {
-        type    = "CTRL+ALT",
-        symbols = [ KP_Add         , KP_Add         , KP_Add         , KP_Add         , XF86Next_VMode   ]
-    };
-    key <KPSU> {
-        type    = "CTRL+ALT",
-        symbols = [ KP_Subtract    , KP_Subtract    , KP_Subtract    , KP_Subtract    , XF86Prev_VMode   ]
-    };
-    key <KPMU> {
-        type    = "CTRL+ALT",
-        symbols = [ KP_Multiply    , KP_Multiply    , KP_Multiply    , KP_Multiply    , XF86ClearGrab    ]
-    };
-    key <KPDV> {
-        type    = "CTRL+ALT",
-        symbols = [ KP_Divide      , KP_Divide      , KP_Divide      , KP_Divide      , XF86Ungrab       ]
-    };
-    key <KPDL> {
-        type    = "KEYPAD",
-        symbols = [ KP_Delete      , KP_Separator   ]
-    };
-    key  <KP0> {
-        type    = "KEYPAD",
-        symbols = [ KP_Insert      , KP_0           ]
-    };
-    key  <KP1> {
-        type    = "KEYPAD",
-        symbols = [ KP_End         , KP_1           ]
-    };
-    key  <KP2> {
-        type    = "KEYPAD",
-        symbols = [ KP_Down        , KP_2           ]
-    };
-    key  <KP3> {
-        type    = "KEYPAD",
-        symbols = [ KP_Next        , KP_3           ]
-    };
-    key  <KP4> {
-        type    = "KEYPAD",
-        symbols = [ KP_Left        , KP_4           ]
-    };
-    key  <KP5> {
-        type    = "KEYPAD",
-        symbols = [ KP_Begin       , KP_5           ]
-    };
-    key  <KP6> {
-        type    = "KEYPAD",
-        symbols = [ KP_Right       , KP_6           ]
-    };
-    key  <KP7> {
-        type    = "KEYPAD",
-        symbols = [ KP_Home        , KP_7           ]
-    };
-    key  <KP8> {
-        type    = "KEYPAD",
-        symbols = [ KP_Up          , KP_8           ]
-    };
-    key  <KP9> {
-        type    = "KEYPAD",
-        symbols = [ KP_Prior       , KP_9           ]
-    };
+    key.type = "ONE_LEVEL";
+    key <KPEN> { [ KP_Enter ] };
+
+    key.type = "CTRL+ALT";
+    key <KPAD> { [ KP_Add     , KP_Add     , KP_Add     , KP_Add     , XF86Next_VMode ] };
+    key <KPSU> { [ KP_Subtract, KP_Subtract, KP_Subtract, KP_Subtract, XF86Prev_VMode ] };
+    key <KPMU> { [ KP_Multiply, KP_Multiply, KP_Multiply, KP_Multiply, XF86ClearGrab  ] };
+    key <KPDV> { [ KP_Divide  , KP_Divide  , KP_Divide  , KP_Divide  , XF86Ungrab     ] };
+
+    key.type = "KEYPAD";
+    key <KPDL> { [ KP_Delete, KP_Separator ] };
+    key <KP0>  { [ KP_Insert, KP_0         ] };
+    key <KP1>  { [ KP_End   , KP_1         ] };
+    key <KP2>  { [ KP_Down  , KP_2         ] };
+    key <KP3>  { [ KP_Next  , KP_3         ] };
+    key <KP4>  { [ KP_Left  , KP_4         ] };
+    key <KP5>  { [ KP_Begin , KP_5         ] };
+    key <KP6>  { [ KP_Right , KP_6         ] };
+    key <KP7>  { [ KP_Home  , KP_7         ] };
+    key <KP8>  { [ KP_Up    , KP_8         ] };
+    key <KP9>  { [ KP_Prior , KP_9         ] };
 
 
 
-    key   <UP> {
-        type    = "ONE_LEVEL",
-        symbols = [ Up             ]
-    };
-    key <LEFT> {
-        type    = "ONE_LEVEL",
-        symbols = [ Left           ]
-    };
-    key <RGHT> {
-        type    = "ONE_LEVEL",
-        symbols = [ Right          ]
-    };
-    key <DOWN> {
-        type    = "ONE_LEVEL",
-        symbols = [ Down           ]
-    };
+    key.type = "ONE_LEVEL";
+    key <UP>   { [ Up    ] };
+    key <LEFT> { [ Left  ] };
+    key <RGHT> { [ Right ] };
+    key <DOWN> { [ Down  ] };
 
 
 
-    key <MUTE> {
-        type    = "ONE_LEVEL",
-        symbols = [ XF86AudioMute  ]
-    };
-    key <VOL-> {
-        type    = "ONE_LEVEL",
-        symbols = [ XF86AudioLowerVolume ]
-    };
-    key <VOL+> {
-        type    = "ONE_LEVEL",
-        symbols = [ XF86AudioRaiseVolume ]
-    };
-    key <I171> {
-        type    = "ONE_LEVEL",
-        symbols = [ XF86AudioNext  ]
-    };
-    key <I172> {
-        type    = "ONE_LEVEL",
-        symbols = [ XF86AudioPlay  ]
-    };
-    key <I173> {
-        type    = "ONE_LEVEL",
-        symbols = [ XF86AudioPrev  ]
-    };
+    key.type = "ONE_LEVEL";
+    key <MUTE> { [ XF86AudioMute        ] };
+    key <VOL-> { [ XF86AudioLowerVolume ] };
+    key <VOL+> { [ XF86AudioRaiseVolume ] };
+    key <I171> { [ XF86AudioNext        ] };
+    key <I172> { [ XF86AudioPlay        ] };
+    key <I173> { [ XF86AudioPrev        ] };
 
 
 
-    key <FK15> {
-        type    = "ONE_LEVEL",
-        symbols = [ F15            ]
-    };
-    key <FK16> {
-        type    = "ONE_LEVEL",
-        symbols = [ F16            ]
-    };
-    key <FK17> {
-        type    = "ONE_LEVEL",
-        symbols = [ F17            ]
-    };
-    key <FK18> {
-        type    = "ONE_LEVEL",
-        symbols = [ F18            ]
-    };
-    key <FK19> {
-        type    = "ONE_LEVEL",
-        symbols = [ F19            ]
-    };
-    key <FK20> {
-        type    = "ONE_LEVEL",
-        symbols = [ F20            ]
-    };
-    key <FK21> {
-        type    = "ONE_LEVEL",
-        symbols = [ F21            ]
-    };
-    key <FK22> {
-        type    = "ONE_LEVEL",
-        symbols = [ F22            ]
-    };
-    key <FK23> {
-        type    = "ONE_LEVEL",
-        symbols = [ F23            ]
-    };
-    key <FK24> {
-        type    = "ONE_LEVEL",
-        symbols = [ F24            ]
-    };
+    key.type = "ONE_LEVEL";
+    key <FK15> { [ F15 ] };
+    key <FK16> { [ F16 ] };
+    key <FK17> { [ F17 ] };
+    key <FK18> { [ F18 ] };
+    key <FK19> { [ F19 ] };
+    key <FK20> { [ F20 ] };
+    key <FK21> { [ F21 ] };
+    key <FK22> { [ F22 ] };
+    key <FK23> { [ F23 ] };
+    key <FK24> { [ F24 ] };
 };

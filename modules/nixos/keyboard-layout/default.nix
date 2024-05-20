@@ -7,7 +7,7 @@
   cfg = config.custom.keyboard-layout;
 in {
   options.custom.keyboard-layout = {
-    enable = lib.mkEnableOption "custom ErgoDox/Moonlander layout for X11";
+    enable = lib.mkEnableOption "custom ErgoDox/Moonlander layout";
   };
 
   config = lib.mkIf cfg.enable {
