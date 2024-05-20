@@ -9,10 +9,10 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ../../modules/nixos
     ./boot.nix
-    ./graphical.nix
     ./hardware.nix
     ./network.nix
     ./users.nix
+    ./x11.nix
   ];
 
   custom = {
@@ -31,6 +31,11 @@
   console = {
     font = "Lat2-Terminus16";
     keyMap = "pl";
+  };
+
+  fonts.fontconfig = {
+    enable = true;
+    subpixel.rgba = "rgb";
   };
 
   home-manager.users = {

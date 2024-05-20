@@ -35,11 +35,4 @@
       EndSection
     '';
   };
-
-  fonts.fontconfig = {
-    enable = true;
-    subpixel.rgba = "rgb";
-  };
-
-  hardware.nvidia.modesetting.enable = true;
 }
