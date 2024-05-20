@@ -33,7 +33,11 @@ in {
     neovim.enable = true;
     nix.enable = true;
     nushell.enable = true;
-    packages.enable = true;
+    packages = {
+      cli = true;
+      gui = true;
+      x11 = true;
+    };
     rofi.enable = true;
     styling.enable = true;
     syncthing = {
