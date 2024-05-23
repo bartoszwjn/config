@@ -48,6 +48,7 @@ in {
               "cpu"
               "memory"
               "disk"
+              "pulseaudio"
               "clock"
               "tray"
             ];
@@ -117,6 +118,27 @@ in {
             interval = 10;
             format = "󰉋 {free}";
             path = "/";
+          };
+
+          pulseaudio = {
+            format = "󰕾 {volume:3}% {format_source}";
+            format-bluetooth = "󰂯 {volume:3}% {format_source}";
+            format-muted = "󰝟 {volume:3}% {format_source}";
+            format-bluetooth-muted = "󰂲 {volume:3}% {format_source}";
+            format-source = "󰍬 {volume:3}%";
+            format-source-muted = "󰍭 {volume:3}%";
+            scroll-step = 1;
+            on-click = "wpctl set-mute @DEFAULT_SINK@ toggle";
+            on-click-middle = "helvum";
+            on-click-right = "pavucontrol";
+            tooltip = true;
+            tooltip-format = lib.strings.removeSuffix "\n" ''
+              port description: {desc}
+              volume: {volume}%
+            '';
+            max-volume = 100;
+            reverse-scrolling = false;
+            reverse-mouse-scrolling = false;
           };
 
           clock = {
@@ -200,7 +222,14 @@ in {
           margin: 0 4px;
         }
 
-        #systemd-failed-units, #idle_inhibitor, #battery, #cpu, #memory, #disk, #clock {
+        #systemd-failed-units,
+        #idle_inhibitor,
+        #battery,
+        #cpu,
+        #memory,
+        #disk,
+        #pulseaudio,
+        #clock {
           padding: 0 10px;
         }
 

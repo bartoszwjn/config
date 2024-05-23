@@ -35,7 +35,15 @@ in {
   config = lib.mkIf cfg.enable {
     custom.hyprland.waybar.enable = lib.mkDefault true;
 
-    home.packages = [pkgs.grim pkgs.hyprlock pkgs.slurp pkgs.wl-clipboard-rs pkgs.wl-ss];
+    home.packages = [
+      pkgs.grim
+      pkgs.helvum
+      pkgs.hyprlock
+      pkgs.pavucontrol
+      pkgs.slurp
+      pkgs.wl-clipboard-rs
+      pkgs.wl-ss
+    ];
 
     wayland.windowManager.hyprland = {
       enable = true;
