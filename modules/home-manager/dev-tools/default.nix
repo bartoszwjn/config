@@ -58,7 +58,7 @@ in {
       sessionPath = lib.optional cfg.rust (config.home.homeDirectory + "/.cargo/bin");
 
       file = lib.optionalAttrs cfg.rust {
-        ".cargo/config".source = (pkgs.formats.toml {}).generate "cargo-config.toml" {
+        ".cargo/config.toml".source = (pkgs.formats.toml {}).generate "cargo-config.toml" {
           alias = {
             b = "build";
             br = "build --release";
