@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  osConfig,
   ...
 }: let
   cfg = config.custom.home;
@@ -25,5 +26,16 @@ in {
     };
 
     sops.age.keyFile = config.home.homeDirectory + "/keys/sops-nix.agekey";
+
+    systemd.user.settings.Manager.DefaultEnvironment.PATH = let
+    in
+      lib.concatStringsSep ":" (
+        config.home.sessionPath
+        ++ [
+          osConfig.security.wrapperDir
+          (config.home.profileDirectory + "/bin")
+          "/run/current-system/sw/bin"
+        ]
+      );
   };
 }
