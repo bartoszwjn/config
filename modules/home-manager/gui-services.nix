@@ -10,7 +10,6 @@ in {
     enableAll = lib.mkEnableOption "all custom graphical user services";
 
     gnome-keyring.enable = lib.mkEnableOption "gnome-keyring user service";
-    pasystray.enable = lib.mkEnableOption "pasystray user service";
     signal-desktop.enable = lib.mkEnableOption "signal-desktop user service";
     solaar.enable = lib.mkEnableOption "solaar user service";
   };
@@ -19,7 +18,6 @@ in {
     (lib.mkIf cfg.enableAll {
       custom.gui-services = {
         gnome-keyring.enable = true;
-        pasystray.enable = true;
         signal-desktop.enable = true;
         solaar.enable = true;
       };
@@ -40,21 +38,6 @@ in {
           ExecStart = "/run/wrappers/bin/gnome-keyring-daemon --start --foreground";
           Restart = "on-abort";
         };
-      };
-    })
-
-    (lib.mkIf cfg.pasystray.enable {
-      home.packages = [pkgs.pasystray];
-      systemd.user.services.pasystray = {
-        Unit = {
-          Description = "PulseAudio system tray";
-          After = ["tray.target"];
-          PartOf = ["graphical-session.target"];
-        };
-        Install.WantedBy = ["graphical-session.target"];
-        Service.ExecStart = let
-          pasystray = lib.getExe' pkgs.pasystray "pasystray";
-        in "${pasystray} --volume-inc=5 --notify=none --notify=new --notify=sink --notify=source";
       };
     })
 
