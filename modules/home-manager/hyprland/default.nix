@@ -130,7 +130,6 @@ in {
           "SHLVL, 0"
           "XCURSOR_THEME, Adwaita"
           "XCURSOR_SIZE, 24"
-          "WLR_NO_HARDWARE_CURSORS, 1"
         ];
 
         windowrulev2 = [

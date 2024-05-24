@@ -12,7 +12,6 @@
     cpu.amd.updateMicrocode = true;
     keyboard.zsa.enable = true;
     logitech.wireless.enable = true;
-    nvidia.modesetting.enable = true;
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
