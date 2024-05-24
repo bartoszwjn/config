@@ -133,6 +133,21 @@ in {
           "WLR_NO_HARDWARE_CURSORS, 1"
         ];
 
+        windowrulev2 = [
+          "workspace 5 silent, class:^(Slack)$"
+          "workspace 6 silent, class:^(Signal)$"
+          "workspace 7 silent, class:^(obsidian)$"
+          "workspace 9 silent, class:^(Spotify)$"
+          # pavucontrol
+          "float, class:^(pavucontrol)$"
+          "move onscreen cursor 0 0, class:^(pavucontrol)$"
+          "size 600 800, class:^(pavucontrol)$"
+          # syncthingtray
+          "float, class:^()$, title:^(Syncthing Tray)$"
+          "move onscreen cursor 0 0, class:^()$, title:^(Syncthing Tray)$"
+          "size 600 800, class:^()$, title:^(Syncthing Tray)$"
+        ];
+
         bindm = [
           "SUPER, mouse:272, movewindow"
           "SUPER, mouse:273, resizewindow"
