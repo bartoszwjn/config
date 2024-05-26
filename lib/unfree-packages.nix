@@ -5,5 +5,8 @@
       "obsidian"
       "slack"
       "spotify"
+      "steam"
+      "steam-original"
+      "steam-run"
     ];
 }
