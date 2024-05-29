@@ -52,7 +52,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vmap("<Leader>c", "[c]ode (LSP)", "<Nop>")
     nmap("<Leader>ca", "[c]ode [a]ction (LSP)", vim.lsp.buf.code_action)
     vmap("<Leader>ca", "[c]ode [a]ction (LSP)", vim.lsp.buf.code_action)
-    nmap("<Leader>cf", "[c]ode: [f]ormat (LSP)", vim.lsp.buf.format)
     nmap("<Leader>ci", "[c]ode: go to [i]mplementations (LSP)", function()
       tb.lsp_implementations { jump_type = "never", reuse_win = true }
     end)
