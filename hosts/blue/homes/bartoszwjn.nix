@@ -65,4 +65,8 @@ in {
       inherit (pkgs) chatterino2 discord;
     };
   };
+
+  xdg.dataFile."chatterino/Settings".source = config.lib.file.mkOutOfStoreSymlink (
+    config.home.homeDirectory + "/syncthing/chatterino-settings"
+  );
 }
