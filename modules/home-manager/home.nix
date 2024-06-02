@@ -27,15 +27,18 @@ in {
 
     sops.age.keyFile = config.home.homeDirectory + "/keys/sops-nix.agekey";
 
-    systemd.user.settings.Manager.DefaultEnvironment.PATH = let
-    in
-      lib.concatStringsSep ":" (
-        config.home.sessionPath
-        ++ [
-          osConfig.security.wrapperDir
-          (config.home.profileDirectory + "/bin")
-          "/run/current-system/sw/bin"
-        ]
-      );
+    systemd.user.settings.Manager.DefaultEnvironment.PATH = lib.concatStringsSep ":" (
+      config.home.sessionPath
+      ++ [
+        osConfig.security.wrapperDir
+        (config.home.profileDirectory + "/bin")
+        "/run/current-system/sw/bin"
+      ]
+    );
+
+    systemd.user.tmpfiles.rules = [
+      #Type Path           Mode User Group Age Argument
+      "d    %h/screenshots 0755 -    -     -   -"
+    ];
   };
 }
