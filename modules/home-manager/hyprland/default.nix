@@ -236,6 +236,8 @@ in {
             "MOD3, v            , exec, playerctl -p spotify next"
             "    , XF86AudioPrev, exec, playerctl -p spotify previous"
             "MOD3, x            , exec, playerctl -p spotify previous"
+            # global keybinds
+            ", code:191, pass, class:^discord$"
           ]);
       };
 
