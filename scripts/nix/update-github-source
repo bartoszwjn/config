@@ -3,7 +3,7 @@
 def main [
   file: path # path to source.json file
   --dry-run # print the new contents instead of modifying the file in place
-] {
+]: nothing -> nothing {
   let old = (open --raw $file | from json)
 
   let commit = (
