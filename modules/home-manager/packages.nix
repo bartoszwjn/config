@@ -19,6 +19,7 @@ in {
           (pkgs)
           age
           bat
+          brightnessctl
           fd
           jq
           nasm
