@@ -9,6 +9,9 @@ neogit.setup {
   disable_hint = true,
   disable_insert_on_commit = true,
   remember_settings = false,
+  commit_editor = {
+    kind = "vsplit",
+  },
   commit_view = {
     kind = "vsplit",
     verify_commit = false,
