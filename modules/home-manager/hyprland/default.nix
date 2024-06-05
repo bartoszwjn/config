@@ -79,6 +79,8 @@ in {
           no_focus_fallback = true;
         };
 
+        # debug.disable_logs = false;
+
         dwindle = {
           preserve_split = true;
           force_split = 1;

@@ -34,9 +34,9 @@ in {
       enable = true;
       monitorsConfig = [
         "eDP-2, 2560x1600@120, 0x0, 1.33"
-        "desc:Dell Inc. DELL S2522HG GQ6L1C3, 1920x1080@120, -1920x0, 1"
-        "desc:LG Electronics LG Ultra HD 0x00049402, 1920x1080@60, -1920x0, 1"
-        ", preferred, auto, 1"
+        "desc:Dell Inc. DELL S2522HG GQ6L1C3, 1920x1080@120, auto-left, 1"
+        "desc:LG Electronics LG Ultra HD 0x00049402, 1920x1080@60, auto-left, 1"
+        ", preferred, auto-left, 1"
       ];
       waybar.monitors = ["eDP-2" "HDMI-A-1"];
       waybar.showBattery = true;
