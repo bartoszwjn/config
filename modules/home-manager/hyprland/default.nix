@@ -61,6 +61,7 @@ in {
           "WAYLAND_DISPLAY"
           "XDG_CURRENT_DESKTOP"
           "NIXOS_XDG_OPEN_USE_PORTAL"
+          "NIXOS_OZONE_WL"
         ];
       };
       xwayland.enable = true;
@@ -136,6 +137,7 @@ in {
           "SHLVL, 0"
           "XCURSOR_THEME, Adwaita"
           "XCURSOR_SIZE, 24"
+          "NIXOS_OZONE_WL, 1"
         ];
 
         windowrulev2 = [
