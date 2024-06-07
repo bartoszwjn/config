@@ -28,6 +28,7 @@ in
           diffview-nvim # required by neogit
           fidget-nvim
           friendly-snippets
+          git-messenger-vim
           indent-blankline-nvim
           leap-nvim
           luasnip
