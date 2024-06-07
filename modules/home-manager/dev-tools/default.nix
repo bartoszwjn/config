@@ -86,6 +86,7 @@ in {
       extraConfig = {
         advice.detachedHead = false;
         init.defaultBranch = "main";
+        log.date = "format:%a %F %T %z";
         pull.ff = "only";
       };
       includes = lib.mkIf (builtins.isAttrs cfg.git.userEmail) (
