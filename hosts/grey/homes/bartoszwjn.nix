@@ -66,7 +66,8 @@ in {
       ".ssh/config".source = userPrivateConfig.sshConfig;
     };
     packages = builtins.attrValues {
-      inherit (pkgs) chatterino2 discord;
+      inherit (flakeInputs.self.packages.${pkgs.hostPlatform.system}) chatterino2;
+      inherit (pkgs) discord;
     };
   };
 

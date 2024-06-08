@@ -14,6 +14,8 @@
     ./users.nix
   ];
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   custom = {
     admin-tools.enable = true;
     documentation.enable = true;

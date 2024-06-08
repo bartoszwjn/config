@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  osConfig,
+  flakeInputs,
   ...
 }: let
   inherit (lib) types;
@@ -42,13 +42,13 @@ in {
     '');
 
     home.packages = [
+      flakeInputs.self.packages.${pkgs.hostPlatform.system}.wl-ss
       pkgs.grim
       pkgs.helvum
       pkgs.hyprlock
       pkgs.pavucontrol
       pkgs.slurp
       pkgs.wl-clipboard-rs
-      pkgs.wl-ss
     ];
 
     wayland.windowManager.hyprland = {

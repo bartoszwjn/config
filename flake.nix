@@ -67,7 +67,6 @@
       nixosConfigurations = let
         mkNixos = name:
           nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
             specialArgs.flakeInputs = inputs;
             modules = [./hosts/${name}/configuration.nix];
           };
@@ -79,8 +78,6 @@
       };
 
       lib = import ./lib {inherit (nixpkgs) lib;};
-
-      overlays.default = final: prev: import ./packages {pkgs = final;};
 
       templates = {
         python = {

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  flakeInputs,
   ...
 }: let
   cfg = config.custom.dev-tools;
@@ -49,7 +50,7 @@ in {
         })
         ++ lib.optionals cfg.rust (builtins.attrValues {
           inherit (pkgs) cargo-edit cargo-expand cargo-outdated rust-analyzer;
-          inherit (pkgs.fenix.stable) defaultToolchain;
+          inherit (flakeInputs.fenix.packages.${pkgs.hostPlatform.system}.stable) defaultToolchain;
         })
         ++ lib.optionals cfg.git.enable (builtins.attrValues {
           inherit (pkgs) gitui;
