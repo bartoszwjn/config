@@ -17,6 +17,7 @@
   custom = {
     admin-tools.enable = true;
     documentation.enable = true;
+    games.steam.enable = true;
     home-manager.enable = true;
     hyprland.enable = true;
     keyboard-layout.enable = true;

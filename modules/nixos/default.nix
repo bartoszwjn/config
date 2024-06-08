@@ -9,6 +9,7 @@
     ./admin-tools.nix
     ./dns
     ./documentation.nix
+    ./games.nix
     ./home-manager.nix
     ./hyprland.nix
     ./keyboard-layout

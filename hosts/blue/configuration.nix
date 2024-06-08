@@ -17,6 +17,7 @@
   custom = {
     admin-tools.enable = true;
     documentation.enable = true;
+    games.steam.enable = true;
     home-manager.enable = true;
     hyprland.enable = true;
     keyboard-layout.enable = true;
@@ -48,11 +49,6 @@
       "en_GB.UTF-8/UTF-8"
       "pl_PL.UTF-8/UTF-8"
     ];
-  };
-
-  programs.steam = {
-    enable = true;
-    extest.enable = true;
   };
 
   programs.dconf.enable = true;
