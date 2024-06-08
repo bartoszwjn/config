@@ -13,12 +13,10 @@ in {
 
   config = lib.mkIf cfg.enable {
     nix = {
-      registry.nixpkgs = {
-        from = {
-          type = "indirect";
-          id = "nixpkgs";
-        };
-        flake = flakeInputs.nixpkgs;
+      channel.enable = false;
+      registry = {
+        home-manager.flake = flakeInputs.home-manager;
+        nixpkgs.flake = flakeInputs.nixpkgs;
       };
       settings = {
         auto-optimise-store = true;

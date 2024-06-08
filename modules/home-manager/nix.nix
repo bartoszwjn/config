@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
   ...
 }: let
   cfg = config.custom.nix;
@@ -12,18 +11,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    nix = {
-      registry.nixpkgs = {
-        from = {
-          type = "indirect";
-          id = "nixpkgs";
-        };
-        flake = flakeInputs.nixpkgs;
-      };
-      settings = {
-        experimental-features = ["nix-command" "flakes"];
-        nix-path = ["nixpkgs=flake:nixpkgs"];
-      };
+    nix.settings = {
+      experimental-features = ["nix-command" "flakes"];
+      nix-path = ["nixpkgs=flake:nixpkgs"];
     };
   };
 }
