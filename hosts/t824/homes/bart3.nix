@@ -39,6 +39,7 @@ in {
         ", preferred, auto-left, 1"
       ];
       waybar.monitors = ["eDP-2" "HDMI-A-1"];
+      waybar.showBacklight = true;
       waybar.showBattery = true;
     };
     neovim.enable = true;

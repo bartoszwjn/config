@@ -16,6 +16,12 @@ in {
       example = ["DP-1"];
     };
 
+    showBacklight = lib.mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether to show backlight state using a waybar widget";
+    };
+
     showBattery = lib.mkOption {
       type = types.bool;
       default = false;
@@ -48,6 +54,9 @@ in {
               "cpu"
               "memory"
               "disk"
+            ]
+            ++ lib.optional cfg.showBacklight "backlight"
+            ++ [
               "pulseaudio"
               "clock"
               "tray"
@@ -118,6 +127,13 @@ in {
             interval = 10;
             format = "󰉋 {free}";
             path = "/";
+          };
+
+          backlight = lib.mkIf cfg.showBacklight {
+            interval = 1;
+            format = "󰃠 {percent:3}%";
+            on-scroll-up = "brightnessctl --class=backlight set 1%+";
+            on-scroll-down = "brightnessctl --class=backlight set 1%-";
           };
 
           pulseaudio = {
@@ -228,6 +244,7 @@ in {
         #cpu,
         #memory,
         #disk,
+        #backlight,
         #pulseaudio,
         #clock {
           padding: 0 10px;
