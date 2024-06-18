@@ -29,6 +29,7 @@ in
           fidget-nvim
           friendly-snippets
           git-messenger-vim
+          gitsigns-nvim
           indent-blankline-nvim
           leap-nvim
           luasnip
