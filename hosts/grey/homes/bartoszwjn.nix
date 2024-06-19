@@ -35,7 +35,7 @@ in {
         "desc:LG Electronics LG Ultra HD 0x00049402, 1920x1080@60, auto-left, 1"
         ", preferred, auto-left, 1"
       ];
-      waybar.monitors = ["eDP-1" "HDMI-A-1"];
+      waybar.monitors = ["eDP-1" "DP-1" "HDMI-A-1"];
       waybar.showBacklight = true;
       waybar.showBattery = true;
     };
