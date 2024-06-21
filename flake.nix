@@ -74,7 +74,6 @@
         blue = mkNixos "blue";
         bootstrap = mkNixos "bootstrap";
         grey = mkNixos "grey";
-        t824 = mkNixos "t824";
       };
 
       lib = import ./lib {inherit (nixpkgs) lib;};

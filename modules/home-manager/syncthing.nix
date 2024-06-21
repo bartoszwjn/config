@@ -146,14 +146,6 @@ in {
           deviceID = privateConfig.red.syncthing.deviceId;
           addresses = ["tcp://${privateConfig.red.tailscale.fqdn}:22000"];
         };
-        t824 = {
-          deviceID = privateConfig.t824.bartoszwjn.syncthing.deviceId;
-          addresses = ["tcp://${privateConfig.t824.tailscale.fqdn}:22000"];
-        };
-        t824-bart3 = {
-          deviceID = privateConfig.t824.bart3.syncthing.deviceId;
-          addresses = ["tcp://${privateConfig.t824.tailscale.fqdn}:22001"];
-        };
       };
 
       folders = {
