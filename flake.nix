@@ -22,10 +22,6 @@
         rust-analyzer-src.follows = "";
       };
     };
-    chemacs2 = {
-      url = "github:plexus/chemacs2";
-      flake = false;
-    };
     private-config.url = "github:bartoszwjn/private-config";
   };
 

@@ -8,7 +8,6 @@
   imports = [
     ./alacritty
     ./dev-tools
-    ./doom-emacs.nix
     ./dunst.nix
     ./gpg.nix
     ./gui-services.nix

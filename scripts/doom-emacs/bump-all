@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-# Bump version of doom emacs and manually installed packages
-
-set -euo pipefail
-
-"$CONFIG_REPO_ROOT/scripts/doom-emacs/bump-doom"
-"$CONFIG_REPO_ROOT/scripts/doom-emacs/bump-packages"

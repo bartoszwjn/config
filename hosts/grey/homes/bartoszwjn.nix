@@ -22,7 +22,6 @@ in {
         userEmail = "bartoszwjn@gmail.com";
       };
     };
-    doom-emacs.enable = true;
     dunst.enable = true;
     gpg.enable = true;
     gui-services.enableAll = true;
