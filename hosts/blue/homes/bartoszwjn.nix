@@ -57,7 +57,7 @@ in {
 
   home = {
     username = "bartoszwjn";
-    stateVersion = "23.11";
+    stateVersion = "24.05";
     file = {
       ".ssh/config".source = userPrivateConfig.sshConfig;
     };

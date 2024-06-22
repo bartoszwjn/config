@@ -14,6 +14,7 @@
     ./users.nix
   ];
 
+  system.stateVersion = "24.05";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   custom = {
@@ -75,6 +76,4 @@
   };
 
   time.timeZone = "Europe/Warsaw";
-
-  system.stateVersion = "23.11";
 }

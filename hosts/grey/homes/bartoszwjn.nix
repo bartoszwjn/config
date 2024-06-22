@@ -60,7 +60,7 @@ in {
 
   home = {
     username = "bartoszwjn";
-    stateVersion = "23.11";
+    stateVersion = "24.05";
     file = {
       ".screen-brightness".source =
         config.custom.repo.flakeRoot + "/scripts/laptop/screen-brightness";
