@@ -9,7 +9,6 @@ in {
   options.custom.packages = {
     cli = lib.mkEnableOption "common misc CLI packages";
     gui = lib.mkEnableOption "common misc GUI packages";
-    x11 = lib.mkEnableOption "common misc X11 packages";
   };
 
   config = lib.mkMerge [
@@ -54,13 +53,6 @@ in {
           xournalpp
           ;
         inherit (pkgs.gnome) seahorse;
-      };
-    })
-
-    (lib.mkIf cfg.x11 {
-      home.packages = builtins.attrValues {
-        inherit (pkgs) scrot xclip;
-        inherit (pkgs.xorg) xev xrandr xmodmap xinit;
       };
     })
   ];

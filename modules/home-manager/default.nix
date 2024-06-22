@@ -21,8 +21,6 @@
     ./rofi.nix
     ./styling.nix
     ./syncthing.nix
-    ./x11-services.nix
-    ./xmonad
     ./zathura
     ./zsh.nix
     flakeInputs.sops-nix.homeManagerModules.sops
