@@ -35,6 +35,7 @@ in {
       ];
       waybar.monitors = ["DP-1"];
     };
+    keyring.enable = true;
     neovim.enable = true;
     nix.enable = true;
     nushell.enable = true;

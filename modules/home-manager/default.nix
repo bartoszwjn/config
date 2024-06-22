@@ -13,6 +13,7 @@
     ./gui-services.nix
     ./home.nix
     ./hyprland
+    ./keyring.nix
     ./neovim.nix
     ./nix.nix
     ./nushell

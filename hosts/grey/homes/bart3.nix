@@ -41,6 +41,7 @@ in {
       waybar.showBacklight = true;
       waybar.showBattery = true;
     };
+    keyring.enable = true;
     neovim.enable = true;
     nix.enable = true;
     nushell.enable = true;

@@ -17,55 +17,26 @@
   system.stateVersion = "24.05";
   nixpkgs.hostPlatform = "x86_64-linux";
 
+  home-manager.users.bartoszwjn = ./homes/bartoszwjn.nix;
+
   custom = {
     admin-tools.enable = true;
+    console.enable = true;
     documentation.enable = true;
     games.steam.enable = true;
     home-manager.enable = true;
     hyprland.enable = true;
+    i18n.enable = true;
     keyboard-layout.enable = true;
+    keyring.enable = true;
     nix.enable = true;
     printing.enable = true;
+    zsh.enable = true;
   };
-
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "pl";
-  };
-
-  fonts.fontconfig = {
-    enable = true;
-    subpixel.rgba = "rgb";
-  };
-
-  home-manager.users.bartoszwjn = ./homes/bartoszwjn.nix;
-
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_COLLATE = "C";
-      LC_TIME = "en_GB.UTF-8";
-    };
-    supportedLocales = [
-      "C.UTF-8/UTF-8"
-      "en_US.UTF-8/UTF-8"
-      "en_GB.UTF-8/UTF-8"
-      "pl_PL.UTF-8/UTF-8"
-    ];
-  };
-
-  programs.dconf.enable = true;
-  programs.zsh = {
-    enable = true;
-    enableBashCompletion = true;
-  };
-  services.gnome.gnome-keyring.enable = true;
 
   sops = {
-    age = {
-      keyFile = "/root/sops-nix.agekey";
-      sshKeyPaths = [];
-    };
+    age.keyFile = "/root/sops-nix.agekey";
+    age.sshKeyPaths = [];
     gnupg.sshKeyPaths = [];
   };
 

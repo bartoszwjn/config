@@ -15,7 +15,13 @@ in {
       "/share/applications"
       "/share/xdg-desktop-portal"
     ];
-    fonts.enableDefaultPackages = true;
+    fonts = {
+      enableDefaultPackages = true;
+      fontconfig = {
+        enable = true;
+        subpixel.rgba = "rgb";
+      };
+    };
     hardware.opengl.enable = true;
     programs.dconf.enable = true;
     security = {
