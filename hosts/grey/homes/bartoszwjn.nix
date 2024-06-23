@@ -62,8 +62,6 @@ in {
     username = "bartoszwjn";
     stateVersion = "24.05";
     file = {
-      ".screen-brightness".source =
-        config.custom.repo.flakeRoot + "/scripts/laptop/screen-brightness";
       ".ssh/config".source = userPrivateConfig.sshConfig;
     };
     packages = builtins.attrValues {

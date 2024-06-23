@@ -230,9 +230,9 @@ in {
             "MOD3, a                   , exec, wpctl set-volume @DEFAULT_SINK@ 5%-"
             "    , XF86AudioMute       , exec, wpctl set-mute @DEFAULT_SINK@ toggle"
             "MOD3, z                   , exec, wpctl set-mute @DEFAULT_SINK@ toggle"
-            # screen brightness control
-            ", XF86MonBrightnessUp  , exec, ~/.screen-brightness -i 10 -ny"
-            ", XF86MonBrightnessDown, exec, ~/.screen-brightness -d 10 -ny"
+            # backlight control
+            ", XF86MonBrightnessUp  , exec, brightnessctl --class=backlight set 5%+"
+            ", XF86MonBrightnessDown, exec, brightnessctl --class=backlight set 5%-"
             # media keys
             "    , XF86AudioPlay, exec, playerctl -p spotify play-pause"
             "MOD3, c            , exec, playerctl -p spotify play-pause"
