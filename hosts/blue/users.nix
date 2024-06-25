@@ -4,14 +4,16 @@
   pkgs,
   flakeInputs,
   ...
-}: {
+}: let
+  systemPrivateConfig = flakeInputs.private-config.lib.hosts.blue;
+in {
   users = {
     mutableUsers = false;
     users.bartoszwjn = {
       uid = 1000;
       isNormalUser = true;
       extraGroups = ["wheel"];
-      hashedPassword = flakeInputs.private-config.lib.blue.bartoszwjn.hashedPassword;
+      hashedPassword = systemPrivateConfig.bartoszwjn.hashedPassword;
       shell = pkgs.zsh;
     };
   };

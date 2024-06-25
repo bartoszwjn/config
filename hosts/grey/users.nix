@@ -4,7 +4,9 @@
   pkgs,
   flakeInputs,
   ...
-}: {
+}: let
+  systemPrivateConfig = flakeInputs.private-config.lib.hosts.grey;
+in {
   users = {
     mutableUsers = false;
     users = {
@@ -12,14 +14,14 @@
         uid = 1001;
         isNormalUser = true;
         extraGroups = ["wheel" "video" "docker" "libvirtd"];
-        hashedPassword = flakeInputs.private-config.lib.grey.bart3.hashedPassword;
+        hashedPassword = systemPrivateConfig.bart3.hashedPassword;
         shell = pkgs.zsh;
       };
       bartoszwjn = {
         uid = 1000;
         isNormalUser = true;
         extraGroups = ["wheel" "video" "docker" "libvirtd"];
-        hashedPassword = flakeInputs.private-config.lib.grey.bartoszwjn.hashedPassword;
+        hashedPassword = systemPrivateConfig.bartoszwjn.hashedPassword;
         shell = pkgs.zsh;
       };
     };

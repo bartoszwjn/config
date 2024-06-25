@@ -5,7 +5,7 @@
   flakeInputs,
   ...
 }: let
-  systemPrivateConfig = flakeInputs.private-config.lib.grey;
+  systemPrivateConfig = flakeInputs.private-config.lib.hosts.grey;
   userPrivateConfig = systemPrivateConfig.bart3;
 in {
   custom = {
@@ -48,6 +48,7 @@ in {
     packages.cli = true;
     packages.gui = true;
     rofi.enable = true;
+    ssh.enable = true;
     styling.enable = true;
     syncthing = {
       enable = true;
@@ -65,9 +66,6 @@ in {
   home = {
     username = "bart3";
     stateVersion = "24.05";
-    file = {
-      ".ssh/config".source = userPrivateConfig.sshConfig;
-    };
     packages = builtins.attrValues {
       inherit (pkgs) awscli2 git-review google-cloud-sdk postgresql slack;
     };

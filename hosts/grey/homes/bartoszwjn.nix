@@ -5,7 +5,7 @@
   flakeInputs,
   ...
 }: let
-  systemPrivateConfig = flakeInputs.private-config.lib.grey;
+  systemPrivateConfig = flakeInputs.private-config.lib.hosts.grey;
   userPrivateConfig = systemPrivateConfig.bartoszwjn;
 in {
   custom = {
@@ -45,6 +45,7 @@ in {
     packages.cli = true;
     packages.gui = true;
     rofi.enable = true;
+    ssh.enable = true;
     styling.enable = true;
     syncthing = {
       enable = true;
@@ -61,9 +62,6 @@ in {
   home = {
     username = "bartoszwjn";
     stateVersion = "24.05";
-    file = {
-      ".ssh/config".source = userPrivateConfig.sshConfig;
-    };
     packages = builtins.attrValues {
       inherit (flakeInputs.self.packages.${pkgs.hostPlatform.system}) chatterino2;
       inherit (pkgs) discord;

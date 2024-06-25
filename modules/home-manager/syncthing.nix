@@ -127,24 +127,24 @@ in {
         privateConfig = flakeInputs.private-config.lib;
       in {
         arnold = {
-          deviceID = privateConfig.arnold.syncthing.deviceId;
-          addresses = ["tcp://${privateConfig.arnold.tailscale.fqdn}:22000"];
+          deviceID = privateConfig.hosts.arnold.syncthing.deviceId;
+          addresses = ["tcp://${privateConfig.hosts.arnold.tailscale.fqdn}:22000"];
         };
         blue = {
-          deviceID = privateConfig.blue.bartoszwjn.syncthing.deviceId;
-          addresses = ["tcp://${privateConfig.blue.tailscale.fqdn}:22000"];
+          deviceID = privateConfig.hosts.blue.bartoszwjn.syncthing.deviceId;
+          addresses = ["tcp://${privateConfig.hosts.blue.tailscale.fqdn}:22000"];
         };
         grey = {
-          deviceID = privateConfig.grey.bartoszwjn.syncthing.deviceId;
-          addresses = ["tcp://${privateConfig.grey.tailscale.fqdn}:22000"];
+          deviceID = privateConfig.hosts.grey.bartoszwjn.syncthing.deviceId;
+          addresses = ["tcp://${privateConfig.hosts.grey.tailscale.fqdn}:22000"];
         };
         grey-bart3 = {
-          deviceID = privateConfig.grey.bart3.syncthing.deviceId;
-          addresses = ["tcp://${privateConfig.grey.tailscale.fqdn}:22001"];
+          deviceID = privateConfig.hosts.grey.bart3.syncthing.deviceId;
+          addresses = ["tcp://${privateConfig.hosts.grey.tailscale.fqdn}:22001"];
         };
         red = {
-          deviceID = privateConfig.red.syncthing.deviceId;
-          addresses = ["tcp://${privateConfig.red.tailscale.fqdn}:22000"];
+          deviceID = privateConfig.hosts.red.syncthing.deviceId;
+          addresses = ["tcp://${privateConfig.hosts.red.tailscale.fqdn}:22000"];
         };
       };
 

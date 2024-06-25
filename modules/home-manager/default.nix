@@ -20,6 +20,7 @@
     ./packages.nix
     ./repo.nix
     ./rofi.nix
+    ./ssh.nix
     ./styling.nix
     ./syncthing.nix
     ./zathura
