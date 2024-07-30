@@ -44,8 +44,7 @@ in {
           inherit (pkgs) alejandra nix-diff nix-prefetch-git nix-prefetch-github nvd;
         })
         ++ lib.optionals cfg.python (builtins.attrValues {
-          inherit (pkgs) black isort mypy poetry python3;
-          inherit (pkgs.nodePackages) pyright;
+          inherit (pkgs) black isort mypy poetry pyright python3;
           inherit (pkgs.python3Packages) ipython;
         })
         ++ lib.optionals cfg.rust (builtins.attrValues {

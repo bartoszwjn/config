@@ -49,10 +49,10 @@ in {
           libnotify
           libreoffice-fresh
           obsidian
+          seahorse
           spotify
           xournalpp
           ;
-        inherit (pkgs.gnome) seahorse;
       };
     })
   ];

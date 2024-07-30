@@ -29,7 +29,7 @@ in {
       enable = true;
       cursorTheme.name = "Adwaita";
       cursorTheme.size = 0;
-      cursorTheme.package = pkgs.gnome.gnome-themes-extra;
+      cursorTheme.package = pkgs.gnome-themes-extra;
       font.name = "Cantarell";
       font.size = 11;
       font.package = pkgs.cantarell-fonts;

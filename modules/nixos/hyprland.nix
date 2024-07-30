@@ -22,7 +22,7 @@ in {
         subpixel.rgba = "rgb";
       };
     };
-    hardware.opengl.enable = true;
+    hardware.graphics.enable = true;
     programs.dconf.enable = true;
     security = {
       polkit.enable = true;
