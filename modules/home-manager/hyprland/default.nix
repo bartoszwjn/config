@@ -75,7 +75,6 @@ in {
           "col.nogroup_border" = colorCyan;
           "col.nogroup_border_active" = colorMagenta;
           layout = "dwindle";
-          no_cursor_warps = true;
           no_focus_fallback = true;
         };
 
@@ -97,6 +96,11 @@ in {
             natural_scroll = true;
             clickfinger_behavior = true;
           };
+        };
+
+        cursor = {
+          no_warps = true;
+          enable_hyprcursor = false;
         };
 
         group = {
@@ -130,7 +134,6 @@ in {
           disable_hyprland_logo = true;
           mouse_move_enables_dpms = true;
           key_press_enables_dpms = true;
-          enable_hyprcursor = false;
         };
 
         monitor = cfg.monitorsConfig;
