@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.dunst;
 
   arcIconTheme = {
@@ -11,9 +12,9 @@
     name = "Arc";
     size = "symbolic";
   };
-  mkArcPath = category:
-    "${arcIconTheme.package}/share/icons"
-    + "/${arcIconTheme.name}/${category}/${arcIconTheme.size}/";
+  mkArcPath =
+    category:
+    "${arcIconTheme.package}/share/icons" + "/${arcIconTheme.name}/${category}/${arcIconTheme.size}/";
   arcIconPath = lib.concatMapStringsSep ":" mkArcPath [
     "actions"
     "animations"
@@ -26,7 +27,8 @@
     "places"
     "status"
   ];
-in {
+in
+{
   options.custom.dunst = {
     enable = lib.mkEnableOption "dunst user service";
   };
@@ -84,6 +86,6 @@ in {
       };
     };
 
-    systemd.user.services.dunst.Install.WantedBy = ["graphical-session.target"];
+    systemd.user.services.dunst.Install.WantedBy = [ "graphical-session.target" ];
   };
 }

@@ -4,9 +4,11 @@
   pkgs,
   flakeInputs,
   ...
-}: let
+}:
+let
   cfg = config.custom.ssh;
-in {
+in
+{
   options.custom.ssh = {
     enable = lib.mkEnableOption "custom SSH config";
   };
@@ -15,9 +17,7 @@ in {
     home.file = {
       ".ssh/config".source = flakeInputs.private-config.lib.common.ssh.config;
       ".ssh/known_hosts".source = lib.mkIf config.custom.syncthing.enable (
-        config.lib.file.mkOutOfStoreSymlink (
-          config.home.homeDirectory + "/syncthing/ssh/known_hosts"
-        )
+        config.lib.file.mkOutOfStoreSymlink (config.home.homeDirectory + "/syncthing/ssh/known_hosts")
       );
     };
 

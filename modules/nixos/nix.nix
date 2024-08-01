@@ -4,9 +4,11 @@
   pkgs,
   flakeInputs,
   ...
-}: let
+}:
+let
   cfg = config.custom.nix;
-in {
+in
+{
   options.custom.nix = {
     enable = lib.mkEnableOption "Nix configuration";
   };
@@ -20,11 +22,17 @@ in {
       };
       settings = {
         auto-optimise-store = true;
-        experimental-features = ["nix-command" "flakes"];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         keep-derivations = true;
         keep-outputs = true;
-        nix-path = ["nixpkgs=flake:nixpkgs"];
-        trusted-users = ["root" "@wheel"];
+        nix-path = [ "nixpkgs=flake:nixpkgs" ];
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
       };
     };
 

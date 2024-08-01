@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.zsh;
-in {
+in
+{
   options.custom.zsh = {
     enable = lib.mkEnableOption "system-wide config needed for user-level zsh configuration";
   };

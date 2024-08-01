@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.rofi;
-in {
+in
+{
   options.custom.rofi = {
     enable = lib.mkEnableOption "Rofi application launcher configuration";
   };

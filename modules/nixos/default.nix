@@ -4,7 +4,8 @@
   pkgs,
   flakeInputs,
   ...
-}: {
+}:
+{
   imports = [
     ./admin-tools.nix
     ./console.nix

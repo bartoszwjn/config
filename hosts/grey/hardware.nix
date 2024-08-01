@@ -3,10 +3,11 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   boot = {
-    kernelModules = ["acpi_call"];
-    extraModulePackages = [config.boot.kernelPackages.acpi_call];
+    kernelModules = [ "acpi_call" ];
+    extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
   };
 
   hardware = {

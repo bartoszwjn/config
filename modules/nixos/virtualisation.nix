@@ -3,18 +3,18 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.virtualisation;
-in {
+in
+{
   options.custom.virtualisation = {
     docker.enable = lib.mkEnableOption "docker";
     virt-manager.enable = lib.mkEnableOption "virt-manager";
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.docker.enable {
-      virtualisation.docker.enable = true;
-    })
+    (lib.mkIf cfg.docker.enable { virtualisation.docker.enable = true; })
 
     (lib.mkIf cfg.virt-manager.enable {
       programs.virt-manager.enable = true;

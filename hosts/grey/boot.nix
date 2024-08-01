@@ -3,13 +3,21 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
 
     initrd = {
-      availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" "sdhci_pci"];
-      kernelModules = ["dm-snapshot"];
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "sd_mod"
+        "sdhci_pci"
+      ];
+      kernelModules = [ "dm-snapshot" ];
       luks.devices."root" = {
         device = "/dev/vg0/cryptroot";
         preLVM = false;
@@ -17,7 +25,7 @@
       };
     };
 
-    kernelModules = ["kvm-intel"];
+    kernelModules = [ "kvm-intel" ];
 
     loader = {
       systemd-boot = {

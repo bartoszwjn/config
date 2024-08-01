@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.i18n;
-in {
+in
+{
   options.custom.i18n = {
     enable = lib.mkEnableOption "custom locale config";
   };

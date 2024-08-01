@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.printing;
-in {
+in
+{
   options.custom.printing = {
     enable = lib.mkEnableOption "printer configuration";
   };

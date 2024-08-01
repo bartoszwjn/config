@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.admin-tools;
-in {
+in
+{
   options.custom.admin-tools = {
     enable = lib.mkEnableOption "admin tools";
   };
@@ -13,8 +15,7 @@ in {
   config = lib.mkIf cfg.enable {
     environment = {
       systemPackages = builtins.attrValues {
-        inherit
-          (pkgs)
+        inherit (pkgs)
           file
           git
           htop

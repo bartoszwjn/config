@@ -13,57 +13,68 @@
     };
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    flake-utils,
-    ...
-  }: let
-    mkOutputs = pkgs: let
-      inherit (pkgs) poetry2nix;
-      python = pkgs.python310;
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      flake-utils,
+      ...
+    }:
+    let
+      mkOutputs =
+        pkgs:
+        let
+          inherit (pkgs) poetry2nix;
+          python = pkgs.python310;
 
-      poetryArgs = {
-        projectDir = ./.;
-        inherit python;
-        preferWheels = true;
-        extras = ["*"];
-        overrides = [poetry2nix.defaultPoetryOverrides];
-      };
-    in {
-      mypackage = poetry2nix.mkPoetryApplication (poetryArgs // {groups = [];});
-      mypackage-env = poetry2nix.mkPoetryEnv (poetryArgs // {groups = ["dev"];});
+          poetryArgs = {
+            projectDir = ./.;
+            inherit python;
+            preferWheels = true;
+            extras = [ "*" ];
+            overrides = [ poetry2nix.defaultPoetryOverrides ];
+          };
+        in
+        {
+          mypackage = poetry2nix.mkPoetryApplication (poetryArgs // { groups = [ ]; });
+          mypackage-env = poetry2nix.mkPoetryEnv (poetryArgs // { groups = [ "dev" ]; });
 
-      nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
-        cd ${./.}
-        ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
-        touch $out
-      '';
-    };
-  in
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [(final: prev: {poetry2nix = import inputs.poetry2nix {pkgs = final;};})];
-      };
-      outputs = mkOutputs pkgs;
-    in {
-      packages = {
-        default = outputs.mypackage;
-        inherit (outputs) mypackage;
-        inherit (pkgs) poetry;
-      };
+          nix-fmt-check = pkgs.runCommandLocal "nix-fmt" { } ''
+            cd ${./.}
+            ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
+            touch $out
+          '';
+        };
+    in
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ (final: prev: { poetry2nix = import inputs.poetry2nix { pkgs = final; }; }) ];
+        };
+        outputs = mkOutputs pkgs;
+      in
+      {
+        packages = {
+          default = outputs.mypackage;
+          inherit (outputs) mypackage;
+          inherit (pkgs) poetry;
+        };
 
-      checks = {inherit (outputs) mypackage mypackage-env nix-fmt-check;};
+        checks = {
+          inherit (outputs) mypackage mypackage-env nix-fmt-check;
+        };
 
-      devShells.default = pkgs.mkShell {
-        inputsFrom = [outputs.mypackage-env.env];
-        packages = [pkgs.poetry];
-      };
+        devShells.default = pkgs.mkShell {
+          inputsFrom = [ outputs.mypackage-env.env ];
+          packages = [ pkgs.poetry ];
+        };
 
-      formatter = pkgs.nixfmt-rfc-style;
-    })
+        formatter = pkgs.nixfmt-rfc-style;
+      }
+    )
     // {
-      overlays.default = final: prev: {inherit (mkOutputs final) mypackage;};
+      overlays.default = final: prev: { inherit (mkOutputs final) mypackage; };
     };
 }

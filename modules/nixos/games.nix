@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.games;
-in {
+in
+{
   options.custom.games = {
     steam.enable = lib.mkEnableOption "steam with custom config";
   };

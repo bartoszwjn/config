@@ -4,9 +4,11 @@
   pkgs,
   osConfig,
   ...
-}: let
+}:
+let
   cfg = config.custom.home;
-in {
+in
+{
   options.custom.home = {
     enable = lib.mkEnableOption "home layout configuration";
   };
@@ -15,7 +17,7 @@ in {
     home = {
       homeDirectory = "/home/${config.home.username}";
       keyboard = null;
-      sessionPath = [(config.home.homeDirectory + "/.local/bin")];
+      sessionPath = [ (config.home.homeDirectory + "/.local/bin") ];
       sessionVariables = {
         CONFIG_REPO_ROOT = config.custom.repo.configRepoRoot;
         NIX_USER_CONF_FILES = lib.concatStringsSep ":" [

@@ -4,7 +4,8 @@
   pkgs,
   flakeInputs,
   ...
-}: let
+}:
+let
   inherit (lib) types;
   cfg = config.custom.hyprland;
   hyprlandPackage = config.wayland.windowManager.hyprland.finalPackage;
@@ -16,8 +17,9 @@
   colorYellow = "rgb(d19a66)";
   colorBg = "rgb(282c34)";
   colorFg = "rgb(abb2bf)";
-in {
-  imports = [./waybar.nix];
+in
+{
+  imports = [ ./waybar.nix ];
 
   options.custom.hyprland = {
     enable = lib.mkEnableOption "hyprland with custom config";
@@ -35,11 +37,13 @@ in {
   config = lib.mkIf cfg.enable {
     custom.hyprland.waybar.enable = lib.mkDefault true;
 
-    programs.zsh.loginExtra = lib.mkIf config.custom.zsh.enable (lib.mkAfter ''
-      if [[ "$TTY" = "/dev/tty1" ]]; then
-        Hyprland
-      fi
-    '');
+    programs.zsh.loginExtra = lib.mkIf config.custom.zsh.enable (
+      lib.mkAfter ''
+        if [[ "$TTY" = "/dev/tty1" ]]; then
+          Hyprland
+        fi
+      ''
+    );
 
     home.packages = [
       flakeInputs.self.packages.${pkgs.hostPlatform.system}.wl-ss
@@ -118,9 +122,7 @@ in {
           };
         };
 
-        bezier = [
-          "linear, 1.0, 1.0, 1.0, 1.0"
-        ];
+        bezier = [ "linear, 1.0, 1.0, 1.0, 1.0" ];
 
         animation = [
           #name      , on/off, time (ds), curve[, style]
@@ -201,60 +203,85 @@ in {
             "SUPER+SHIFT, f, fakefullscreen"
             "SUPER      , p, pin, active"
           ]
-          ++ lib.flip lib.lists.concatMap [1 2 3 4 5 6 7 8 9] (n: [
-            # switching workspaces
-            "SUPER      , ${toString n}, focusworkspaceoncurrentmonitor, ${toString n}"
-            "SUPER+SHIFT, ${toString n}, movetoworkspace, ${toString n}"
-          ])
-          ++ lib.lists.concatLists (lib.flip lib.lists.imap0 ["w" "e"] (monitor: key: [
-            # switching monitors
-            "SUPER      , ${key}, focusmonitor, ${toString monitor}"
-            "SUPER+SHIFT, ${key}, movewindow, mon:${toString monitor}"
-          ]))
-          ++ (let
-            rofi = "rofi -modes combi,drun,run,ssh -show combi -combi-modes drun,run,ssh";
-          in [
-            # running and closing programs
-            "SUPER      , q     , killactive"
-            "SUPER+SHIFT, return, exec, alacritty"
-            "SUPER      , r     , exec, ${rofi}"
-            # screenshots
-            "SUPER      , y     , exec, wl-ss --select interactive"
-            "SUPER+SHIFT, y     , exec, wl-ss --select active-window"
-            "SUPER+CTRL , y     , exec, wl-ss --select active-workspace"
-            # dunst
-            "SUPER      , c    , exec, dunstctl close"
-            "SUPER+SHIFT, c    , exec, dunstctl close-all"
-            "SUPER      , grave, exec, dunstctl history-pop"
-            # volume control
-            "    , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_SINK@ 5%+"
-            "MOD3, q                   , exec, wpctl set-volume @DEFAULT_SINK@ 5%+"
-            "    , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_SINK@ 5%-"
-            "MOD3, a                   , exec, wpctl set-volume @DEFAULT_SINK@ 5%-"
-            "    , XF86AudioMute       , exec, wpctl set-mute @DEFAULT_SINK@ toggle"
-            "MOD3, z                   , exec, wpctl set-mute @DEFAULT_SINK@ toggle"
-            # backlight control
-            ", XF86MonBrightnessUp  , exec, brightnessctl --class=backlight set 5%+"
-            ", XF86MonBrightnessDown, exec, brightnessctl --class=backlight set 5%-"
-            # media keys
-            "    , XF86AudioPlay, exec, playerctl -p spotify play-pause"
-            "MOD3, c            , exec, playerctl -p spotify play-pause"
-            "    , XF86AudioStop, exec, playerctl -p spotify stop"
-            "    , XF86AudioNext, exec, playerctl -p spotify next"
-            "MOD3, v            , exec, playerctl -p spotify next"
-            "    , XF86AudioPrev, exec, playerctl -p spotify previous"
-            "MOD3, x            , exec, playerctl -p spotify previous"
-            # global keybinds
-            ", code:191, pass, class:^discord$"
-          ]);
+          ++ lib.flip lib.lists.concatMap
+            [
+              1
+              2
+              3
+              4
+              5
+              6
+              7
+              8
+              9
+            ]
+            (n: [
+              # switching workspaces
+              "SUPER      , ${toString n}, focusworkspaceoncurrentmonitor, ${toString n}"
+              "SUPER+SHIFT, ${toString n}, movetoworkspace, ${toString n}"
+            ])
+          ++ lib.lists.concatLists (
+            lib.flip lib.lists.imap0
+              [
+                "w"
+                "e"
+              ]
+              (
+                monitor: key: [
+                  # switching monitors
+                  "SUPER      , ${key}, focusmonitor, ${toString monitor}"
+                  "SUPER+SHIFT, ${key}, movewindow, mon:${toString monitor}"
+                ]
+              )
+          )
+          ++ (
+            let
+              rofi = "rofi -modes combi,drun,run,ssh -show combi -combi-modes drun,run,ssh";
+            in
+            [
+              # running and closing programs
+              "SUPER      , q     , killactive"
+              "SUPER+SHIFT, return, exec, alacritty"
+              "SUPER      , r     , exec, ${rofi}"
+              # screenshots
+              "SUPER      , y     , exec, wl-ss --select interactive"
+              "SUPER+SHIFT, y     , exec, wl-ss --select active-window"
+              "SUPER+CTRL , y     , exec, wl-ss --select active-workspace"
+              # dunst
+              "SUPER      , c    , exec, dunstctl close"
+              "SUPER+SHIFT, c    , exec, dunstctl close-all"
+              "SUPER      , grave, exec, dunstctl history-pop"
+              # volume control
+              "    , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_SINK@ 5%+"
+              "MOD3, q                   , exec, wpctl set-volume @DEFAULT_SINK@ 5%+"
+              "    , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_SINK@ 5%-"
+              "MOD3, a                   , exec, wpctl set-volume @DEFAULT_SINK@ 5%-"
+              "    , XF86AudioMute       , exec, wpctl set-mute @DEFAULT_SINK@ toggle"
+              "MOD3, z                   , exec, wpctl set-mute @DEFAULT_SINK@ toggle"
+              # backlight control
+              ", XF86MonBrightnessUp  , exec, brightnessctl --class=backlight set 5%+"
+              ", XF86MonBrightnessDown, exec, brightnessctl --class=backlight set 5%-"
+              # media keys
+              "    , XF86AudioPlay, exec, playerctl -p spotify play-pause"
+              "MOD3, c            , exec, playerctl -p spotify play-pause"
+              "    , XF86AudioStop, exec, playerctl -p spotify stop"
+              "    , XF86AudioNext, exec, playerctl -p spotify next"
+              "MOD3, v            , exec, playerctl -p spotify next"
+              "    , XF86AudioPrev, exec, playerctl -p spotify previous"
+              "MOD3, x            , exec, playerctl -p spotify previous"
+              # global keybinds
+              ", code:191, pass, class:^discord$"
+            ]
+          );
       };
 
-      extraConfig = let
-        mkOpen = key: cmd: ''
-          bind=SUPER, ${key}, exec, ${cmd}
-          bind=SUPER, ${key}, submap, reset
-        '';
-      in
+      extraConfig =
+        let
+          mkOpen = key: cmd: ''
+            bind=SUPER, ${key}, exec, ${cmd}
+            bind=SUPER, ${key}, submap, reset
+          '';
+        in
         ''
           bind=SUPER, o, submap, open
           submap=open
@@ -329,10 +356,10 @@ in {
     xdg.portal = {
       enable = true;
       extraPortals = [
-        (pkgs.xdg-desktop-portal-hyprland.override {hyprland = hyprlandPackage;})
+        (pkgs.xdg-desktop-portal-hyprland.override { hyprland = hyprlandPackage; })
         pkgs.xdg-desktop-portal-gtk
       ];
-      configPackages = [hyprlandPackage];
+      configPackages = [ hyprlandPackage ];
       xdgOpenUsePortal = true;
     };
 

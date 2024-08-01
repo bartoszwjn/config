@@ -4,9 +4,11 @@
   pkgs,
   osConfig,
   ...
-}: let
+}:
+let
   cfg = config.custom.keyring;
-in {
+in
+{
   options.custom.keyring = {
     enable = lib.mkEnableOption "keyring daemon";
   };
@@ -28,9 +30,9 @@ in {
     systemd.user.services.gnome-keyring = {
       Unit = {
         Description = "GNOME Keyring";
-        PartOf = ["graphical-session-pre.target"];
+        PartOf = [ "graphical-session-pre.target" ];
       };
-      Install.WantedBy = ["graphical-session-pre.target"];
+      Install.WantedBy = [ "graphical-session-pre.target" ];
       Service = {
         ExecStart = "${osConfig.security.wrapperDir}/gnome-keyring-daemon --start --foreground";
         Restart = "on-abort";

@@ -4,10 +4,12 @@
   pkgs,
   flakeInputs,
   ...
-}: let
+}:
+let
   systemPrivateConfig = flakeInputs.private-config.lib.hosts.grey;
   userPrivateConfig = systemPrivateConfig.bartoszwjn;
-in {
+in
+{
   custom = {
     alacritty.enable = true;
     dev-tools = {
@@ -34,7 +36,11 @@ in {
         "desc:LG Electronics LG Ultra HD 0x00049402, 1920x1080@60, auto-left, 1"
         ", preferred, auto-left, 1"
       ];
-      waybar.monitors = ["eDP-1" "DP-1" "HDMI-A-1"];
+      waybar.monitors = [
+        "eDP-1"
+        "DP-1"
+        "HDMI-A-1"
+      ];
       waybar.showBacklight = true;
       waybar.showBattery = true;
     };
@@ -51,8 +57,11 @@ in {
       enable = true;
       inherit (userPrivateConfig.syncthing) certFile encryptedKeyFile;
       settings = {
-        options.listenAddresses = ["tcp://${systemPrivateConfig.tailscale.ipv4}:22000"];
-        folders.bartoszwjn-main.devices = ["arnold" "red"];
+        options.listenAddresses = [ "tcp://${systemPrivateConfig.tailscale.ipv4}:22000" ];
+        folders.bartoszwjn-main.devices = [
+          "arnold"
+          "red"
+        ];
       };
     };
     zathura.enable = true;

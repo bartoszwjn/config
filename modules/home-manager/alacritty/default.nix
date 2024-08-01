@@ -3,15 +3,17 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.alacritty;
-in {
+in
+{
   options.custom.alacritty = {
     enable = lib.mkEnableOption "alacritty with custom config";
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [pkgs.alacritty];
+    home.packages = [ pkgs.alacritty ];
     xdg.configFile = {
       "alacritty/alacritty.toml".source = ./alacritty.toml;
     };

@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.gpg;
-in {
+in
+{
   options.custom.gpg = {
     enable = lib.mkEnableOption "gpg with custom config";
   };

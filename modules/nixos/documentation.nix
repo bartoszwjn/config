@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.documentation;
-in {
+in
+{
   options.custom.documentation = {
     enable = lib.mkEnableOption "additional documentation";
   };
@@ -13,6 +15,9 @@ in {
   config = lib.mkIf cfg.enable {
     documentation.dev.enable = true;
 
-    environment.systemPackages = [pkgs.man-pages pkgs.man-pages-posix];
+    environment.systemPackages = [
+      pkgs.man-pages
+      pkgs.man-pages-posix
+    ];
   };
 }

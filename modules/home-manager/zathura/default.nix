@@ -3,15 +3,17 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.zathura;
-in {
+in
+{
   options.custom.zathura = {
     enable = lib.mkEnableOption "zathura with custom config";
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [pkgs.zathura];
+    home.packages = [ pkgs.zathura ];
     xdg.configFile = {
       "zathura/zathurarc".source = ./zathurarc;
     };

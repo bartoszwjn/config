@@ -4,7 +4,8 @@
   pkgs,
   flakeInputs,
   ...
-}: {
+}:
+{
   imports = [
     ./alacritty
     ./dev-tools

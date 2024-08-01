@@ -3,17 +3,19 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) types;
   cfg = config.custom.hyprland.waybar;
-in {
+in
+{
   options.custom.hyprland.waybar = {
     enable = lib.mkEnableOption "waybar with hyprland-specific custom config";
 
     monitors = lib.mkOption {
       type = types.listOf types.str;
       description = "Names of monitors to show waybar on";
-      example = ["DP-1"];
+      example = [ "DP-1" ];
     };
 
     showBacklight = lib.mkOption {
@@ -42,8 +44,12 @@ in {
           layer = "bottom";
           position = "top";
           output = cfg.monitors;
-          modules-left = ["hyprland/workspaces" "hyprland/submap" "hyprland/window"];
-          modules-center = [];
+          modules-left = [
+            "hyprland/workspaces"
+            "hyprland/submap"
+            "hyprland/window"
+          ];
+          modules-center = [ ];
           modules-right =
             [
               "systemd-failed-units"
@@ -93,7 +99,19 @@ in {
             format-charging = "{icon}󱦲{capacity:3}% {time:>5}";
             format-discharging = "{icon}󱦳{capacity:3}% {time:>5}";
             format-time = "{H}:{m}";
-            format-icons = ["󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+            format-icons = [
+              "󰂎"
+              "󰁺"
+              "󰁻"
+              "󰁼"
+              "󰁽"
+              "󰁾"
+              "󰁿"
+              "󰂀"
+              "󰂁"
+              "󰂂"
+              "󰁹"
+            ];
             weighted-average = false;
             states = {
               warning = 50;
@@ -172,105 +190,107 @@ in {
         }
       ];
 
-      style = let
-        colorBlue = "#61afef";
-        colorCyan = "#56b6c2";
-        colorMagenta = "#c678dd";
-        colorRed = "#e06c75";
-        colorYellow = "#d19a66";
-        colorBgDark = "#1e2127";
-        colorBg = "#282c34";
-        colorFg = "#abb2bf";
-      in ''
-        * {
-          font-family: SauceCodePro Nerd Font, sans-serif;
-          font-size: 13px;
-        }
-        window#waybar {
-          background-color: ${colorBgDark};
-          color: ${colorFg};
-        }
+      style =
+        let
+          colorBlue = "#61afef";
+          colorCyan = "#56b6c2";
+          colorMagenta = "#c678dd";
+          colorRed = "#e06c75";
+          colorYellow = "#d19a66";
+          colorBgDark = "#1e2127";
+          colorBg = "#282c34";
+          colorFg = "#abb2bf";
+        in
+        ''
+          * {
+            font-family: SauceCodePro Nerd Font, sans-serif;
+            font-size: 13px;
+          }
+          window#waybar {
+            background-color: ${colorBgDark};
+            color: ${colorFg};
+          }
 
-        tooltip {
-          background-color: ${colorBgDark};
-        }
+          tooltip {
+            background-color: ${colorBgDark};
+          }
 
-        button {
-          border: none;
-          border-radius: 0;
-        }
-        button:hover {
-          background: inherit;
-        }
+          button {
+            border: none;
+            border-radius: 0;
+          }
+          button:hover {
+            background: inherit;
+          }
 
-        #workspaces {
-          margin: 0 4px;
-        }
-        .modules-left > widget:first-child > #workspaces {
-          margin-left: 0;
-        }
-        .modules-right > widget:last-child > #workspaces {
-          margin-right: 0;
-        }
+          #workspaces {
+            margin: 0 4px;
+          }
+          .modules-left > widget:first-child > #workspaces {
+            margin-left: 0;
+          }
+          .modules-right > widget:last-child > #workspaces {
+            margin-right: 0;
+          }
 
-        #workspaces button {
-          padding: 0 5px;
-          box-shadow: inset 0 -3px transparent;
-          color: ${colorFg}
-        }
-        #workspaces button.urgent {
-          color: ${colorRed};
-        }
-        #workspaces button.visible {
-          box-shadow: inset 0 -3px ${colorFg};
-        }
-        #workspaces button.active {
-          color: ${colorBlue};
-          box-shadow: inset 0 -3px ${colorBlue};
-        }
+          #workspaces button {
+            padding: 0 5px;
+            box-shadow: inset 0 -3px transparent;
+            color: ${colorFg}
+          }
+          #workspaces button.urgent {
+            color: ${colorRed};
+          }
+          #workspaces button.visible {
+            box-shadow: inset 0 -3px ${colorFg};
+          }
+          #workspaces button.active {
+            color: ${colorBlue};
+            box-shadow: inset 0 -3px ${colorBlue};
+          }
 
-        #submap {
-          padding: 0 10px;
-          font-weight: bold;
-        }
+          #submap {
+            padding: 0 10px;
+            font-weight: bold;
+          }
 
-        #window {
-          margin: 0 4px;
-        }
+          #window {
+            margin: 0 4px;
+          }
 
-        #systemd-failed-units,
-        #idle_inhibitor,
-        #battery,
-        #cpu,
-        #memory,
-        #disk,
-        #backlight,
-        #pulseaudio,
-        #clock {
-          padding: 0 10px;
-        }
+          #systemd-failed-units,
+          #idle_inhibitor,
+          #battery,
+          #cpu,
+          #memory,
+          #disk,
+          #backlight,
+          #pulseaudio,
+          #clock {
+            padding: 0 10px;
+          }
 
-        #systemd-failed-units {
-          background-color: ${colorRed};
-          color: ${colorBgDark};
-        }
+          #systemd-failed-units {
+            background-color: ${colorRed};
+            color: ${colorBgDark};
+          }
 
-        #idle_inhibitor.activated {
-          background-color: ${colorFg};
-          color: ${colorBgDark};
-        }
+          #idle_inhibitor.activated {
+            background-color: ${colorFg};
+            color: ${colorBgDark};
+          }
 
-        #battery.discharging.warning {
-          color: ${colorYellow};
-        }
-        #battery.discharging.low {
-          color: ${colorRed};
-        }
-        #battery.discharging.critical {
-          background-color: ${colorRed};
-          color: ${colorBgDark};
-        }
-      '';
+          #battery.discharging.warning {
+            color: ${colorYellow};
+          }
+          #battery.discharging.low {
+            color: ${colorRed};
+          }
+          #battery.discharging.critical {
+            background-color: ${colorRed};
+            color: ${colorBgDark};
+          }
+        '';
     };
   };
 }

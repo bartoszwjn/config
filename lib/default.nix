@@ -1,3 +1,4 @@
-{lib}: {
-  unfree-packages = import ./unfree-packages.nix {inherit lib;};
+{ lib }:
+{
+  unfree-packages = import ./unfree-packages.nix { inherit lib; };
 }

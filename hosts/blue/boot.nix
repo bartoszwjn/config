@@ -3,13 +3,20 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
 
     initrd = {
-      availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
-      kernelModules = ["dm-snapshot"];
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "sd_mod"
+      ];
+      kernelModules = [ "dm-snapshot" ];
       luks = {
         reusePassphrases = true;
         devices = {
@@ -32,7 +39,7 @@
       };
     };
 
-    kernelModules = ["kvm-amd"];
+    kernelModules = [ "kvm-amd" ];
 
     loader = {
       systemd-boot = {

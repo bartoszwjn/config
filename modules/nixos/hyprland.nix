@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.hyprland;
-in {
+in
+{
   options.custom.hyprland = {
     enable = lib.mkEnableOption "system-wide config needed for user-level hyprland configuration";
   };
@@ -26,7 +28,7 @@ in {
     programs.dconf.enable = true;
     security = {
       polkit.enable = true;
-      pam.services.hyprlock = {};
+      pam.services.hyprlock = { };
     };
     services.pipewire = {
       enable = true;

@@ -8,15 +8,20 @@
   pkgs,
   modulesPath,
   ...
-}: {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+}:
+{
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
-  boot.initrd.kernelModules = ["dm-snapshot"];
-  boot.kernelModules = ["kvm-amd"];
-  boot.extraModulePackages = [];
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "ahci"
+    "usbhid"
+    "sd_mod"
+  ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/ac15240d-7e73-4a26-b2c5-6be49550d6c1";
@@ -33,7 +38,7 @@
   swapDevices = [
     # `nixos-generate-config` doesn't know about `swapDevices.*.randomEncryption` which makes the
     # filesystem UUID change on every boot
-    {device = "/dev/disk/by-uuid/00000000-0000-0000-0000-000000000000";}
+    { device = "/dev/disk/by-uuid/00000000-0000-0000-0000-000000000000"; }
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

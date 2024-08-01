@@ -3,15 +3,17 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.nushell;
-in {
+in
+{
   options.custom.nushell = {
     enable = lib.mkEnableOption "nushell with custom config";
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [pkgs.nushell];
+    home.packages = [ pkgs.nushell ];
 
     xdg.configFile = {
       "nushell/config.nu".source = ./config.nu;

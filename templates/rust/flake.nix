@@ -20,59 +20,72 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-    fenix,
-    crane,
-  }: let
-    mkOutputs = pkgs: let
-      toolchainComponents = ["rustc" "cargo" "rustfmt" "clippy"];
-      rustToolchain = (import fenix {inherit pkgs;}).stable.withComponents toolchainComponents;
-      craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      fenix,
+      crane,
+    }:
+    let
+      mkOutputs =
+        pkgs:
+        let
+          toolchainComponents = [
+            "rustc"
+            "cargo"
+            "rustfmt"
+            "clippy"
+          ];
+          rustToolchain = (import fenix { inherit pkgs; }).stable.withComponents toolchainComponents;
+          craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
 
-      src = craneLib.cleanCargoSource ./.;
-      cargoArtifacts = craneLib.buildDepsOnly {
-        inherit src;
-      };
-    in {
-      mypackage = craneLib.buildPackage {
-        inherit src cargoArtifacts;
-      };
-      mypackage-clippy = craneLib.cargoClippy {
-        inherit src cargoArtifacts;
-        cargoClippyExtraArgs = "--all-targets -- --deny warnings";
-      };
-      mypackage-fmt = craneLib.cargoFmt {
-        inherit src;
-      };
+          src = craneLib.cleanCargoSource ./.;
+          cargoArtifacts = craneLib.buildDepsOnly { inherit src; };
+        in
+        {
+          mypackage = craneLib.buildPackage { inherit src cargoArtifacts; };
+          mypackage-clippy = craneLib.cargoClippy {
+            inherit src cargoArtifacts;
+            cargoClippyExtraArgs = "--all-targets -- --deny warnings";
+          };
+          mypackage-fmt = craneLib.cargoFmt { inherit src; };
 
-      nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
-        cd ${./.}
-        ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
-        touch $out
-      '';
-    };
-  in
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      outputs = mkOutputs pkgs;
-    in {
-      packages = {
-        default = outputs.mypackage;
-        inherit (outputs) mypackage;
-      };
+          nix-fmt-check = pkgs.runCommandLocal "nix-fmt" { } ''
+            cd ${./.}
+            ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
+            touch $out
+          '';
+        };
+    in
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        outputs = mkOutputs pkgs;
+      in
+      {
+        packages = {
+          default = outputs.mypackage;
+          inherit (outputs) mypackage;
+        };
 
-      checks = {inherit (outputs) mypackage mypackage-clippy mypackage-fmt nix-fmt-check;};
+        checks = {
+          inherit (outputs)
+            mypackage
+            mypackage-clippy
+            mypackage-fmt
+            nix-fmt-check
+            ;
+        };
 
-      devShells.default = pkgs.mkShell {
-        inputsFrom = builtins.attrValues self.checks.${system};
-      };
+        devShells.default = pkgs.mkShell { inputsFrom = builtins.attrValues self.checks.${system}; };
 
-      formatter = pkgs.nixfmt-rfc-style;
-    })
+        formatter = pkgs.nixfmt-rfc-style;
+      }
+    )
     // {
-      overlays.default = final: prev: {inherit (mkOutputs final) mypackage;};
+      overlays.default = final: prev: { inherit (mkOutputs final) mypackage; };
     };
 }

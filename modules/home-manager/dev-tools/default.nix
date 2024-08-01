@@ -4,9 +4,11 @@
   pkgs,
   flakeInputs,
   ...
-}: let
+}:
+let
   cfg = config.custom.dev-tools;
-in {
+in
+{
   options.custom.dev-tools = {
     general = lib.mkEnableOption "general dev tools";
     jsonnet = lib.mkEnableOption "jsonnet dev tools";
@@ -18,7 +20,10 @@ in {
     git = {
       enable = lib.mkEnableOption "git with custom config";
       userEmail = lib.mkOption {
-        type = lib.types.oneOf [lib.types.str (lib.types.attrsOf lib.types.str)];
+        type = lib.types.oneOf [
+          lib.types.str
+          (lib.types.attrsOf lib.types.str)
+        ];
         description = ''
           Default user email to use, either a single value that applies globally, or an attribute
           set mapping directory paths to emails that will be used for repositories located in these
@@ -31,43 +36,63 @@ in {
   config = {
     home = {
       packages =
-        lib.optionals cfg.general (builtins.attrValues {
-          inherit (pkgs) cmake gnumake just shellcheck;
-        })
-        ++ lib.optionals cfg.jsonnet (builtins.attrValues {
-          inherit (pkgs) go-jsonnet jsonnet-bundler jsonnet-language-server;
-        })
-        ++ lib.optionals cfg.lua (builtins.attrValues {
-          inherit (pkgs) lua-language-server;
-        })
-        ++ lib.optionals cfg.nix (builtins.attrValues {
-          inherit
-            (pkgs)
-            alejandra
-            nix-diff
-            nix-output-monitor
-            nix-prefetch-git
-            nix-prefetch-github
-            nixfmt-rfc-style
-            nvd
-            ;
-        })
-        ++ lib.optionals cfg.python (builtins.attrValues {
-          inherit (pkgs) black isort mypy poetry pyright python3;
-          inherit (pkgs.python3Packages) ipython;
-        })
-        ++ lib.optionals cfg.rust (builtins.attrValues {
-          inherit (pkgs) cargo-edit cargo-expand cargo-outdated rust-analyzer;
-          inherit (flakeInputs.fenix.packages.${pkgs.hostPlatform.system}.stable) defaultToolchain;
-        })
-        ++ lib.optionals cfg.git.enable (builtins.attrValues {
-          inherit (pkgs) gitui;
-        });
+        lib.optionals cfg.general (
+          builtins.attrValues {
+            inherit (pkgs)
+              cmake
+              gnumake
+              just
+              shellcheck
+              ;
+          }
+        )
+        ++ lib.optionals cfg.jsonnet (
+          builtins.attrValues { inherit (pkgs) go-jsonnet jsonnet-bundler jsonnet-language-server; }
+        )
+        ++ lib.optionals cfg.lua (builtins.attrValues { inherit (pkgs) lua-language-server; })
+        ++ lib.optionals cfg.nix (
+          builtins.attrValues {
+            inherit (pkgs)
+              alejandra
+              nix-diff
+              nix-output-monitor
+              nix-prefetch-git
+              nix-prefetch-github
+              nixfmt-rfc-style
+              nvd
+              ;
+          }
+        )
+        ++ lib.optionals cfg.python (
+          builtins.attrValues {
+            inherit (pkgs)
+              black
+              isort
+              mypy
+              poetry
+              pyright
+              python3
+              ;
+            inherit (pkgs.python3Packages) ipython;
+          }
+        )
+        ++ lib.optionals cfg.rust (
+          builtins.attrValues {
+            inherit (pkgs)
+              cargo-edit
+              cargo-expand
+              cargo-outdated
+              rust-analyzer
+              ;
+            inherit (flakeInputs.fenix.packages.${pkgs.hostPlatform.system}.stable) defaultToolchain;
+          }
+        )
+        ++ lib.optionals cfg.git.enable (builtins.attrValues { inherit (pkgs) gitui; });
 
       sessionPath = lib.optional cfg.rust (config.home.homeDirectory + "/.cargo/bin");
 
       file = lib.optionalAttrs cfg.rust {
-        ".cargo/config.toml".source = (pkgs.formats.toml {}).generate "cargo-config.toml" {
+        ".cargo/config.toml".source = (pkgs.formats.toml { }).generate "cargo-config.toml" {
           alias = {
             b = "build";
             br = "build --release";
@@ -99,10 +124,12 @@ in {
         pull.ff = "only";
       };
       includes = lib.mkIf (builtins.isAttrs cfg.git.userEmail) (
-        lib.flip lib.mapAttrsToList cfg.git.userEmail (dir: email: {
-          condition = "gitdir:${dir}";
-          contents.user.email = email;
-        })
+        lib.flip lib.mapAttrsToList cfg.git.userEmail (
+          dir: email: {
+            condition = "gitdir:${dir}";
+            contents.user.email = email;
+          }
+        )
       );
     };
 

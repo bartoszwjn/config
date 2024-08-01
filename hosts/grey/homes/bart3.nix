@@ -4,10 +4,12 @@
   pkgs,
   flakeInputs,
   ...
-}: let
+}:
+let
   systemPrivateConfig = flakeInputs.private-config.lib.hosts.grey;
   userPrivateConfig = systemPrivateConfig.bart3;
-in {
+in
+{
   custom = {
     alacritty.enable = true;
     dev-tools = {
@@ -37,7 +39,11 @@ in {
         "desc:LG Electronics LG Ultra HD 0x00049402, 1920x1080@60, auto-left, 1"
         ", preferred, auto-left, 1"
       ];
-      waybar.monitors = ["eDP-1" "DP-1" "HDMI-A-1"];
+      waybar.monitors = [
+        "eDP-1"
+        "DP-1"
+        "HDMI-A-1"
+      ];
       waybar.showBacklight = true;
       waybar.showBattery = true;
     };
@@ -55,8 +61,11 @@ in {
       guiAddress = "127.0.0.1:8385";
       inherit (userPrivateConfig.syncthing) certFile encryptedKeyFile;
       settings = {
-        options.listenAddresses = ["tcp://${systemPrivateConfig.tailscale.ipv4}:22001"];
-        folders.bartoszwjn-main.devices = ["arnold" "red"];
+        options.listenAddresses = [ "tcp://${systemPrivateConfig.tailscale.ipv4}:22001" ];
+        folders.bartoszwjn-main.devices = [
+          "arnold"
+          "red"
+        ];
       };
     };
     zathura.enable = true;
@@ -67,7 +76,13 @@ in {
     username = "bart3";
     stateVersion = "24.05";
     packages = builtins.attrValues {
-      inherit (pkgs) awscli2 git-review google-cloud-sdk postgresql slack;
+      inherit (pkgs)
+        awscli2
+        git-review
+        google-cloud-sdk
+        postgresql
+        slack
+        ;
     };
   };
 }

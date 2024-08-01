@@ -4,7 +4,8 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../../modules/nixos
@@ -36,8 +37,8 @@
 
   sops = {
     age.keyFile = "/root/sops-nix.agekey";
-    age.sshKeyPaths = [];
-    gnupg.sshKeyPaths = [];
+    age.sshKeyPaths = [ ];
+    gnupg.sshKeyPaths = [ ];
   };
 
   time.timeZone = "Europe/Warsaw";

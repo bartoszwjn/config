@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.packages;
-in {
+in
+{
   options.custom.packages = {
     cli = lib.mkEnableOption "common misc CLI packages";
     gui = lib.mkEnableOption "common misc GUI packages";
@@ -14,8 +16,7 @@ in {
   config = lib.mkMerge [
     (lib.mkIf cfg.cli {
       home.packages = builtins.attrValues {
-        inherit
-          (pkgs)
+        inherit (pkgs)
           age
           bat
           brightnessctl
@@ -41,8 +42,7 @@ in {
 
     (lib.mkIf cfg.gui {
       home.packages = builtins.attrValues {
-        inherit
-          (pkgs)
+        inherit (pkgs)
           feh
           firefox
           keepassxc

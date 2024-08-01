@@ -4,10 +4,12 @@
   pkgs,
   flakeInputs,
   ...
-}: let
+}:
+let
   systemPrivateConfig = flakeInputs.private-config.lib.hosts.blue;
   userPrivateConfig = systemPrivateConfig.bartoszwjn;
-in {
+in
+{
   custom = {
     alacritty.enable = true;
     dev-tools = {
@@ -33,7 +35,7 @@ in {
         "desc:Dell Inc. DELL U2412M YPPY089G14FB, 1920x1200@60, -1920x0, 1"
         ", preferred, auto-right, 1"
       ];
-      waybar.monitors = ["DP-1"];
+      waybar.monitors = [ "DP-1" ];
     };
     keyring.enable = true;
     neovim.enable = true;
@@ -48,8 +50,11 @@ in {
       enable = true;
       inherit (userPrivateConfig.syncthing) certFile encryptedKeyFile;
       settings = {
-        options.listenAddresses = ["tcp://${systemPrivateConfig.tailscale.ipv4}:22000"];
-        folders.bartoszwjn-main.devices = ["arnold" "red"];
+        options.listenAddresses = [ "tcp://${systemPrivateConfig.tailscale.ipv4}:22000" ];
+        folders.bartoszwjn-main.devices = [
+          "arnold"
+          "red"
+        ];
       };
     };
     zathura.enable = true;

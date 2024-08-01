@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   options.custom.repo = {
     flakeRoot = lib.mkOption {
       type = lib.types.path;

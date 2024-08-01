@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.console;
-in {
+in
+{
   options.custom.console = {
     enable = lib.mkEnableOption "custom console settings";
   };

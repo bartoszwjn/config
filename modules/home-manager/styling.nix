@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.styling;
-in {
+in
+{
   options.custom.styling = {
     enable = lib.mkEnableOption "custom styling config";
   };
@@ -17,7 +19,7 @@ in {
 
     home.packages = builtins.attrValues {
       inherit (pkgs) arc-icon-theme arc-theme;
-      nerdfonts = pkgs.nerdfonts.override {fonts = ["SourceCodePro"];};
+      nerdfonts = pkgs.nerdfonts.override { fonts = [ "SourceCodePro" ]; };
     };
 
     xdg.dataFile = {

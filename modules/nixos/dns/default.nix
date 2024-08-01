@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.dns;
 
   # Using `config.systemd.services.dnscrypt-proxy2.serviceConfig` to define
@@ -11,7 +12,8 @@
   systemdDir = "dnscrypt-proxy";
   cacheDirectory = "/var/cache/${systemdDir}";
   logsDirectory = "/var/log/${systemdDir}";
-in {
+in
+{
   options.custom.dns = {
     enable = lib.mkEnableOption "DNS configuration";
     disableWithSpecialisation = lib.mkOption {
@@ -28,10 +30,16 @@ in {
       };
     };
 
-    assertions = let
-      systemdCfg = config.systemd.services.dnscrypt-proxy2.serviceConfig;
-      dirs = ["CacheDirectory" "LogsDirectory" "RuntimeDirectory" "StateDirectory"];
-    in
+    assertions =
+      let
+        systemdCfg = config.systemd.services.dnscrypt-proxy2.serviceConfig;
+        dirs = [
+          "CacheDirectory"
+          "LogsDirectory"
+          "RuntimeDirectory"
+          "StateDirectory"
+        ];
+      in
       lib.flip map dirs (dir: {
         assertion = systemdDir == systemdCfg.${dir};
         message =
@@ -39,7 +47,7 @@ in {
           + " but the configuration expects ${systemdDir}";
       });
 
-    networking.nameservers = ["127.0.0.1:53"];
+    networking.nameservers = [ "127.0.0.1:53" ];
 
     services = {
       resolved.enable = true;
@@ -48,7 +56,7 @@ in {
         enable = true;
         upstreamDefaults = false;
         settings = {
-          listen_addresses = ["127.0.0.1:53"];
+          listen_addresses = [ "127.0.0.1:53" ];
           max_clients = 250;
           force_tcp = false;
           http3 = false; # experimental
@@ -60,7 +68,7 @@ in {
           tls_disable_session_tickets = false;
           offline_mode = false;
 
-          bootstrap_resolvers = ["9.9.9.9:53"];
+          bootstrap_resolvers = [ "9.9.9.9:53" ];
           ignore_system_dns = true;
           netprobe_timeout = 10; # seconds
           netprobe_address = "9.9.9.9:53";
@@ -153,16 +161,19 @@ in {
       };
     };
 
-    systemd.network.networks = let
-      networkCfg = config.custom.network;
-    in
-      builtins.listToAttrs (lib.flip map networkCfg.interfaces (iface: {
-        name = networkCfg.interfaceToNetwork.${iface};
-        value = {
-          dhcpV4Config.UseDNS = false;
-          dhcpV6Config.UseDNS = false;
-          ipv6AcceptRAConfig.UseDNS = false;
-        };
-      }));
+    systemd.network.networks =
+      let
+        networkCfg = config.custom.network;
+      in
+      builtins.listToAttrs (
+        lib.flip map networkCfg.interfaces (iface: {
+          name = networkCfg.interfaceToNetwork.${iface};
+          value = {
+            dhcpV4Config.UseDNS = false;
+            dhcpV6Config.UseDNS = false;
+            ipv6AcceptRAConfig.UseDNS = false;
+          };
+        })
+      );
   };
 }
