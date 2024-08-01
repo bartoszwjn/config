@@ -34,8 +34,9 @@
       mypackage = poetry2nix.mkPoetryApplication (poetryArgs // {groups = [];});
       mypackage-env = poetry2nix.mkPoetryEnv (poetryArgs // {groups = ["dev"];});
 
-      nix-fmt-check = pkgs.runCommandLocal "nix-fmt-check" {} ''
-        ${pkgs.alejandra}/bin/alejandra --check ${self} 2>/dev/null
+      nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
+        cd ${./.}
+        ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
         touch $out
       '';
     };
@@ -60,9 +61,7 @@
         packages = [pkgs.poetry];
       };
 
-      formatter = pkgs.writeShellScriptBin "format-nix" ''
-        ${pkgs.alejandra}/bin/alejandra "$@" 2>/dev/null;
-      '';
+      formatter = pkgs.nixfmt-rfc-style;
     })
     // {
       overlays.default = final: prev: {inherit (mkOutputs final) mypackage;};

@@ -50,11 +50,12 @@
           };
       };
 
-      formatter = pkgs.alejandra;
+      formatter = pkgs.nixfmt-rfc-style;
 
       checks = {
         nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
-          ${lib.getExe' pkgs.alejandra "alejandra"} --check ${self} 2>/dev/null
+          cd ${./.}
+          ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
           touch $out
         '';
       };

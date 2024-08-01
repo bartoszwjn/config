@@ -48,8 +48,9 @@
         inherit src;
       };
 
-      nix-fmt-check = pkgs.runCommandLocal "nix-fmt-check" {} ''
-        ${pkgs.alejandra}/bin/alejandra --check ${self} 2>/dev/null
+      nix-fmt-check = pkgs.runCommandLocal "nix-fmt" {} ''
+        cd ${./.}
+        ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
         touch $out
       '';
     };
@@ -69,9 +70,7 @@
         inputsFrom = builtins.attrValues self.checks.${system};
       };
 
-      formatter = pkgs.writeShellScriptBin "format-nix" ''
-        ${pkgs.alejandra}/bin/alejandra "$@" 2>/dev/null;
-      '';
+      formatter = pkgs.nixfmt-rfc-style;
     })
     // {
       overlays.default = final: prev: {inherit (mkOutputs final) mypackage;};
