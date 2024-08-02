@@ -1,20 +1,19 @@
 #!/usr/bin/env nu
 
 def main [
-  file: path # path to source.json file
-  --dry-run # print the new contents instead of modifying the file in place
-]: nothing -> nothing {
+  file: path # Path to source.json file
+  --dry-run # Print the new contents instead of modifying the file in place
+] {
   let old = (open --raw $file | from json)
 
   let commit = (
-    curl --fail --silent --show-error
-      $"https://api.github.com/repos/($old.owner)/($old.repo)/branches/($old.branch)"
-    | from json | get commit
+    http get $"https://api.github.com/repos/($old.owner)/($old.repo)/branches/($old.branch)"
+    | get commit
   )
   let git_commit = $commit.commit
   let new_datetime = ($git_commit.committer.date | into datetime)
   let new_summary = ($git_commit.message | lines | first)
-  print --stderr $"Most recent commit: ($new_summary)\nCommit date: ($new_datetime)"
+  print -e $"Most recent commit: ($new_summary)\nCommit date: ($new_datetime)"
 
   let fetch_submodules = if "fetchSubmodules" in ($old | columns) and $old.fetchSubmodules {
     "--fetch-submodules"
@@ -22,7 +21,7 @@ def main [
     "--no-fetch-submodules"
   }
   let new_hash = (
-    nix-prefetch-github $old.owner $old.repo --rev $commit.sha $fetch_submodules --json
+    do -c { ^nix-prefetch-github $old.owner $old.repo --rev $commit.sha $fetch_submodules --json }
     | from json | get hash
   )
 

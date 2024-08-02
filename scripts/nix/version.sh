@@ -14,5 +14,5 @@ nix eval nixpkgs#nix.version --raw
 echo
 
 echo "=== nixpkgs/nixpkgs-unstable ==="
-nix eval nixpkgs/nixpkgs-unstable#nix.version --raw
+nix eval github:NixOS/nixpkgs/nixpkgs-unstable#nix.version --raw
 echo

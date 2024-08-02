@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# Switch to the `normal-dns` specialisation of the system configuration
-
-set -euo pipefail
-
-PS4='+> '
-set -x
-
-sudo /nix/var/nix/profiles/system/specialisation/normal-dns/bin/switch-to-configuration test

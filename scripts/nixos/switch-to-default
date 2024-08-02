@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# Switch to the default, unspecialized system configuration
-
-set -euo pipefail
-
-PS4='+> '
-set -x
-
-sudo /nix/var/nix/profiles/system/bin/switch-to-configuration test

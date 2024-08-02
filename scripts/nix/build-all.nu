@@ -25,7 +25,7 @@ def main [
     ++ (if $out_link != "result" { ["--out-link" $out_link] } else { [] })
     ++ (if $cores != null { ["--cores" $cores] } else { [] })
   )
-  print $"(ansi default_bold)nix ($nix_args | str join ' ')(ansi reset)\n"
+  print -e $"(ansi default_bold)nix ($nix_args | str join ' ')(ansi reset)\n"
   nix ...$nix_args
 }
 
