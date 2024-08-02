@@ -40,12 +40,12 @@ in
           "StateDirectory"
         ];
       in
-      lib.flip map dirs (dir: {
+      map (dir: {
         assertion = systemdDir == systemdCfg.${dir};
         message =
           "systemd ${dir} for dnscrypt-proxy is ${systemdCfg.${dir}},"
           + " but the configuration expects ${systemdDir}";
-      });
+      }) dirs;
 
     networking.nameservers = [ "127.0.0.1:53" ];
 
@@ -166,14 +166,14 @@ in
         networkCfg = config.custom.network;
       in
       builtins.listToAttrs (
-        lib.flip map networkCfg.interfaces (iface: {
+        map (iface: {
           name = networkCfg.interfaceToNetwork.${iface};
           value = {
             dhcpV4Config.UseDNS = false;
             dhcpV6Config.UseDNS = false;
             ipv6AcceptRAConfig.UseDNS = false;
           };
-        })
+        }) networkCfg.interfaces
       );
   };
 }

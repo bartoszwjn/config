@@ -14,7 +14,7 @@ let
   };
   mkArcPath =
     category:
-    "${arcIconTheme.package}/share/icons" + "/${arcIconTheme.name}/${category}/${arcIconTheme.size}/";
+    "${arcIconTheme.package}/share/icons/${arcIconTheme.name}/${category}/${arcIconTheme.size}/";
   arcIconPath = lib.concatMapStringsSep ":" mkArcPath [
     "actions"
     "animations"

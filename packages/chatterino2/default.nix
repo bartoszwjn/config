@@ -21,17 +21,14 @@ in
 mkDerivation {
   pname = "chatterino2";
   inherit version;
+
   src = fetchFromGitHub {
-    inherit (source)
-      owner
-      repo
-      rev
-      hash
-      fetchSubmodules
-      ;
+    inherit (source) owner repo fetchSubmodules;
+    inherit (source) rev hash;
     # use the same store path as `nix-prefetch-github`
     name = "${source.repo}-${builtins.substring 0 7 source.rev}";
   };
+
   nativeBuildInputs = [
     pkg-config
     cmake

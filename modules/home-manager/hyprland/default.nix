@@ -203,37 +203,18 @@ in
             "SUPER+SHIFT, f, fakefullscreen"
             "SUPER      , p, pin, active"
           ]
-          ++ lib.flip lib.lists.concatMap
-            [
-              1
-              2
-              3
-              4
-              5
-              6
-              7
-              8
-              9
-            ]
-            (n: [
-              # switching workspaces
-              "SUPER      , ${toString n}, focusworkspaceoncurrentmonitor, ${toString n}"
-              "SUPER+SHIFT, ${toString n}, movetoworkspace, ${toString n}"
-            ])
-          ++ lib.lists.concatLists (
-            lib.flip lib.lists.imap0
-              [
-                "w"
-                "e"
-              ]
-              (
-                monitor: key: [
-                  # switching monitors
-                  "SUPER      , ${key}, focusmonitor, ${toString monitor}"
-                  "SUPER+SHIFT, ${key}, movewindow, mon:${toString monitor}"
-                ]
-              )
-          )
+          ++ lib.lists.concatMap (n: [
+            # switching workspaces
+            "SUPER      , ${toString n}, focusworkspaceoncurrentmonitor, ${toString n}"
+            "SUPER+SHIFT, ${toString n}, movetoworkspace, ${toString n}"
+          ]) (lib.genList (n: n + 1) 9)
+          ++ [
+            # switching monitors
+            "SUPER      , w, focusmonitor, 0"
+            "SUPER+SHIFT, w, movewindow, mon:0"
+            "SUPER      , e, focusmonitor, 1"
+            "SUPER+SHIFT, e, movewindow, mon:1"
+          ]
           ++ (
             let
               rofi = "rofi -modes combi,drun,run,ssh -show combi -combi-modes drun,run,ssh";

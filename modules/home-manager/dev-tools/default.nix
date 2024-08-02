@@ -124,12 +124,10 @@ in
         pull.ff = "only";
       };
       includes = lib.mkIf (builtins.isAttrs cfg.git.userEmail) (
-        lib.flip lib.mapAttrsToList cfg.git.userEmail (
-          dir: email: {
-            condition = "gitdir:${dir}";
-            contents.user.email = email;
-          }
-        )
+        lib.mapAttrsToList (dir: email: {
+          condition = "gitdir:${dir}";
+          contents.user.email = email;
+        }) cfg.git.userEmail
       );
     };
 

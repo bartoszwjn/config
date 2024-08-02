@@ -36,12 +36,10 @@ in
         numWidth = lib.max 2 (builtins.stringLength (toString (builtins.length cfg.interfaces)));
       in
       builtins.listToAttrs (
-        lib.flip lib.imap1 cfg.interfaces (
-          n: iface: {
-            name = iface;
-            value = "${lib.strings.fixedWidthNumber numWidth n}-${iface}";
-          }
-        )
+        lib.imap1 (n: iface: {
+          name = iface;
+          value = "${lib.strings.fixedWidthNumber numWidth n}-${iface}";
+        }) cfg.interfaces
       );
 
     networking = {
@@ -61,17 +59,15 @@ in
     systemd.network = {
       enable = true;
       networks = builtins.listToAttrs (
-        lib.flip lib.imap1 cfg.interfaces (
-          n: iface: {
-            name = cfg.interfaceToNetwork.${iface};
-            value = {
-              matchConfig.Name = iface;
-              networkConfig.DHCP = "ipv4";
-              dhcpV4Config.RouteMetric = n;
-              ipv6AcceptRAConfig.RouteMetric = n;
-            };
-          }
-        )
+        lib.imap1 (n: iface: {
+          name = cfg.interfaceToNetwork.${iface};
+          value = {
+            matchConfig.Name = iface;
+            networkConfig.DHCP = "ipv4";
+            dhcpV4Config.RouteMetric = n;
+            ipv6AcceptRAConfig.RouteMetric = n;
+          };
+        }) cfg.interfaces
       );
       wait-online.anyInterface = true;
     };
