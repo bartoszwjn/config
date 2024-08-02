@@ -1,24 +1,19 @@
 {
   lib,
-  mkDerivation,
+  stdenv,
   fetchFromGitHub,
   pkg-config,
   cmake,
-  wrapQtAppsHook,
+  qt6,
   boost,
   libsecret,
   openssl,
-  qtbase,
-  qtimageformats,
-  qtmultimedia,
-  qtsvg,
-  qttools,
 }:
 let
   source = builtins.fromJSON (builtins.readFile ./source.json);
   version = "unstable-${source.commitDate}";
 in
-mkDerivation {
+stdenv.mkDerivation {
   pname = "chatterino2";
   inherit version;
 
@@ -30,22 +25,25 @@ mkDerivation {
   };
 
   nativeBuildInputs = [
-    pkg-config
     cmake
-    wrapQtAppsHook
+    pkg-config
+    qt6.wrapQtAppsHook
   ];
   buildInputs = [
     boost
     libsecret
     openssl
-    qtbase
-    qtimageformats
-    qtmultimedia
-    qtsvg
-    qttools
-  ];
+    qt6.qt5compat
+    qt6.qtbase
+    qt6.qtimageformats
+    qt6.qtsvg
+    qt6.qttools
+  ] ++ lib.optional stdenv.isLinux qt6.qtwayland;
 
-  cmakeFlags = [ (lib.strings.cmakeBool "CHATTERINO_UPDATER" false) ];
+  cmakeFlags = [
+    (lib.strings.cmakeBool "BUILD_WITH_QT6" true)
+    (lib.strings.cmakeBool "CHATTERINO_UPDATER" false)
+  ];
 
   env = {
     GIT_RELEASE = version;
