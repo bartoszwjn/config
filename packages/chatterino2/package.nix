@@ -10,18 +10,18 @@
   openssl,
 }:
 let
-  source = builtins.fromJSON (builtins.readFile ./source.json);
-  version = "unstable-${source.commitDate}";
+  source-info = lib.importJSON ./source-info.json;
+  version = "unstable-${source-info.commitDate}";
 in
 stdenv.mkDerivation {
   pname = "chatterino2";
   inherit version;
 
   src = fetchFromGitHub {
-    inherit (source) owner repo fetchSubmodules;
-    inherit (source) rev hash;
+    inherit (source-info) owner repo fetchSubmodules;
+    inherit (source-info) rev hash;
     # use the same store path as `nix-prefetch-github`
-    name = "${source.repo}-${builtins.substring 0 7 source.rev}";
+    name = "${source-info.repo}-${builtins.substring 0 7 source-info.rev}";
   };
 
   nativeBuildInputs = [
@@ -47,8 +47,8 @@ stdenv.mkDerivation {
 
   env = {
     GIT_RELEASE = version;
-    GIT_COMMIT = source.rev;
-    GIT_HASH = source.rev;
+    GIT_COMMIT = source-info.rev;
+    GIT_HASH = source-info.rev;
   };
 
   meta = {
