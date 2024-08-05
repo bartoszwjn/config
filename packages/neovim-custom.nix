@@ -39,11 +39,14 @@ neovim.override {
         nvim-cmp
         nvim-lspconfig
         nvim-surround
+        nvim-treesitter-textobjects
         onedark-nvim
         plenary-nvim # required by neogit, telescope-nvim
+        rainbow-delimiters-nvim
         substitute-nvim
         telescope-nvim # required by neogit
         ;
+      nvim-treesitter = vimPlugins.nvim-treesitter.withAllGrammars;
     };
   };
 }
