@@ -5,10 +5,19 @@
   ...
 }:
 {
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      editor = false;
+    };
+  };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
 
+    kernelModules = [ "kvm-amd" ];
     initrd = {
+      kernelModules = [ "dm-snapshot" ];
       availableKernelModules = [
         "nvme"
         "xhci_pci"
@@ -16,36 +25,23 @@
         "usbhid"
         "sd_mod"
       ];
-      kernelModules = [ "dm-snapshot" ];
-      luks = {
-        reusePassphrases = true;
-        devices = {
-          root = {
-            device = "/dev/vg0/cryptroot";
-            preLVM = false;
-            allowDiscards = true;
-          };
-          data-0-0 = {
-            device = "/dev/disk/by-uuid/6bfa567a-0adc-4332-8849-41dadfcf465c";
-            preLVM = false;
-            allowDiscards = true;
-          };
-          data-0-1 = {
-            device = "/dev/disk/by-uuid/9174ee64-8fe1-47a4-87af-94b597560e4d";
-            preLVM = false;
-            allowDiscards = true;
-          };
-        };
-      };
     };
+  };
 
-    kernelModules = [ "kvm-amd" ];
+  boot.initrd.systemd.enable = true;
 
-    loader = {
-      systemd-boot = {
-        enable = true;
-        editor = false;
-      };
+  boot.initrd.luks.devices = {
+    root = {
+      device = "/dev/vg0/cryptroot";
+      allowDiscards = true;
+    };
+    data-0-0 = {
+      device = "/dev/disk/by-uuid/6bfa567a-0adc-4332-8849-41dadfcf465c";
+      allowDiscards = true;
+    };
+    data-0-1 = {
+      device = "/dev/disk/by-uuid/9174ee64-8fe1-47a4-87af-94b597560e4d";
+      allowDiscards = true;
     };
   };
 

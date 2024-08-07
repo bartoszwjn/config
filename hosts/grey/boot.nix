@@ -5,10 +5,19 @@
   ...
 }:
 {
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      editor = false;
+    };
+  };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
 
+    kernelModules = [ "kvm-intel" ];
     initrd = {
+      kernelModules = [ "dm-snapshot" ];
       availableKernelModules = [
         "xhci_pci"
         "ahci"
@@ -17,21 +26,15 @@
         "sd_mod"
         "sdhci_pci"
       ];
-      kernelModules = [ "dm-snapshot" ];
-      luks.devices."root" = {
-        device = "/dev/vg0/cryptroot";
-        preLVM = false;
-        allowDiscards = true;
-      };
     };
+  };
 
-    kernelModules = [ "kvm-intel" ];
+  boot.initrd.systemd.enable = true;
 
-    loader = {
-      systemd-boot = {
-        enable = true;
-        editor = false;
-      };
+  boot.initrd.luks.devices = {
+    root = {
+      device = "/dev/vg0/cryptroot";
+      allowDiscards = true;
     };
   };
 
