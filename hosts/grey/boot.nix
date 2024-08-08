@@ -40,7 +40,7 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/155ea03b-d794-42d6-8ea8-96b4c6a8495e";
+      device = "/dev/mapper/root";
       fsType = "ext4";
     };
     "/boot" = {

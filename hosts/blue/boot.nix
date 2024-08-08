@@ -47,7 +47,7 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/ac15240d-7e73-4a26-b2c5-6be49550d6c1";
+      device = "/dev/mapper/root";
       fsType = "ext4";
     };
     "/boot" = {
@@ -55,7 +55,7 @@
       fsType = "vfat";
     };
     "/mnt/data-0" = {
-      device = "/dev/disk/by-label/data-0";
+      device = "/dev/mapper/data-0-0";
       fsType = "btrfs";
     };
   };
