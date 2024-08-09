@@ -170,10 +170,11 @@ in
         ];
 
         bind =
+          let
+            inherit (config.custom.repo) configRepoRoot;
+          in
           [
-            "SUPER+SHIFT, q        , exec, systemctl --user stop graphical-session.target"
-            "SUPER+SHIFT, q        , exec, systemctl --user stop graphical-session-pre.target"
-            "SUPER+SHIFT, q        , exit"
+            "SUPER+SHIFT, q        , exec, ${configRepoRoot}/scripts/hypr/exit.nu"
             "SUPER+SHIFT, r        , forcerendererreload"
             "SUPER      , semicolon, exec, loginctl lock-session"
             "SUPER+SHIFT, semicolon, exec, loginctl lock-session"
