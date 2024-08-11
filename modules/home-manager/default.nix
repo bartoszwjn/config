@@ -24,7 +24,7 @@
     ./ssh.nix
     ./styling.nix
     ./syncthing.nix
-    ./zathura
+    ./zathura.nix
     ./zsh.nix
     flakeInputs.sops-nix.homeManagerModules.sops
   ];
