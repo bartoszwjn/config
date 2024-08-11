@@ -20,7 +20,7 @@ configs.setup {
   modules = {},
 
   highlight = { enable = true },
-  indent = { enable = true, disable = { "nix" } },
+  indent = { enable = true, disable = { "markdown", "nix" } },
   textobjects = {
     select = {
       enable = true,
