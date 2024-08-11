@@ -3,28 +3,29 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    systems.url = "github:nix-systems/default";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
     poetry2nix = {
       url = "github:nix-community/poetry2nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
         flake-utils.follows = "flake-utils";
       };
     };
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      flake-utils,
-      ...
-    }:
+    inputs@{ self, nixpkgs, ... }:
     let
+      inherit (nixpkgs) lib;
       mkOutputs =
         pkgs:
         let
-          inherit (pkgs) poetry2nix;
+          poetry2nix = import inputs.poetry2nix { inherit pkgs; };
           python = pkgs.python310;
 
           poetryArgs = {
@@ -39,20 +40,17 @@
           mypackage = poetry2nix.mkPoetryApplication (poetryArgs // { groups = [ ]; });
           mypackage-env = poetry2nix.mkPoetryEnv (poetryArgs // { groups = [ "dev" ]; });
 
-          nix-fmt-check = pkgs.runCommandLocal "nix-fmt" { } ''
+          nix-fmt = pkgs.runCommandLocal "nix-fmt-check" { } ''
             cd ${./.}
             ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
             touch $out
           '';
         };
     in
-    flake-utils.lib.eachDefaultSystem (
+    inputs.flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ (final: prev: { poetry2nix = import inputs.poetry2nix { pkgs = final; }; }) ];
-        };
+        pkgs = nixpkgs.legacyPackages.${system};
         outputs = mkOutputs pkgs;
       in
       {
@@ -63,7 +61,7 @@
         };
 
         checks = {
-          inherit (outputs) mypackage mypackage-env nix-fmt-check;
+          inherit (outputs) mypackage mypackage-env nix-fmt;
         };
 
         devShells.default = pkgs.mkShell {

@@ -3,7 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    systems.url = "github:nix-systems/default";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
     fenix = {
       url = "github:nix-community/fenix";
       inputs = {
@@ -13,33 +17,24 @@
     };
     crane = {
       url = "github:ipetkov/crane";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      flake-utils,
-      fenix,
-      crane,
-    }:
+    inputs@{ self, nixpkgs, ... }:
     let
+      inherit (nixpkgs) lib;
       mkOutputs =
         pkgs:
         let
-          toolchainComponents = [
+          rustToolchain = (import inputs.fenix { inherit pkgs; }).stable.withComponents [
             "rustc"
             "cargo"
             "rustfmt"
             "clippy"
           ];
-          rustToolchain = (import fenix { inherit pkgs; }).stable.withComponents toolchainComponents;
-          craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
+          craneLib = (inputs.crane.mkLib pkgs).overrideToolchain rustToolchain;
 
           src = craneLib.cleanCargoSource ./.;
           cargoArtifacts = craneLib.buildDepsOnly { inherit src; };
@@ -52,14 +47,14 @@
           };
           mypackage-fmt = craneLib.cargoFmt { inherit src; };
 
-          nix-fmt-check = pkgs.runCommandLocal "nix-fmt" { } ''
+          nix-fmt = pkgs.runCommandLocal "nix-fmt-check" { } ''
             cd ${./.}
             ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
             touch $out
           '';
         };
     in
-    flake-utils.lib.eachDefaultSystem (
+    inputs.flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -76,7 +71,7 @@
             mypackage
             mypackage-clippy
             mypackage-fmt
-            nix-fmt-check
+            nix-fmt
             ;
         };
 
