@@ -13,9 +13,22 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.zathura ];
-    xdg.configFile = {
-      "zathura/zathurarc".source = ./zathurarc;
+    programs.zathura = {
+      enable = true;
+
+      options = {
+        recolor = true;
+        recolor-darkcolor = "#cccccc";
+        recolor-lightcolor = "#1e2027";
+        recolor-keephue = true;
+
+        show-recent = 2;
+
+        window-title-home-tilde = true;
+        statusbar-home-tilde = true;
+
+        selection-clipboard = "clipboard";
+      };
     };
   };
 }
