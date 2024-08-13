@@ -18,3 +18,23 @@ vim.api.nvim_create_user_command("Mkdir",
     complete = "dir",
   }
 )
+
+vim.api.nvim_create_user_command("Mv",
+  function(opts)
+    local old_path = vim.fn.expand("%")
+    local new_path = opts.fargs[1]
+    local success, msg = os.rename(old_path, new_path)
+    if success then
+      vim.api.nvim_buf_set_name(0, new_path)
+    else
+      vim.api.nvim_echo(
+        { { "Failed to rename " .. old_path .. " to " .. new_path .. ":\n  " .. msg } }, true, {}
+      )
+    end
+  end,
+  {
+    desc = "Moves the current file to a new location",
+    nargs = 1,
+    complete = "file",
+  }
+)
