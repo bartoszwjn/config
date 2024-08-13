@@ -24,13 +24,14 @@ vim.api.nvim_create_user_command("Mv",
     local old_path = vim.fn.expand("%")
     local new_path = opts.fargs[1]
     local success, msg = os.rename(old_path, new_path)
-    if success then
-      vim.api.nvim_buf_set_name(0, new_path)
-    else
+    if not success then
       vim.api.nvim_echo(
         { { "Failed to rename " .. old_path .. " to " .. new_path .. ":\n  " .. msg } }, true, {}
       )
+      return
     end
+    vim.api.nvim_buf_set_name(0, new_path)
+    vim.cmd.edit() -- clear the "notedited" flag
   end,
   {
     desc = "Moves the current file to a new location",

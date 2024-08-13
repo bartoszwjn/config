@@ -13,3 +13,13 @@ vim.keymap.set("n", "<Leader>.", function()
     return ":e " .. dir .. "/"
   end
 end, { expr = true, desc = "Edit file starting from this file's directory" })
+
+vim.keymap.set("n", "<Leader>m", function()
+  local old_path = vim.fn.expand("%")
+  if old_path == "" then
+    vim.api.nvim_echo({ { "No file associated with the current buffer" } }, true, {})
+    return ""
+  else
+    return ":Mv " .. old_path
+  end
+end, { expr = true, desc = "[M]ove file" })
