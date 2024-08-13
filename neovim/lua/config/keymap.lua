@@ -6,5 +6,10 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 vim.keymap.set("n", "<Leader>.", function()
-  return ":e " .. vim.fn.expand("%:p:h") .. "/"
+  local dir = vim.fn.expand("%:h")
+  if dir == "." or dir == "" then
+    return ":e "
+  else
+    return ":e " .. dir .. "/"
+  end
 end, { expr = true, desc = "Edit file starting from this file's directory" })
