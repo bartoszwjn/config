@@ -20,6 +20,7 @@ in
           age
           bat
           brightnessctl
+          eza
           fd
           jq
           nasm
@@ -31,7 +32,6 @@ in
           ripgrep
           rsync
           sops
-          tree
           unzip
           vim
           wally-cli

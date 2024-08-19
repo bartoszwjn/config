@@ -46,16 +46,20 @@ in
         sd = config.custom.repo.configRepoRoot + "/scripts";
       };
       shellAliases = {
-        ls = "ls --color=auto";
-        ll = "ls -lh --group-directories-first";
-        l = "ls -lhA --group-directories-first";
+        ls = "eza --group-directories-first";
+        l = "ls --long --all --header --group --binary --time-style=iso";
+        ll = "l --git --git-repos --total-size";
+        t = "ls --tree";
+        tl = "t --long --header --group --binary --time-style=iso";
+        tll = "tl --git --git-repos --total-size";
+        ta = "t --all";
+        tla = "tl --all";
 
         gl = "git log --all --oneline --graph";
 
         sctl = "systemctl";
         btctl = "bluetoothctl";
         j = "just";
-        tree = "tree -C";
         lsblk = "lsblk -o NAME,MAJ:MIN,RM,TYPE,RO,SIZE,MOUNTPOINT,LABEL,FSTYPE,PARTTYPENAME,UUID";
       };
 
