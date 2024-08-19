@@ -33,66 +33,69 @@ in
     };
   };
 
-  config = {
-    home = {
-      packages =
-        lib.optionals cfg.general (
-          builtins.attrValues {
-            inherit (pkgs)
-              cmake
-              gnumake
-              just
-              shellcheck
-              ;
-          }
-        )
-        ++ lib.optionals cfg.jsonnet (
-          builtins.attrValues { inherit (pkgs) go-jsonnet jsonnet-bundler jsonnet-language-server; }
-        )
-        ++ lib.optionals cfg.lua (builtins.attrValues { inherit (pkgs) lua-language-server; })
-        ++ lib.optionals cfg.nix (
-          builtins.attrValues {
-            inherit (pkgs)
-              alejandra
-              nix-diff
-              nix-output-monitor
-              nix-prefetch-git
-              nix-prefetch-github
-              nixfmt-rfc-style
-              nvd
-              ;
-          }
-        )
-        ++ lib.optionals cfg.python (
-          builtins.attrValues {
-            inherit (pkgs)
-              black
-              isort
-              mypy
-              poetry
-              pyright
-              python3
-              ;
-            inherit (pkgs.python3Packages) ipython;
-          }
-        )
-        ++ lib.optionals cfg.rust (
-          builtins.attrValues {
-            inherit (pkgs)
-              cargo-edit
-              cargo-expand
-              cargo-outdated
-              rust-analyzer
-              ;
-            inherit (flakeInputs.fenix.packages.${pkgs.hostPlatform.system}.stable) defaultToolchain;
-          }
-        )
-        ++ lib.optionals cfg.git.enable (builtins.attrValues { inherit (pkgs) gitui; });
+  config = lib.mkMerge [
+    (lib.mkIf cfg.general {
+      home.packages = builtins.attrValues {
+        inherit (pkgs)
+          cmake
+          gnumake
+          just
+          shellcheck
+          ;
+      };
+    })
 
-      sessionPath = lib.optional cfg.rust (config.home.homeDirectory + "/.cargo/bin");
+    (lib.mkIf cfg.jsonnet {
+      home.packages = builtins.attrValues {
+        inherit (pkgs) go-jsonnet jsonnet-bundler jsonnet-language-server;
+      };
+    })
 
-      file = lib.optionalAttrs cfg.rust {
-        ".cargo/config.toml".source = (pkgs.formats.toml { }).generate "cargo-config.toml" {
+    (lib.mkIf cfg.lua { home.packages = [ pkgs.lua-language-server ]; })
+
+    (lib.mkIf cfg.nix {
+      home.packages = builtins.attrValues {
+        inherit (pkgs)
+          alejandra
+          nix-diff
+          nix-output-monitor
+          nix-prefetch-git
+          nix-prefetch-github
+          nixfmt-rfc-style
+          nvd
+          ;
+      };
+    })
+
+    (lib.mkIf cfg.python {
+      home.packages = builtins.attrValues {
+        inherit (pkgs)
+          black
+          isort
+          mypy
+          poetry
+          pyright
+          python3
+          ;
+        inherit (pkgs.python3Packages) ipython;
+      };
+    })
+
+    (lib.mkIf cfg.rust {
+      home = {
+        packages = builtins.attrValues {
+          inherit (pkgs)
+            cargo-edit
+            cargo-expand
+            cargo-outdated
+            rust-analyzer
+            ;
+          inherit (flakeInputs.fenix.packages.${pkgs.hostPlatform.system}.stable) defaultToolchain;
+        };
+
+        sessionPath = [ (config.home.homeDirectory + "/.cargo/bin") ];
+
+        file.".cargo/config.toml".source = (pkgs.formats.toml { }).generate "cargo-config.toml" {
           alias = {
             b = "build";
             br = "build --release";
@@ -111,29 +114,33 @@ in
           };
         };
       };
-    };
+    })
 
-    programs.git = lib.mkIf cfg.git.enable {
-      enable = true;
-      userName = "Bartosz Wojno";
-      userEmail = lib.mkIf (builtins.isString cfg.git.userEmail) cfg.git.userEmail;
-      extraConfig = {
-        advice.detachedHead = false;
-        init.defaultBranch = "main";
-        log.date = "format:%a %F %T %z";
-        pull.ff = "only";
+    (lib.mkIf cfg.git.enable {
+      home.packages = [ pkgs.gitui ];
+
+      programs.git = {
+        enable = true;
+        userName = "Bartosz Wojno";
+        userEmail = lib.mkIf (builtins.isString cfg.git.userEmail) cfg.git.userEmail;
+        extraConfig = {
+          advice.detachedHead = false;
+          init.defaultBranch = "main";
+          log.date = "format:%a %F %T %z";
+          pull.ff = "only";
+        };
+        includes = lib.mkIf (builtins.isAttrs cfg.git.userEmail) (
+          lib.mapAttrsToList (dir: email: {
+            condition = "gitdir:${dir}";
+            contents.user.email = email;
+          }) cfg.git.userEmail
+        );
       };
-      includes = lib.mkIf (builtins.isAttrs cfg.git.userEmail) (
-        lib.mapAttrsToList (dir: email: {
-          condition = "gitdir:${dir}";
-          contents.user.email = email;
-        }) cfg.git.userEmail
-      );
-    };
 
-    xdg.configFile = lib.mkIf cfg.git.enable {
-      "gitui/key_bindings.ron".source = ./gitui-key-bindings.ron;
-      "gitui/key_symbols.ron".source = ./gitui-key-symbols.ron;
-    };
-  };
+      xdg.configFile = {
+        "gitui/key_bindings.ron".source = ./gitui-key-bindings.ron;
+        "gitui/key_symbols.ron".source = ./gitui-key-symbols.ron;
+      };
+    })
+  ];
 }
