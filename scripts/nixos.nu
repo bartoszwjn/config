@@ -43,6 +43,7 @@ def --wrapped "main switch" [
 
     run-cmd sudo --validate
     let path = main build --nix=$nix ...$args
+    set-system-profile $path
     switch-to-configuration $path switch
 }
 
@@ -75,6 +76,7 @@ def --wrapped "main boot" [
 
     run-cmd sudo --validate
     let path = main build --nix=$nix ...$args
+    set-system-profile $path
     switch-to-configuration $path boot
 }
 
@@ -87,8 +89,12 @@ def "main specialisation" [
     switch-to-configuration /nix/var/nix/profiles/system test $specialisation
 }
 
+def set-system-profile [path: path]: nothing -> nothing {
+    run-cmd sudo nix-env --profile /nix/var/nix/profiles/system --set $path
+}
+
 def switch-to-configuration [
-    $path: path, action: string, $specialisation?: string
+    path: path, action: string, specialisation?: string
 ]: nothing -> nothing {
     let systemd_run = [
         systemd-run
@@ -173,13 +179,13 @@ def "main diff" [
     }
 }
 
-def get-path-for-nix-diff [$host: string, $rev?: string]: nothing -> string {
+def get-path-for-nix-diff [host: string, rev?: string]: nothing -> string {
     let rev = match $rev { null => { "" }, _ => { $"?rev=($rev)" } }
     let attr = $"nixosConfigurations.($host).config.system.build.toplevel"
     do -c { ^nix path-info --derivation $".($rev)#($attr)" }
 }
 
-def get-path-for-nvd [$host: string, $rev?: string]: nothing -> string {
+def get-path-for-nvd [host: string, rev?: string]: nothing -> string {
     let rev = match $rev { null => { "" }, _ => { $"?rev=($rev)" } }
     let attr = $"nixosConfigurations.($host).config.system.build.toplevel"
     do -c { ^nix build --no-link --print-out-paths $".($rev)#($attr)" }
