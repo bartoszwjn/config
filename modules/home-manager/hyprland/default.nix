@@ -200,8 +200,9 @@ in
             "SUPER+CTRL , l, swapwindow, r"
             "SUPER      , v, layoutmsg, togglesplit"
             "SUPER      , t, togglefloating, active"
-            "SUPER      , f, fullscreen, 0"
-            "SUPER+SHIFT, f, fakefullscreen"
+            "SUPER      , f, fullscreen, 1"
+            "SUPER+SHIFT, f, fullscreen, 0"
+            "SUPER+CTRL , f, fullscreenstate, 0 3"
             "SUPER      , p, pin, active"
           ]
           ++ lib.lists.concatMap (n: [
