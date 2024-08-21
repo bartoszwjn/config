@@ -61,6 +61,7 @@ in
           nix-output-monitor
           nix-prefetch-git
           nix-prefetch-github
+          nix-tree
           nixfmt-rfc-style
           nvd
           ;
