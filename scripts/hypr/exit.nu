@@ -1,30 +1,49 @@
 #!/usr/bin/env nu
 
 # Close all windows, stop the graphical session, wait for processes to exit, then exit Hyprland
-export def main [
+def main [
     --dry-run # Print what commands would be executed without running them
+    --systemd-service # Run directly instead of through systemd-run
 ]: nothing -> nothing {
+    if not $systemd_service {
+        let systemd_args = [
+            --user
+            --unit=hypr-exit
+            --service-type=exec
+            --same-dir
+            --setenv=PATH
+            --setenv=HYPRLAND_INSTANCE_SIGNATURE
+        ]
+        let self_args = [--systemd-service] ++ (if $dry_run { [--dry-run] } else { [] })
+        exec systemd-run ...$systemd_args $env.CURRENT_FILE ...$self_args
+    }
+
     let clients = (get-clients)
     let pids = ($clients | get-pids)
     let actions = ($clients | get-actions)
 
     $actions.close | close-windows --dry-run=$dry_run
     $actions.kill | kill-processes --dry-run=$dry_run
-    stop-session --dry-run=$dry_run
     $pids | wait-for-processes --dry-run=$dry_run
+    stop-session --dry-run=$dry_run
     stop-session-pre --dry-run=$dry_run
     exit-hyprland --dry-run=$dry_run
 }
 
-export def get-clients []: nothing -> table {
+def get-clients []: nothing -> table {
     do -c { ^hyprctl clients -j } | from json
 }
 
-export def get-pids []: table -> list<int> {
-    $in | get pid | uniq
+def get-pids []: table -> list<int> {
+    (
+        get pid
+        | uniq
+        # only wait for processes that are not part of a systemd unit
+        | filter {|pid| (^systemctl --user whoami $pid | complete | get exit_code) != 0 }
+    )
 }
 
-export def get-actions []: table -> record<close: list<string>, kill: list<int>> {
+def get-actions []: table -> record<close: list<string>, kill: list<int>> {
     let $clients = $in
 
     let actions = (
@@ -42,11 +61,11 @@ export def get-actions []: table -> record<close: list<string>, kill: list<int>>
     }
 }
 
-export def close-windows [--dry-run]: list<string> -> nothing {
+def close-windows [--dry-run]: list<string> -> nothing {
     $in | each { run-cmd --dry-run=$dry_run hyprctl dispatch closewindow $"address:($in)" }
 }
 
-export def kill-processes [--dry-run]: list<int> -> nothing {
+def kill-processes [--dry-run]: list<int> -> nothing {
     let $pids = $in
     if ($pids | length) > 0 {
         if $dry_run {
@@ -58,23 +77,23 @@ export def kill-processes [--dry-run]: list<int> -> nothing {
     }
 }
 
-export def stop-session [--dry-run]: nothing -> nothing {
-    run-cmd --dry-run=$dry_run systemctl "--user" stop hyprland-session.target
-}
-
-export def wait-for-processes [--dry-run]: list<int> -> nothing {
+def wait-for-processes [--dry-run]: list<int> -> nothing {
     run-cmd --dry-run=$dry_run waitpid "--exited" ...($in)
 }
 
-export def stop-session-pre [--dry-run]: nothing -> nothing {
+def stop-session [--dry-run]: nothing -> nothing {
+    run-cmd --dry-run=$dry_run systemctl "--user" stop graphical-session.target
+}
+
+def stop-session-pre [--dry-run]: nothing -> nothing {
     run-cmd --dry-run=$dry_run systemctl "--user" stop graphical-session-pre.target
 }
 
-export def exit-hyprland [--dry-run]: nothing -> nothing {
+def exit-hyprland [--dry-run]: nothing -> nothing {
     run-cmd --dry-run=$dry_run hyprctl dispatch exit
 }
 
-export def run-cmd [$cmd: string, ...$args: string, --dry-run]: any -> any {
+def run-cmd [$cmd: string, ...$args: string, --dry-run]: any -> any {
     if $dry_run {
         $"Would run ($cmd) ($args | str join ' ')" | print -e
     } else {
