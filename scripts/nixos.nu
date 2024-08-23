@@ -34,6 +34,7 @@ def --wrapped "main build" [
 def --wrapped "main switch" [
     --help (-h) # Display the help message for this command
     --nix # Call nix directly instead of using nom
+    --install-bootloader # (re)install the bootloader
     ...args: string # Additional arguments passed to 'nix build'
 ]: nothing -> nothing {
     if $help {
@@ -44,7 +45,7 @@ def --wrapped "main switch" [
     run-cmd sudo --validate
     let path = main build --nix=$nix ...$args
     set-system-profile $path
-    switch-to-configuration $path switch
+    switch-to-configuration $path switch --install-bootloader=$install_bootloader
 }
 
 # Build and activate the NixOS configuration for the current host without adding bootloader entries
@@ -67,6 +68,7 @@ def --wrapped "main test" [
 def --wrapped "main boot" [
     --help (-h) # Display the help message for this command
     --nix # Call nix directly instead of using nom
+    --install-bootloader # (re)install the bootloader
     ...args: string # Additional arguments passed to 'nix build'
 ] {
     if $help {
@@ -77,7 +79,7 @@ def --wrapped "main boot" [
     run-cmd sudo --validate
     let path = main build --nix=$nix ...$args
     set-system-profile $path
-    switch-to-configuration $path boot
+    switch-to-configuration $path boot --install-bootloader=$install_bootloader
 }
 
 # Switch to a specialisation of the system configuration
@@ -94,12 +96,12 @@ def set-system-profile [path: path]: nothing -> nothing {
 }
 
 def switch-to-configuration [
-    path: path, action: string, specialisation?: string
+    path: path, action: string, specialisation?: string, --install-bootloader
 ]: nothing -> nothing {
     let systemd_run = [
         systemd-run
         -E LOCALE_ARCHIVE
-        -E NIXOS_INSTALL_BOOTLOADER=
+        -E $"NIXOS_INSTALL_BOOTLOADER=(if $install_bootloader { '1' } else { '' })"
         --collect
         --no-ask-password
         --pipe
