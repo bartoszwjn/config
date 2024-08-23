@@ -154,9 +154,9 @@ in
           "workspace 9 silent, class:^(Spotify)$" # xwayland: 1
           "workspace 9 silent, class:^()$, title:^(Spotify Premium)$" # xwayland: 0
           # pavucontrol
-          "float, class:^(pavucontrol)$"
-          "move onscreen cursor 0 0, class:^(pavucontrol)$"
-          "size 600 800, class:^(pavucontrol)$"
+          "float, class:^(org\\.pulseaudio\\.pavucontrol)$"
+          "move onscreen cursor 0 0, class:^(org\\.pulseaudio\\.pavucontrol)$"
+          "size 600 800, class:^(org\\.pulseaudio\\.pavucontrol)$"
           # syncthingtray
           "float, class:^()$, title:^(Syncthing Tray)$"
           "move onscreen cursor 0 0, class:^()$, title:^(Syncthing Tray)$"
