@@ -78,7 +78,10 @@ def kill-processes [--dry-run]: list<int> -> nothing {
 }
 
 def wait-for-processes [--dry-run]: list<int> -> nothing {
-    run-cmd --dry-run=$dry_run waitpid "--exited" ...($in)
+    let pids = $in
+    if ($pids | is-not-empty) {
+        run-cmd --dry-run=$dry_run waitpid "--exited" ...($pids)
+    }
 }
 
 def stop-session [--dry-run]: nothing -> nothing {
