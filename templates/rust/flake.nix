@@ -47,9 +47,9 @@
           };
           mypackage-fmt = craneLib.cargoFmt { inherit src; };
 
-          nix-fmt = pkgs.runCommandLocal "nix-fmt-check" { } ''
+          nix-fmt = pkgs.runCommandLocal "nix-fmt-check" { nativeBuildInputs = [ pkgs.nixfmt-rfc-style ]; } ''
             cd ${./.}
-            ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
+            nixfmt --check .
             touch $out
           '';
         };
@@ -75,7 +75,7 @@
             ;
         };
 
-        devShells.default = pkgs.mkShell { inputsFrom = builtins.attrValues self.checks.${system}; };
+        devShells.default = pkgs.mkShell { inputsFrom = lib.attrValues self.checks.${system}; };
 
         formatter = pkgs.nixfmt-rfc-style;
       }

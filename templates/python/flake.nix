@@ -40,9 +40,9 @@
           mypackage = poetry2nix.mkPoetryApplication (poetryArgs // { groups = [ ]; });
           mypackage-env = poetry2nix.mkPoetryEnv (poetryArgs // { groups = [ "dev" ]; });
 
-          nix-fmt = pkgs.runCommandLocal "nix-fmt-check" { } ''
+          nix-fmt = pkgs.runCommandLocal "nix-fmt-check" { nativeBuildInputs = [ pkgs.nixfmt-rfc-style ]; } ''
             cd ${./.}
-            ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
+            nixfmt --check .
             touch $out
           '';
         };
@@ -65,7 +65,10 @@
         };
 
         devShells.default = pkgs.mkShell {
-          inputsFrom = [ outputs.mypackage-env.env ];
+          inputsFrom = [
+            outputs.mypackage-env.env
+            outputs.nix-fmt
+          ];
           packages = [ pkgs.poetry ];
         };
 
