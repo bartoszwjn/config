@@ -68,7 +68,12 @@ in
           tls_disable_session_tickets = false;
           offline_mode = false;
 
-          bootstrap_resolvers = [ "9.9.9.9:53" ];
+          bootstrap_resolvers = [
+            "9.9.9.9:53"
+            "[2620:fe::fe]:53"
+            "149.112.112.112:53"
+            "[2620:fe::9]:53"
+          ];
           ignore_system_dns = true;
           netprobe_timeout = 10; # seconds
           netprobe_address = "9.9.9.9:53";
@@ -99,6 +104,11 @@ in
             "quad9-dnscrypt-ip6-filter-alt"
             "quad9-dnscrypt-ip6-filter-alt2"
           ];
+          ipv4_servers = true;
+          ipv6_servers = true;
+          dnscrypt_servers = true;
+          doh_servers = true;
+          odoh_servers = false;
 
           # Request filters
           block_ipv6 = false;
