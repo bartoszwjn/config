@@ -83,6 +83,7 @@
         {
           blue = mkNixos "blue";
           bootstrap = mkNixos "bootstrap";
+          green = mkNixos "green";
           grey = mkNixos "grey";
         };
 
