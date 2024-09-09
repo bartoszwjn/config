@@ -54,6 +54,17 @@ in
     rofi.enable = true;
     ssh.enable = true;
     styling.enable = true;
+    syncthing = {
+      enable = true;
+      inherit (userPrivateConfig.syncthing) certFile encryptedKeyFile;
+      settings = {
+        options.listenAddresses = [ "tcp://${systemPrivateConfig.tailscale.ipv4}:22000" ];
+        folders.bartoszwjn-main.devices = [
+          "arnold"
+          "red"
+        ];
+      };
+    };
     zathura.enable = true;
     zsh.enable = true;
   };
@@ -66,4 +77,8 @@ in
       inherit (pkgs) discord;
     };
   };
+
+  xdg.dataFile."chatterino/Settings".source = config.lib.file.mkOutOfStoreSymlink (
+    config.home.homeDirectory + "/syncthing/chatterino-settings"
+  );
 }

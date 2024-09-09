@@ -57,6 +57,18 @@ in
     rofi.enable = true;
     ssh.enable = true;
     styling.enable = true;
+    syncthing = {
+      enable = true;
+      guiAddress = "127.0.0.1:8385";
+      inherit (userPrivateConfig.syncthing) certFile encryptedKeyFile;
+      settings = {
+        options.listenAddresses = [ "tcp://${systemPrivateConfig.tailscale.ipv4}:22001" ];
+        folders.bartoszwjn-main.devices = [
+          "arnold"
+          "red"
+        ];
+      };
+    };
     zathura.enable = true;
     zsh.enable = true;
   };
