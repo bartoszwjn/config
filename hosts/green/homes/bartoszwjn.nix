@@ -31,7 +31,7 @@ in
     hyprland = {
       enable = true;
       monitorsConfig = [
-        # TODO
+        "eDP-1, preferred, 0x0, 2"
         "desc:Dell Inc. DELL S2522HG GQ6L1C3, 1920x1080@120, auto-left, 1"
         "desc:LG Electronics LG Ultra HD 0x00049402, 1920x1080@60, auto-left, 1"
         ", preferred, auto-left, 1"
