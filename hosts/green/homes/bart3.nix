@@ -85,5 +85,8 @@ in
         slack
         ;
     };
+    file.".terraformrc".text = ''
+      plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
+    '';
   };
 }
