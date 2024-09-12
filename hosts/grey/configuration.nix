@@ -10,6 +10,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ../../modules/nixos
     ./boot.nix
+    ./disks.nix
     ./hardware.nix
     ./network.nix
     ./users.nix

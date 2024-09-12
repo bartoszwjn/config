@@ -6,7 +6,10 @@
 }:
 {
   boot = {
-    kernelModules = [ "acpi_call" "kvm-amd" ];
+    kernelModules = [
+      "acpi_call"
+      "kvm-amd"
+    ];
     extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
   };
 
@@ -23,13 +26,12 @@
 
   powerManagement.cpuFreqGovernor = "powersave";
 
-  services = {
-    fstrim.enable = true;
-    udev.extraRules = lib.concatStringsSep ", " [
-      ''ACTION=="add"''
-      ''SUBSYSTEM=="backlight"''
-      ''RUN+="${lib.getExe' pkgs.coreutils "chgrp"} video $sys$devpath/brightness"''
-      ''RUN+="${lib.getExe' pkgs.coreutils "chmod"} g+w $sys$devpath/brightness"''
-    ];
-  };
+  services.fstrim.enable = true;
+
+  services.udev.extraRules = lib.concatStringsSep ", " [
+    ''ACTION=="add"''
+    ''SUBSYSTEM=="backlight"''
+    ''RUN+="${lib.getExe' pkgs.coreutils "chgrp"} video $sys$devpath/brightness"''
+    ''RUN+="${lib.getExe' pkgs.coreutils "chmod"} g+w $sys$devpath/brightness"''
+  ];
 }

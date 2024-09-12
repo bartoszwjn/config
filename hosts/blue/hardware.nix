@@ -5,6 +5,8 @@
   ...
 }:
 {
+  boot.kernelModules = [ "kvm-amd" ];
+
   hardware = {
     bluetooth = {
       enable = true;
