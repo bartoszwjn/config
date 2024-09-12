@@ -19,6 +19,7 @@ in
       nix = true;
       python = true;
       rust = true;
+      terraform = true;
       git = {
         enable = true;
         userEmail = {
@@ -85,8 +86,5 @@ in
         slack
         ;
     };
-    file.".terraformrc".text = ''
-      plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
-    '';
   };
 }

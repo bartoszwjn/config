@@ -16,6 +16,7 @@ in
     nix = lib.mkEnableOption "Nix dev tools";
     python = lib.mkEnableOption "Python dev tools";
     rust = lib.mkEnableOption "Rust dev tools";
+    terraform = lib.mkEnableOption "terraform config";
 
     git = {
       enable = lib.mkEnableOption "git with custom config";
@@ -115,6 +116,18 @@ in
           };
         };
       };
+    })
+
+    (lib.mkIf cfg.terraform {
+      home.file.".terraformrc".text = ''
+        plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
+      '';
+
+      systemd.user.tmpfiles.rules = [
+        #Type Path                         Mode User Group Age Argument
+        "d    %h/.terraform.d              0755 -    -     -"
+        "d    %h/.terraform.d/plugin-cache 0755 -    -     -"
+      ];
     })
 
     (lib.mkIf cfg.git.enable {
