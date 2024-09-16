@@ -55,7 +55,16 @@ in
         ta = "t --all";
         tla = "tl --all";
 
+        gf = "git fetch";
         gl = "git log --all --oneline --graph";
+        gm = "git merge --ff-only";
+        gpl = "git pull";
+        gps = "git push";
+        gr = "git rebase";
+        gsh = "git show";
+        gspp = "git stash pop";
+        gsps = "git stash push";
+        gst = "git status";
 
         sctl = "systemctl";
         btctl = "bluetoothctl";
