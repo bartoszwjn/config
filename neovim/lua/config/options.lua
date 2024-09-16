@@ -31,6 +31,9 @@ vim.o.sidescroll = 10 -- in case of `:set nowrap`
 -- folding
 vim.o.foldlevel = 99 -- open all folds
 
+-- diff
+vim.opt.diffopt:append("vertical")
+
 -- tabs and indentation
 vim.o.expandtab = true
 vim.o.tabstop = 8
