@@ -55,6 +55,7 @@ in
         ta = "t --all";
         tla = "tl --all";
 
+        ga = "git add";
         gf = "git fetch";
         gl = "git log --all --oneline --graph";
         gm = "git merge --ff-only";
