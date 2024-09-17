@@ -49,6 +49,7 @@ in
       ];
       waybar.showBacklight = true;
       waybar.showBattery = true;
+      waybar.showPowerProfile = true;
     };
     keyring.enable = true;
     neovim.enable = true;

@@ -29,6 +29,12 @@ in
       default = false;
       description = "Whether to show battery state using a waybar widget";
     };
+
+    showPowerProfile = lib.mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether to show power-profiles-daemon profile";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -55,6 +61,7 @@ in
               "systemd-failed-units"
               "idle_inhibitor"
             ]
+            ++ lib.optional cfg.showPowerProfile "power-profiles-daemon"
             ++ lib.optional cfg.showBattery "battery"
             ++ [
               "cpu"
@@ -92,12 +99,27 @@ in
             start-activated = false;
           };
 
+          power-profiles-daemon = lib.mkIf cfg.showPowerProfile {
+            format = "{icon}";
+            format-icons = {
+              default = "";
+              performance = "";
+              balanced = "";
+              power-saver = "";
+            };
+            tooltip = true;
+            tooltip-format = lib.strings.removeSuffix "\n" ''
+              power profile: {profile}
+              driver: {driver}
+            '';
+          };
+
           battery = lib.mkIf cfg.showBattery {
             interval = 10;
             design-capacity = false;
-            format = "{icon} {capacity:3}% {time:>5}";
-            format-charging = "{icon}󱦲{capacity:3}% {time:>5}";
-            format-discharging = "{icon}󱦳{capacity:3}% {time:>5}";
+            format = "{icon} {capacity:3}%";
+            format-charging = "{icon}󱦲{capacity:3}%";
+            format-discharging = "{icon}󱦳{capacity:3}%";
             format-time = "{H}:{m}";
             format-icons = [
               "󰂎"
@@ -260,6 +282,7 @@ in
 
           #systemd-failed-units,
           #idle_inhibitor,
+          #power-profiles-daemon,
           #battery,
           #cpu,
           #memory,
