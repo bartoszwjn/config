@@ -56,16 +56,18 @@ in
         tla = "tl --all";
 
         ga = "git add";
+        gdf = "git diff";
         gf = "git fetch";
         gl = "git log --all --oneline --graph";
         gm = "git merge --ff-only";
         gpl = "git pull";
         gps = "git push";
-        gr = "git rebase";
+        grb = "git rebase";
         gsh = "git show";
         gspp = "git stash pop";
         gsps = "git stash push";
         gst = "git status";
+        gsw = "git switch";
 
         sctl = "systemctl";
         btctl = "bluetoothctl";
