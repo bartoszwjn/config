@@ -24,13 +24,33 @@ in
   options.custom.hyprland = {
     enable = lib.mkEnableOption "hyprland with custom config";
 
-    monitorsConfig = lib.mkOption {
-      type = types.listOf types.str;
+    monitors = lib.mkOption {
       description = "Hyprland monitors configuration";
       example = [
         "DP-1, 1920x1080@240, 0x0, 1"
         ", preferred, auto, 1"
       ];
+      type = types.attrsOf (
+        types.submodule (
+          { name, ... }:
+          {
+            options = {
+              name = lib.mkOption {
+                type = types.str;
+                default = name;
+              };
+              config = lib.mkOption {
+                type = types.str;
+                description = "Resolution, position, scale";
+              };
+              isPrimary = lib.mkOption {
+                type = types.bool;
+                default = false;
+              };
+            };
+          }
+        )
+      );
     };
   };
 
@@ -138,7 +158,7 @@ in
           key_press_enables_dpms = true;
         };
 
-        monitor = cfg.monitorsConfig;
+        monitor = map (monitor: "${monitor.name}, ${monitor.config}") (lib.attrValues cfg.monitors);
 
         env = [
           "SHLVL, 0"
@@ -264,6 +284,20 @@ in
             bind=SUPER, ${key}, exec, ${cmd}
             bind=SUPER, ${key}, submap, reset
           '';
+
+          primaryMonitors = lib.filter (lib.getAttr "isPrimary") (lib.attrValues cfg.monitors);
+          enablePrimaryMonitors = key: ''
+            ${lib.concatMapStringsSep "\n" (
+              monitor: "bind=SUPER, ${key}, exec, hyprctl keyword monitor ${monitor.name}, ${monitor.config}"
+            ) primaryMonitors}
+            bind=SUPER, ${key}, submap, reset
+          '';
+          disablePrimaryMonitors = key: ''
+            ${lib.concatMapStringsSep "\n" (
+              monitor: "bind=SUPER, ${key}, exec, hyprctl keyword monitor ${monitor.name}, disabled"
+            ) primaryMonitors}
+            bind=SUPER, ${key}, submap, reset
+          '';
         in
         ''
           bind=SUPER, o, submap, open
@@ -276,6 +310,15 @@ in
         + mkOpen "n" "alacritty --command nvim"
         + mkOpen "o" "obsidian"
         + mkOpen "s" "spotify"
+        + ''
+          bind=, catchall, submap, reset
+          submap=reset
+
+          bind=SUPER, m, submap, monitor
+          submap=monitor
+        ''
+        + enablePrimaryMonitors "p"
+        + disablePrimaryMonitors "e"
         + ''
           bind=, catchall, submap, reset
           submap=reset

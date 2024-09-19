@@ -30,11 +30,11 @@ in
     home.enable = true;
     hyprland = {
       enable = true;
-      monitorsConfig = [
-        "desc:Dell Inc. DELL S2522HG GQ6L1C3, 1920x1080@240, 0x0, 1"
-        "desc:Dell Inc. DELL U2412M YPPY089G14FB, 1920x1200@60, -1920x0, 1"
-        ", preferred, auto-right, 1"
-      ];
+      monitors = {
+        "desc:Dell Inc. DELL S2522HG GQ6L1C3".config = "1920x1080@240, 0x0, 1";
+        "desc:Dell Inc. DELL U2412M YPPY089G14FB".config = "1920x1200@60, -1920x0, 1";
+        "".config = "preferred, auto-right, 1";
+      };
       waybar.monitors = [ "DP-1" ];
     };
     keyring.enable = true;
