@@ -21,5 +21,8 @@ in
       };
       printing.enable = true;
     };
+
+    # https://discourse.nixos.org/t/cups-cups-filters-and-libppd-security-issues/52780
+    systemd.services.cups-browsed.enable = false;
   };
 }
