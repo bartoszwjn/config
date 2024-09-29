@@ -70,6 +70,7 @@ in
             ]
             ++ lib.optional cfg.showBacklight "backlight"
             ++ [
+              "network"
               "pulseaudio"
               "clock"
               "tray"
@@ -174,6 +175,34 @@ in
             format = "󰃠 {percent:3}%";
             on-scroll-up = "brightnessctl --class=backlight set 1%+";
             on-scroll-down = "brightnessctl --class=backlight set 1%-";
+          };
+
+          network = {
+            interval = 10;
+            family = "ipv4";
+            format = "󰛵";
+            format-ethernet = "";
+            format-wifi = "󰖩";
+            format-disconnected = "󰲛";
+            tooltip = true;
+            tooltip-format = lib.strings.removeSuffix "\n" ''
+              interface: {ifname}
+              address: {ipaddr}/{cidr}
+              gateway: {gwaddr}
+              download: {bandwidthDownBytes}
+              upload: {bandwidthUpBytes}
+            '';
+            tooltip-format-wifi = lib.strings.removeSuffix "\n" ''
+              interface: {ifname}
+              address: {ipaddr}/{cidr}
+              gateway: {gwaddr}
+              download: {bandwidthDownBytes}
+              upload: {bandwidthUpBytes}
+              ssid: {essid}
+              signal: {signalStrength}
+              frequency: {frequency}
+            '';
+            tooltip-format-disconnected = "disconnected";
           };
 
           pulseaudio = {
@@ -288,6 +317,7 @@ in
           #memory,
           #disk,
           #backlight,
+          #network,
           #pulseaudio,
           #clock {
             padding: 0 10px;
