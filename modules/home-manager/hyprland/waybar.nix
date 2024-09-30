@@ -180,10 +180,20 @@ in
           network = {
             interval = 10;
             family = "ipv4";
-            format = "󰛵";
-            format-ethernet = "";
-            format-wifi = "󰖩";
-            format-disconnected = "󰲛";
+            format = "{icon}";
+            format-icons = {
+              default = "󰛵";
+              disabled = "󰲛";
+              disconnected = "󰲛";
+              ethernet = "";
+              wifi = [
+                "󰤯"
+                "󰤟"
+                "󰤢"
+                "󰤥"
+                "󰤨"
+              ];
+            };
             tooltip = true;
             tooltip-format = lib.strings.removeSuffix "\n" ''
               interface: {ifname}
