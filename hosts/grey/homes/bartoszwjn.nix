@@ -31,7 +31,7 @@ in
     hyprland = {
       enable = true;
       monitors = {
-        "eDP-1".config = "1920x1080@60, 0x0, 1"
+        "eDP-1".config = "1920x1080@60, 0x0, 1";
         "eDP-1".isPrimary = true;
         "desc:Dell Inc. DELL S2522HG GQ6L1C3".config = "1920x1080@120, auto-left, 1";
         "desc:LG Electronics LG Ultra HD 0x00049402".config = "1920x1080@60, auto-left, 1";
