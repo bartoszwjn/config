@@ -4,22 +4,6 @@
   pkgs,
   ...
 }:
-let
-  framework-laptop-kmod =
-    let
-      orig = config.boot.kernelPackages.framework-laptop-kmod;
-    in
-    assert orig.version == "0-unstable-2024-01-02";
-    orig.overrideAttrs {
-      version = "0-unstable-2024-09-15";
-      src = pkgs.fetchFromGitHub {
-        owner = "DHowett";
-        repo = "framework-laptop-kmod";
-        rev = "6164bc3dec24b6bb2806eedd269df6a170bcc930";
-        hash = "sha256-OwtXQR0H4GNlYjVZ5UU5MEM6ZOjlV3B0x2auYawbS2U=";
-      };
-    };
-in
 {
   boot = {
     kernelModules = [
@@ -30,7 +14,7 @@ in
       "kvm-amd"
     ];
     kernelParams = [ "amd_pstate=active" ];
-    extraModulePackages = [ framework-laptop-kmod ];
+    extraModulePackages = [ config.boot.kernelPackages.framework-laptop-kmod ];
   };
 
   environment.systemPackages = [ pkgs.framework-tool ];
