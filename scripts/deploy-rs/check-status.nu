@@ -28,14 +28,14 @@ export def main [
     print "Evaluating local profile paths"
     let evaled = match [$single_eval, $eval_threads] {
         [true, _] => {
-            $queried | eval-all-profiles
+            $queried | eval-all-profiles $flake
         }
         [false, null] => {
             # This is bottlenecked by CPU/memory, use the default thread pool
-            $queried | par-each --keep-order { eval-profile }
+            $queried | par-each --keep-order { eval-profile $flake }
         }
         [false, _] => {
-            $queried | par-each --keep-order --threads $eval_threads { eval-profile }
+            $queried | par-each --keep-order --threads $eval_threads { eval-profile $flake }
         }
     }
 
@@ -83,9 +83,11 @@ def query-profile []: record -> record {
     $profile | merge $result_parsed
 }
 
-def eval-profile []: record -> record {
+def eval-profile [flake: string]: record -> record {
     let profile = $in
-    let flake_ref = $".#deploy.nodes.($profile.node).profiles.($profile.profile).path.outPath"
+    let flake_ref = (
+        $"($flake)#deploy.nodes.($profile.node).profiles.($profile.profile).path.outPath"
+    )
     # `--no-eval-cache` to avoid a spam of "SQLite database is busy" errors, which happens when
     # running multiple instances of nix in parallel. It even seems to make it slightly faster.
     # `complete` to avoid a spam of "warning: Git tree is dirty" for each `nix eval`.
@@ -97,9 +99,9 @@ def eval-profile []: record -> record {
     $profile | insert local_path $local_path
 }
 
-def eval-all-profiles []: list<record> -> list<record> {
+def eval-all-profiles [flake: string]: list<record> -> list<record> {
     let profiles = $in
-    let flake_ref = ".#deploy"
+    let flake_ref = $"($flake)#deploy"
     let profile_exprs = (
         $profiles
         | each {|profile| $"deploy.nodes.($profile.node).profiles.($profile.profile).path.outPath" }
