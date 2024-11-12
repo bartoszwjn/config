@@ -139,6 +139,7 @@ in
         userEmail = lib.mkIf (builtins.isString cfg.git.userEmail) cfg.git.userEmail;
         extraConfig = {
           advice.detachedHead = false;
+          diff.sops.textconv = "sops decrypt";
           init.defaultBranch = "main";
           log.date = "format:%a %F %T %z";
           pull.ff = "only";
