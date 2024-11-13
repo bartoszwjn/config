@@ -35,7 +35,10 @@ in
         "desc:Dell Inc. DELL U2412M YPPY089G14FB".config = "1920x1200@60, -1920x0, 1";
         "".config = "preferred, auto-right, 1";
       };
-      waybar.monitors = [ "DP-1" ];
+      waybar.monitors = [
+        "DP-1"
+        "HDMI-A-1"
+      ];
     };
     keyring.enable = true;
     neovim.enable = true;
