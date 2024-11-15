@@ -232,10 +232,10 @@ in
           ]) (lib.genList (n: n + 1) 9)
           ++ [
             # switching monitors
-            "SUPER      , w, focusmonitor, 0"
-            "SUPER+SHIFT, w, movewindow, mon:0"
-            "SUPER      , e, focusmonitor, 1"
-            "SUPER+SHIFT, e, movewindow, mon:1"
+            "SUPER      , w, focusmonitor, l"
+            "SUPER+SHIFT, w, movewindow, mon:l"
+            "SUPER      , e, focusmonitor, r"
+            "SUPER+SHIFT, e, movewindow, mon:r"
           ]
           ++ (
             let
