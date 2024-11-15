@@ -7,10 +7,7 @@
 {
   custom = {
     dns.enable = true;
-    network = {
-      enable = true;
-      interfaces = [ "enp5s0" ];
-    };
+    network.enable = true;
   };
 
   networking = {

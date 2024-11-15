@@ -10,10 +10,6 @@
     network = {
       enable = true;
       enableWireless = true;
-      interfaces = [
-        "enp3s0"
-        "wlp5s0"
-      ];
     };
   };
 

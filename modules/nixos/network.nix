@@ -5,6 +5,8 @@
   ...
 }:
 let
+  inherit (lib) types;
+
   cfg = config.custom.network;
 in
 {
@@ -13,35 +15,14 @@ in
 
     enableWireless = lib.mkEnableOption "wpa_supplicant configuration";
 
-    interfaces = lib.mkOption {
-      type = lib.types.uniq (lib.types.listOf lib.types.str);
-      description = ''
-        List of network interfaces managed by systemd-networkd. Interfaces earlier in that list will
-        be preferred over later ones for sending outgoing packets.
-      '';
-    };
-
-    interfaceToNetwork = lib.mkOption {
-      type = lib.types.uniq (lib.types.attrsOf lib.types.str);
-      description = ''
-        A read-only option that maps names of interfaces in `config.custom.network.interfaces` to
-        names of networks that control them.
-      '';
+    networks = lib.mkOption {
+      type = types.listOf types.str;
+      description = "Names of systemd-networkd networks configured by this module";
+      readOnly = true;
     };
   };
 
   config = lib.mkIf cfg.enable {
-    custom.network.interfaceToNetwork =
-      let
-        numWidth = lib.max 2 (builtins.stringLength (toString (builtins.length cfg.interfaces)));
-      in
-      builtins.listToAttrs (
-        lib.imap1 (n: iface: {
-          name = iface;
-          value = "${lib.strings.fixedWidthNumber numWidth n}-${iface}";
-        }) cfg.interfaces
-      );
-
     networking = {
       useNetworkd = true;
       firewall.enable = true;
@@ -58,18 +39,35 @@ in
 
     systemd.network = {
       enable = true;
-      networks = builtins.listToAttrs (
-        lib.imap1 (n: iface: {
-          name = cfg.interfaceToNetwork.${iface};
-          value = {
-            matchConfig.Name = iface;
-            networkConfig.DHCP = "ipv4";
-            dhcpV4Config.RouteMetric = n;
-            ipv6AcceptRAConfig.RouteMetric = n;
-          };
-        }) cfg.interfaces
-      );
       wait-online.anyInterface = true;
+      networks = {
+        "90-ethernet" = {
+          # Match ethernet interfaces, excluding virtual interfaces.
+          # https://wiki.archlinux.org/title/Systemd-networkd#Configuration_examples
+          matchConfig.Type = "ether";
+          matchConfig.Kind = "!*";
+
+          networkConfig.DHCP = "ipv4";
+          networkConfig.IPv6PrivacyExtensions = "yes";
+
+          dhcpV4Config.RouteMetric = 1024;
+          ipv6AcceptRAConfig.RouteMetric = 1024;
+        };
+        "90-wireless" = {
+          matchConfig.WLANInterfaceType = "station";
+
+          networkConfig.DHCP = "ipv4";
+          networkConfig.IPv6PrivacyExtensions = "yes";
+
+          dhcpV4Config.RouteMetric = 1025;
+          ipv6AcceptRAConfig.RouteMetric = 1025;
+        };
+      };
     };
+
+    custom.network.networks = [
+      "90-ethernet"
+      "90-wireless"
+    ];
   };
 }

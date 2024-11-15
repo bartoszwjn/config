@@ -40,7 +40,13 @@ in
           "StateDirectory"
         ];
       in
-      map (dir: {
+      [
+        {
+          assertion = config.custom.network.enable;
+          message = "Custom DNS config requires custom network config to be enabled as well";
+        }
+      ]
+      ++ map (dir: {
         assertion = systemdDir == systemdCfg.${dir};
         message =
           "systemd ${dir} for dnscrypt-proxy is ${systemdCfg.${dir}},"
@@ -171,19 +177,10 @@ in
       };
     };
 
-    systemd.network.networks =
-      let
-        networkCfg = config.custom.network;
-      in
-      builtins.listToAttrs (
-        map (iface: {
-          name = networkCfg.interfaceToNetwork.${iface};
-          value = {
-            dhcpV4Config.UseDNS = false;
-            dhcpV6Config.UseDNS = false;
-            ipv6AcceptRAConfig.UseDNS = false;
-          };
-        }) networkCfg.interfaces
-      );
+    systemd.network.networks = lib.genAttrs config.custom.network.networks (network: {
+      dhcpV4Config.UseDNS = false;
+      dhcpV6Config.UseDNS = false;
+      ipv6AcceptRAConfig.UseDNS = false;
+    });
   };
 }
