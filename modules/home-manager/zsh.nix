@@ -56,6 +56,8 @@ in
         tla = "tl --all";
 
         ga = "git add";
+        gb = "git branch";
+        gc = "git commit";
         gdf = "git diff";
         gf = "git fetch";
         gl = "git log --all --oneline --graph";
