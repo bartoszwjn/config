@@ -11,26 +11,7 @@ let
     src = ../neovim;
   };
 
-  inherit (vimPlugins) nvim-treesitter;
-  nvim-treesitter-with-plugins = nvim-treesitter.withPlugins (
-    ps: nvim-treesitter.allGrammars ++ [ ps.tree-sitter-nu ]
-  );
-
-  nvim-treesitter-fixed = nvim-treesitter-with-plugins.overrideAttrs (old: {
-    passthru.dependencies =
-      assert lib.count isNuGrammar old.passthru.dependencies == 1;
-      map (drv: if isNuGrammar drv then fixupNuQueries drv else drv) old.passthru.dependencies;
-  });
-  isNuGrammar = drv: lib.getName drv == "vimplugin-treesitter-grammar-nu";
-  fixupNuQueries =
-    drv:
-    runCommand "vimplugin-treesitter-grammar-nu" { meta = drv.meta; } ''
-      cp -r ${drv} $out
-      chmod u+w $out/queries $out/queries/nu
-      mv -n $out/queries/nu $out/queries/nu-old
-      mv -n $out/queries/nu-old/nu $out/queries/nu
-      rmdir $out/queries/nu-old
-    '';
+  nvim-treesitter-with-plugins = vimPlugins.nvim-treesitter.withAllGrammars;
 in
 neovim.override {
   withPython3 = false;
@@ -69,7 +50,7 @@ neovim.override {
         substitute-nvim
         telescope-nvim # required by neogit
         ;
-      nvim-treesitter = nvim-treesitter-fixed;
+      nvim-treesitter = nvim-treesitter-with-plugins;
     };
   };
 }
