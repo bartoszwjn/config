@@ -38,9 +38,20 @@
       let
         inherit (nixpkgs) lib;
         pkgs = nixpkgs.legacyPackages.${system};
+
+        customPackages = lib.packagesFromDirectoryRecursive {
+          directory = ./packages;
+          inherit (pkgs) callPackage;
+        };
+        customChecks = lib.packagesFromDirectoryRecursive {
+          directory = ./checks;
+          # Use `self` instead of `./.` to avoid double-copying the source tree.
+          # https://github.com/NixOS/nix/issues/10627
+          callPackage = lib.callPackageWith (pkgs // { src = self; });
+        };
       in
       {
-        packages = import ./packages { inherit pkgs; };
+        packages = customPackages;
 
         apps = {
           write-bootstrap-image =
@@ -58,13 +69,7 @@
 
         formatter = pkgs.nixfmt-rfc-style;
 
-        checks = {
-          nix-fmt-check = pkgs.runCommandLocal "nix-fmt" { } ''
-            cd ${./.}
-            ${lib.getExe' pkgs.nixfmt-rfc-style "nixfmt"} --check .
-            touch $out
-          '';
-        };
+        checks = customChecks;
       }
     )
     // {
