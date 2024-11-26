@@ -49,9 +49,15 @@
           # https://github.com/NixOS/nix/issues/10627
           callPackage = lib.callPackageWith (pkgs // { src = self; });
         };
+
+        nixosToplevels = lib.optionalAttrs (system == "x86_64-linux") (
+          lib.mapAttrs' (
+            name: nixos: lib.nameValuePair "nixos/${name}" nixos.config.system.build.toplevel
+          ) self.nixosConfigurations
+        );
       in
       {
-        packages = customPackages;
+        packages = lib.attrsets.unionOfDisjoint customPackages nixosToplevels;
 
         apps = {
           write-bootstrap-image =
@@ -69,7 +75,7 @@
 
         formatter = pkgs.nixfmt-rfc-style;
 
-        checks = customChecks;
+        checks = lib.attrsets.unionOfDisjoint customChecks self.packages.${system};
       }
     )
     // {
