@@ -74,7 +74,7 @@ in
         sctl = "systemctl";
         btctl = "bluetoothctl";
         j = "just";
-        lsblk = "lsblk -o NAME,MAJ:MIN,RM,TYPE,RO,SIZE,MOUNTPOINT,LABEL,FSTYPE,PARTTYPENAME,UUID";
+        lsblk = "lsblk -o NAME,MAJ:MIN,RM,TYPE,RO,SIZE,MOUNTPOINTS,LABEL,FSTYPE,PARTTYPENAME,UUID";
       };
 
       envExtra = ''
