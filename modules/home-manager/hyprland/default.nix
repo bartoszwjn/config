@@ -171,8 +171,7 @@ in
           "workspace 5 silent, class:^(Slack)$"
           "workspace 6 silent, class:^(Signal)$"
           "workspace 7 silent, class:^(obsidian)$"
-          "workspace 9 silent, class:^(Spotify)$" # xwayland: 1
-          "workspace 9 silent, class:^()$, title:^(Spotify Premium)$" # xwayland: 0
+          "workspace 9 silent, class:^(spotify)$"
           # pavucontrol
           "float, class:^(org\\.pulseaudio\\.pavucontrol)$"
           "move onscreen cursor 0 0, class:^(org\\.pulseaudio\\.pavucontrol)$"
