@@ -96,24 +96,6 @@ in
         [[ -n "''${key[Control-Left]}" ]] && bindkey -- "''${key[Control-Left]}" backward-word
         [[ -n "''${key[Control-Right]}" ]] && bindkey -- "''${key[Control-Right]}" forward-word
 
-        function dup () {
-            if (( $# > 1 )) then
-                echo "dup: expected at most one argument"
-                return 1
-            fi
-            if [[ $TERM != "alacritty" ]]; then
-                echo "dup: current terminal is not alacritty"
-                return 1
-            fi
-            if (( $# == 0 )) then
-                alacritty&!
-            else
-                repeat $1 do
-                    alacritty&!
-                done
-            fi
-        }
-
         function mcd () {
             if (( $# != 1 )) then
               echo "mcd: expected one argument"

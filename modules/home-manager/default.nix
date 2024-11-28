@@ -15,6 +15,7 @@
     ./home.nix
     ./hyprland
     ./keyring.nix
+    ./kitty.nix
     ./neovim.nix
     ./nix.nix
     ./nushell

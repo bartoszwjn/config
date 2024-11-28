@@ -53,6 +53,7 @@ in
       waybar.showPowerProfile = true;
     };
     keyring.enable = true;
+    kitty.enable = true;
     neovim.enable = true;
     nix.enable = true;
     nushell.enable = true;

@@ -243,7 +243,7 @@ in
             [
               # running and closing programs
               "SUPER      , q     , killactive"
-              "SUPER+SHIFT, return, exec, alacritty"
+              "SUPER+SHIFT, return, exec, kitty"
               "SUPER      , r     , exec, ${rofi}"
               # screenshots
               "SUPER      , y     , exec, wl-ss --select interactive"
@@ -306,7 +306,7 @@ in
         + mkOpen "f" "firefox"
         + mkOpen "k" "keepassxc"
         + mkOpen "m" "signal-desktop"
-        + mkOpen "n" "alacritty --command nvim"
+        + mkOpen "n" "kitty nvim"
         + mkOpen "o" "obsidian"
         + mkOpen "s" "spotify"
         + ''

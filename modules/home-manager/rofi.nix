@@ -16,7 +16,7 @@ in
     programs.rofi = {
       enable = true;
       package = pkgs.rofi-wayland;
-      terminal = "alacritty";
+      terminal = "kitty";
       cycle = true;
       location = "center";
       theme = "Arc-Dark";
