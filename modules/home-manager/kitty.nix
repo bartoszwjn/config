@@ -52,7 +52,6 @@ in
 
       settings = {
         box_drawing_scale = "0.001, 0.5, 1, 2";
-        text_fg_override_threshold = 5;
 
         cursor_blink_interval = 0; # disable
 
@@ -94,6 +93,16 @@ in
         color13 = colors.bright.magenta;
         color14 = colors.bright.cyan;
         color15 = colors.bright.white;
+      };
+
+      keybindings = {
+        "ctrl+alt+t>c>n" = "remote_control load-config -o text_fg_override_threshold=0";
+        "ctrl+alt+t>c>y" = "remote_control load-config -o text_fg_override_threshold=5";
+
+        "ctrl+alt+{" = "scroll_to_prompt -1";
+        "ctrl+alt+}" = "scroll_to_prompt 1";
+        "ctrl+shift+x" = "no_op";
+        "ctrl+shift+z" = "no_op";
       };
     };
   };
