@@ -29,7 +29,6 @@
     home-manager.enable = true;
     hyprland.enable = true;
     i18n.enable = true;
-    keyboard-layout.enable = true;
     keyring.enable = true;
     nix.enable = true;
     printing.enable = true;

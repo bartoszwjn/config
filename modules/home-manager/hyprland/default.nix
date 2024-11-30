@@ -9,6 +9,7 @@ let
   inherit (lib) types;
   cfg = config.custom.hyprland;
   hyprlandPackage = config.wayland.windowManager.hyprland.finalPackage;
+  xkbKeymapPackage = flakeInputs.self.packages.${pkgs.hostPlatform.system}.xkb-keymap-ed;
 
   colorBlue = "rgb(61afef)";
   colorCyan = "rgb(56b6c2)";
@@ -110,8 +111,7 @@ in
         };
 
         input = {
-          kb_layout = "ed"; # TODO: integrate with options.custom.keyboard-layout
-          kb_options = "lv3:ralt_switch";
+          kb_file = "${xkbKeymapPackage}/keymap.xkb";
           mouse_refocus = false;
           float_switch_override_focus = 2;
           special_fallthrough = true;

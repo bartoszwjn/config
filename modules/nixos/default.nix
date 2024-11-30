@@ -15,7 +15,6 @@
     ./home-manager.nix
     ./hyprland.nix
     ./i18n.nix
-    ./keyboard-layout
     ./keyring.nix
     ./network.nix
     ./nix.nix

@@ -42,7 +42,7 @@ default xkb_symbols "ed" {
     key <ESC>  { [ Escape           ] };
 
     key.type = "TWO_LEVEL_FN";
-    key <SPCE> { [ Space, underscore ] };
+    key <SPCE> { [ space, underscore ] };
 
     key.type = "TWO_LEVEL";
     key <BKSP> { [ BackSpace, BackSpace    ] };
