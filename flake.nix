@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    systems.url = "github:nix-systems/default";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,41 +30,63 @@
     inputs@{
       self,
       nixpkgs,
-      flake-utils,
       ...
     }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" ] (
-      system:
-      let
-        inherit (nixpkgs) lib;
-        pkgs = nixpkgs.legacyPackages.${system};
+    let
+      inherit (nixpkgs) lib;
+      systems = import inputs.systems;
+      nixosSystem = "x86_64-linux";
 
-        customPackages = lib.packagesFromDirectoryRecursive {
-          directory = ./packages;
-          inherit (pkgs) callPackage;
-        };
-        customChecks = lib.packagesFromDirectoryRecursive {
-          directory = ./checks;
-          # Use `self` instead of `./.` to avoid double-copying the source tree.
-          # https://github.com/NixOS/nix/issues/10627
-          callPackage = lib.callPackageWith (pkgs // { src = self; });
-        };
+      pkgsFor = lib.genAttrs systems (
+        system:
+        import nixpkgs {
+          localSystem.system = system;
+          config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
+        }
+      );
 
-        nixosToplevels = lib.optionalAttrs (system == "x86_64-linux") (
-          lib.mapAttrs' (
-            name: nixos: lib.nameValuePair "nixos/${name}" nixos.config.system.build.toplevel
-          ) self.nixosConfigurations
+      perSystem =
+        f:
+        lib.genAttrs systems (
+          system:
+          f {
+            inherit system;
+            pkgs = pkgsFor.${system};
+          }
         );
-      in
-      {
-        packages = lib.attrsets.unionOfDisjoint customPackages nixosToplevels;
+    in
+    {
+      lib = import ./lib { inherit lib; };
 
-        formatter = pkgs.nixfmt-rfc-style;
+      packages = perSystem (
+        { pkgs, system, ... }:
+        let
+          customPackages = lib.packagesFromDirectoryRecursive {
+            directory = ./packages;
+            inherit (pkgs) callPackage;
+          };
+          nixosToplevels = lib.optionalAttrs (system == nixosSystem) (
+            lib.mapAttrs' (
+              name: nixos: lib.nameValuePair "nixos/${name}" nixos.config.system.build.toplevel
+            ) self.nixosConfigurations
+          );
+        in
+        lib.attrsets.unionOfDisjoint customPackages nixosToplevels
+      );
 
-        checks = lib.attrsets.unionOfDisjoint customChecks self.packages.${system};
-      }
-    )
-    // {
+      checks = perSystem (
+        { pkgs, system, ... }:
+        let
+          customChecks = lib.packagesFromDirectoryRecursive {
+            directory = ./checks;
+            # Use `self` instead of `./.` to avoid double-copying the source tree.
+            # https://github.com/NixOS/nix/issues/10627
+            callPackage = lib.callPackageWith (pkgs // { src = self; });
+          };
+        in
+        lib.attrsets.unionOfDisjoint customChecks self.packages.${system}
+      );
+
       nixosConfigurations =
         let
           mkNixos =
@@ -81,7 +103,7 @@
           grey = mkNixos "grey";
         };
 
-      lib = import ./lib { inherit (nixpkgs) lib; };
+      formatter = perSystem ({ pkgs, ... }: pkgs.nixfmt-rfc-style);
 
       templates = {
         python = {
