@@ -90,17 +90,26 @@
       nixosConfigurations =
         let
           mkNixos =
-            name:
+            {
+              name,
+              readOnlyPkgs ? true,
+            }:
             nixpkgs.lib.nixosSystem {
               specialArgs.flakeInputs = inputs;
-              modules = [ ./hosts/${name}/configuration.nix ];
+              modules = [
+                ./hosts/${name}/configuration.nix
+                { nixpkgs.pkgs = pkgsFor.${nixosSystem}; }
+              ] ++ lib.optional readOnlyPkgs nixpkgs.nixosModules.readOnlyPkgs;
             };
         in
         {
-          blue = mkNixos "blue";
-          bootstrap = mkNixos "bootstrap";
-          green = mkNixos "green";
-          grey = mkNixos "grey";
+          blue = mkNixos { name = "blue"; };
+          bootstrap = mkNixos {
+            name = "bootstrap";
+            readOnlyPkgs = false; # `nixos/modules/profiles/installation-device.nix` uses overlays
+          };
+          green = mkNixos { name = "green"; };
+          grey = mkNixos { name = "grey"; };
         };
 
       formatter = perSystem ({ pkgs, ... }: pkgs.nixfmt-rfc-style);

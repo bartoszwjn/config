@@ -36,10 +36,6 @@ in
       };
     };
 
-    nixpkgs = {
-      config.allowUnfreePredicate = flakeInputs.self.lib.unfree-packages.isAllowed;
-    };
-
     programs.command-not-found.enable = false;
   };
 }
