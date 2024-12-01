@@ -59,20 +59,6 @@
       {
         packages = lib.attrsets.unionOfDisjoint customPackages nixosToplevels;
 
-        apps = {
-          write-bootstrap-image =
-            let
-              inherit (self.nixosConfigurations.bootstrap.config.system.build) isoImage;
-              isoPath = "${isoImage}/iso/${isoImage.isoName}";
-            in
-            flake-utils.lib.mkApp {
-              drv = pkgs.writeShellScriptBin "write-bootstrap-image" ''
-                if [[ "$#" -ne 1 ]]; then echo "Usage: $0 <device>"; exit 1; fi
-                exec ${lib.getExe' pkgs.coreutils "dd"} bs=64K status=progress if=${isoPath} of="$1"
-              '';
-            };
-        };
-
         formatter = pkgs.nixfmt-rfc-style;
 
         checks = lib.attrsets.unionOfDisjoint customChecks self.packages.${system};
