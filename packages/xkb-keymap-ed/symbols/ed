@@ -97,10 +97,10 @@ default xkb_symbols "ed" {
 
     key.type = "ALPHABETIC_UNICODE_FN";
     key <AD01> { [ q         , Q         , Greek_alpha, Greek_ALPHA   , XF86AudioRaiseVolume ] };
-    key <AD02> { [ w         , W         , Greek_omega, Greek_OMEGA   , NoSymbol             ] };
+    key <AD02> { [ w         , W         , Greek_omega, Greek_OMEGA   , Home                 ] };
     key <AD03> { [ e         , E         , eogonek    , Eogonek       , Up                   ] };
-    key <AD04> { [ r         , R         , Greek_rho  , Greek_RHO     , NoSymbol             ] };
-    key <AD05> { [ t         , T         , Greek_tau  , Greek_TAU     , NoSymbol             ] };
+    key <AD04> { [ r         , R         , Greek_rho  , Greek_RHO     , End                  ] };
+    key <AD05> { [ t         , T         , Greek_tau  , Greek_TAU     , Prior                ] };
     key <AD06> { [ y         , Y         , multiply   , periodcentered, asterisk             ] };
     key <AD07> { [ u         , U         , logicalor  , union         , plus                 ] };
     key <AD08> { [ i         , I         , logicaland , intersection  , bracketleft          ] };
@@ -117,7 +117,7 @@ default xkb_symbols "ed" {
     key <AC02> { [ s         , S       , sacute     , Sacute     , Left                 ] };
     key <AC03> { [ d         , D       , Greek_delta, Greek_DELTA, Down                 ] };
     key <AC04> { [ f         , F       , Greek_phi  , Greek_PHI  , Right                ] };
-    key <AC05> { [ g         , G       , Greek_gamma, Greek_GAMMA, NoSymbol             ] };
+    key <AC05> { [ g         , G       , Greek_gamma, Greek_GAMMA, Next                 ] };
     key <AC06> { [ h         , H       , identical  , notequal   , equal                ] };
     key <AC07> { [ j         , J       , leftarrow  , downarrow  , minus                ] };
     key <AC08> { [ k         , K       , rightarrow , uparrow    , parenleft            ] };
@@ -190,12 +190,14 @@ default xkb_symbols "ed" {
 
 
     key.type = "ONE_LEVEL";
-    key <MUTE> { [ XF86AudioMute        ] };
-    key <VOL-> { [ XF86AudioLowerVolume ] };
-    key <VOL+> { [ XF86AudioRaiseVolume ] };
-    key <I171> { [ XF86AudioNext        ] };
-    key <I172> { [ XF86AudioPlay        ] };
-    key <I173> { [ XF86AudioPrev        ] };
+    key <MUTE> { [ XF86AudioMute         ] };
+    key <VOL-> { [ XF86AudioLowerVolume  ] };
+    key <VOL+> { [ XF86AudioRaiseVolume  ] };
+    key <I171> { [ XF86AudioNext         ] };
+    key <I172> { [ XF86AudioPlay         ] };
+    key <I173> { [ XF86AudioPrev         ] };
+    key <I232> { [ XF86MonBrightnessDown ] };
+    key <I233> { [ XF86MonBrightnessUp   ] };
 
 
 
