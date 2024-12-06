@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
   ...
 }:
 let
@@ -87,12 +86,16 @@ in
       home = {
         packages = builtins.attrValues {
           inherit (pkgs)
+            cargo
             cargo-edit
             cargo-expand
             cargo-outdated
+            clippy
+            gcc # linker
             rust-analyzer
+            rustc
+            rustfmt
             ;
-          inherit (flakeInputs.fenix.packages.${pkgs.hostPlatform.system}.stable) defaultToolchain;
         };
 
         sessionPath = [ (config.home.homeDirectory + "/.cargo/bin") ];
