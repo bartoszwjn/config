@@ -1,12 +1,14 @@
 use std::{
     error::Error,
+    fs::File,
+    io::{Seek, SeekFrom},
     path::PathBuf,
-    process::{Command, ExitCode},
+    process::{Command, ExitCode, Stdio},
 };
 
 use clap::{Parser, ValueEnum};
 
-use command::{run, run_command};
+use command::{execute, run};
 use hyprland::{get_active_window_region, get_active_workspace_region};
 
 mod command;
@@ -53,14 +55,11 @@ fn main_impl() -> Result<()> {
     let args = Args::parse();
 
     let region = get_region(args.select)?;
-
-    let output_path = match args.output {
-        Some(output_path) => output_path,
-        // important to choose this after the user is done selecting the region
-        None => get_default_output_path()?,
-    };
-
-    take_screenshot(region, output_path)?;
+    // Default output path includes a timestamp, so it's important to do this after the user is
+    // done selecting the region.
+    let output_file = prepare_output_file(args.output)?;
+    with_copied_file(&output_file, |file| take_screenshot(region, file))??;
+    copy_to_clipboard(output_file)?;
 
     Ok(())
 }
@@ -99,6 +98,18 @@ fn select_region_interactively() -> Result<Region> {
     })
 }
 
+fn prepare_output_file(provided_path: Option<PathBuf>) -> Result<File> {
+    let output_path = match provided_path {
+        Some(output_path) => output_path,
+        None => get_default_output_path()?,
+    };
+
+    let file = File::create_new(&output_path)
+        .map_err(|e| format!("failed to open file {:?}: {}", output_path, e))?;
+
+    Ok(file)
+}
+
 fn get_default_output_path() -> Result<PathBuf> {
     let home = PathBuf::from(std::env::var_os("HOME").ok_or("$HOME is not set")?);
     if !home.is_absolute() {
@@ -112,7 +123,7 @@ fn get_default_output_path() -> Result<PathBuf> {
     Ok(output_path)
 }
 
-fn take_screenshot(region: Option<Region>, output_path: PathBuf) -> Result<()> {
+fn take_screenshot(region: Option<Region>, output_file: File) -> Result<()> {
     let mut cmd = Command::new("grim");
     cmd.args(["-t", "png"]);
     if let Some(region) = region {
@@ -125,7 +136,31 @@ fn take_screenshot(region: Option<Region>, output_path: PathBuf) -> Result<()> {
         );
         cmd.args(["-g", geometry]);
     }
-    cmd.arg(&output_path);
-    print!("{}", run_command(&mut cmd)?);
-    Ok(())
+    cmd.arg("-"); // write to stdout
+    cmd.stdin(Stdio::null()).stdout(output_file);
+    execute(&mut cmd)
+}
+
+fn copy_to_clipboard(output_file: File) -> Result<()> {
+    let mut cmd = Command::new("wl-copy");
+    cmd.args(["--type", "image/png"]);
+    cmd.stdin(output_file);
+    execute(&mut cmd)
+}
+
+fn with_copied_file<T>(mut file: &File, f: impl FnOnce(File) -> T) -> Result<T> {
+    // The copied file handle shares state with the original, we need to restore it when we're
+    // done.
+    let original_pos = file
+        .stream_position()
+        .map_err(|e| format!("failed to get current position in file: {}", e))?;
+    let file_copy = file
+        .try_clone()
+        .map_err(|e| format!("failed to duplicate handle for output file: {}", e))?;
+
+    let result = f(file_copy);
+
+    file.seek(SeekFrom::Start(original_pos))
+        .map_err(|e| format!("seek operation failed: {}", e))?;
+    Ok(result)
 }
