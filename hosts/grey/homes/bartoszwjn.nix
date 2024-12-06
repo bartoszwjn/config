@@ -42,8 +42,13 @@ in
         "DP-1"
         "HDMI-A-1"
       ];
-      waybar.showBacklight = true;
-      waybar.showBattery = true;
+      waybar.backlight.enable = true;
+      waybar.battery.enable = true;
+      waybar.battery.thresholds = {
+        warning = 50;
+        low = 25;
+        critical = 15;
+      };
     };
     keyring.enable = true;
     kitty.enable = true;

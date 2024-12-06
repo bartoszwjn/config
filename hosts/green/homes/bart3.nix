@@ -48,9 +48,9 @@ in
         "DP-3" # back left (slot 1)
         "DP-4" # front right (slot 4)
       ];
-      waybar.showBacklight = true;
-      waybar.showBattery = true;
-      waybar.showPowerProfile = true;
+      waybar.backlight.enable = true;
+      waybar.battery.enable = true;
+      waybar.powerProfiles.enable = true;
     };
     keyring.enable = true;
     kitty.enable = true;

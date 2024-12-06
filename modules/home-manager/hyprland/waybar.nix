@@ -18,23 +18,28 @@ in
       example = [ "DP-1" ];
     };
 
-    showBacklight = lib.mkOption {
-      type = types.bool;
-      default = false;
-      description = "Whether to show backlight state using a waybar widget";
+    backlight.enable = lib.mkEnableOption "backlight state waybar widget";
+
+    battery = {
+      enable = lib.mkEnableOption "battery state waybar widget";
+
+      thresholds = {
+        warning = lib.mkOption {
+          type = types.ints.between 0 100;
+          default = 25;
+        };
+        low = lib.mkOption {
+          type = types.ints.between 0 100;
+          default = 10;
+        };
+        critical = lib.mkOption {
+          type = types.ints.between 0 100;
+          default = 5;
+        };
+      };
     };
 
-    showBattery = lib.mkOption {
-      type = types.bool;
-      default = false;
-      description = "Whether to show battery state using a waybar widget";
-    };
-
-    showPowerProfile = lib.mkOption {
-      type = types.bool;
-      default = false;
-      description = "Whether to show power-profiles-daemon profile";
-    };
+    powerProfiles.enable = lib.mkEnableOption "power-profiles-daemon waybar widget";
   };
 
   config = lib.mkIf cfg.enable {
@@ -61,14 +66,14 @@ in
               "systemd-failed-units"
               "idle_inhibitor"
             ]
-            ++ lib.optional cfg.showPowerProfile "power-profiles-daemon"
-            ++ lib.optional cfg.showBattery "battery"
+            ++ lib.optional cfg.powerProfiles.enable "power-profiles-daemon"
+            ++ lib.optional cfg.battery.enable "battery"
             ++ [
               "cpu"
               "memory"
               "disk"
             ]
-            ++ lib.optional cfg.showBacklight "backlight"
+            ++ lib.optional cfg.backlight.enable "backlight"
             ++ [
               "network"
               "pulseaudio"
@@ -100,7 +105,7 @@ in
             start-activated = false;
           };
 
-          power-profiles-daemon = lib.mkIf cfg.showPowerProfile {
+          power-profiles-daemon = lib.mkIf cfg.powerProfiles.enable {
             format = "{icon}";
             format-icons = {
               default = "";
@@ -115,7 +120,7 @@ in
             '';
           };
 
-          battery = lib.mkIf cfg.showBattery {
+          battery = lib.mkIf cfg.battery.enable {
             interval = 10;
             design-capacity = false;
             format = "{icon} {capacity:3}%";
@@ -137,9 +142,7 @@ in
             ];
             weighted-average = false;
             states = {
-              warning = 50;
-              low = 25;
-              critical = 15;
+              inherit (cfg.battery.thresholds) warning low critical;
             };
             tooltip-format = lib.strings.removeSuffix "\n" ''
               capacity: {capacity}%
@@ -170,7 +173,7 @@ in
             path = "/";
           };
 
-          backlight = lib.mkIf cfg.showBacklight {
+          backlight = lib.mkIf cfg.backlight.enable {
             interval = 1;
             format = "󰃠 {percent:3}%";
             on-scroll-up = "brightnessctl --class=backlight set 1%+";
