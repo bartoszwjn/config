@@ -17,7 +17,7 @@ in
 
     services.gpg-agent = {
       enable = true;
-      enableScDaemon = false;
+      enableScDaemon = true;
       defaultCacheTtl = 3600; # seconds
       pinentryPackage = pkgs.pinentry-curses;
     };
