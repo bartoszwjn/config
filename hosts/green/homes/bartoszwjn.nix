@@ -75,7 +75,7 @@ in
 
   home = {
     username = "bartoszwjn";
-    stateVersion = "24.05";
+    stateVersion = "24.11";
     packages = builtins.attrValues {
       inherit (flakeInputs.self.packages.${pkgs.hostPlatform.system}) chatterino2;
       inherit (pkgs) discord;

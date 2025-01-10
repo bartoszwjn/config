@@ -80,7 +80,7 @@ in
 
   home = {
     username = "bart3";
-    stateVersion = "24.05";
+    stateVersion = "24.11";
     packages = builtins.attrValues {
       inherit (pkgs)
         awscli2
