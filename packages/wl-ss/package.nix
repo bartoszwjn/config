@@ -15,5 +15,5 @@ rustPlatform.buildRustPackage {
     ];
   };
 
-  cargoHash = "sha256-E1pRyjj5GjM0ZoiGm9rZWI/z19UBmQAXU0APo9nY0D4=";
+  cargoHash = "sha256-0dvz/wNqCikA8T8+HPmFxMPK5c0fl3QIuZmEPc2pXt4=";
 }
