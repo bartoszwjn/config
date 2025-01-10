@@ -19,7 +19,7 @@ in
 
     home.packages = builtins.attrValues {
       inherit (pkgs) arc-icon-theme arc-theme;
-      nerdfonts = pkgs.nerdfonts.override { fonts = [ "SourceCodePro" ]; };
+      inherit (pkgs.nerd-fonts) sauce-code-pro;
     };
 
     xdg.dataFile = {

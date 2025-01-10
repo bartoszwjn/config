@@ -9,19 +9,7 @@ let
   config = vimUtils.buildVimPlugin {
     name = "config";
     src = ../neovim;
-  };
-
-  nvim-treesitter-with-plugins = vimPlugins.nvim-treesitter.withAllGrammars;
-in
-neovim.override {
-  withPython3 = false;
-  withRuby = false;
-  configure = {
-    customRC = ''
-      source ${config}/init.lua
-    '';
-    packages.custom.start = builtins.attrValues {
-      inherit config;
+    dependencies = builtins.attrValues {
       inherit (vimPlugins)
         cmp-cmdline
         cmp-nvim-lsp
@@ -29,7 +17,7 @@ neovim.override {
         cmp-path
         cmp_luasnip
         comment-nvim
-        diffview-nvim # required by neogit
+        diffview-nvim # optional dep for neogit
         fidget-nvim
         friendly-snippets
         git-messenger-vim
@@ -45,12 +33,24 @@ neovim.override {
         nvim-surround
         nvim-treesitter-textobjects
         onedark-nvim
-        plenary-nvim # required by neogit, telescope-nvim
+        plenary-nvim # required dep for neogit, telescope-nvim
         rainbow-delimiters-nvim
         substitute-nvim
-        telescope-nvim # required by neogit
+        telescope-nvim # optional dep for neogit
         ;
       nvim-treesitter = nvim-treesitter-with-plugins;
     };
+  };
+
+  nvim-treesitter-with-plugins = vimPlugins.nvim-treesitter.withAllGrammars;
+in
+neovim.override {
+  withPython3 = false;
+  withRuby = false;
+  configure = {
+    customRC = ''
+      source ${config}/init.lua
+    '';
+    packages.custom.start = [ config ];
   };
 }
