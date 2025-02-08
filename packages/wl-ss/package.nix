@@ -1,6 +1,6 @@
 { lib, rustPlatform }:
 let
-  cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+  cargoToml = lib.importTOML ./Cargo.toml;
 in
 rustPlatform.buildRustPackage {
   pname = cargoToml.package.name;
@@ -15,5 +15,5 @@ rustPlatform.buildRustPackage {
     ];
   };
 
-  cargoHash = "sha256-0dvz/wNqCikA8T8+HPmFxMPK5c0fl3QIuZmEPc2pXt4=";
+  cargoLock.lockFile = ./Cargo.lock;
 }
