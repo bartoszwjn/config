@@ -25,7 +25,6 @@ def main [
     | from json | get hash
   )
 
-  let date = ($new_datetime | date to-record)
   let new = (
     $old
     | update rev $commit.sha
