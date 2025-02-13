@@ -49,7 +49,10 @@ export def get-profile-info [
 
     match $nodes {
         [] => { $profiles }
-        _ => { $profiles | where node in $nodes }
+        _ => {
+            let profiles_by_node = ($profiles | group-by node)
+            $nodes | each {|node| $profiles_by_node | get $node } | flatten
+        }
     }
 }
 
