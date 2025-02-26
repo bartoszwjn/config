@@ -15,6 +15,7 @@ in
 
   config = lib.mkIf cfg.enable {
     nix = {
+      package = pkgs.lix;
       channel.enable = false;
       registry = {
         home-manager.flake = flakeInputs.home-manager;
