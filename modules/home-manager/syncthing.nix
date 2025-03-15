@@ -150,14 +150,6 @@ in
             deviceID = privateConfig.hosts.green.bart3.syncthing.deviceId;
             addresses = [ "tcp://${privateConfig.hosts.green.tailscale.fqdn}:22001" ];
           };
-          grey = {
-            deviceID = privateConfig.hosts.grey.bartoszwjn.syncthing.deviceId;
-            addresses = [ "tcp://${privateConfig.hosts.grey.tailscale.fqdn}:22000" ];
-          };
-          grey-bart3 = {
-            deviceID = privateConfig.hosts.grey.bart3.syncthing.deviceId;
-            addresses = [ "tcp://${privateConfig.hosts.grey.tailscale.fqdn}:22001" ];
-          };
           red = {
             deviceID = privateConfig.hosts.red.syncthing.deviceId;
             addresses = [ "tcp://${privateConfig.hosts.red.tailscale.fqdn}:22000" ];

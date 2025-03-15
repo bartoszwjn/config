@@ -102,7 +102,6 @@
             readOnlyPkgs = false; # `nixos/modules/profiles/installation-device.nix` uses overlays
           };
           green = mkNixos { name = "green"; };
-          grey = mkNixos { name = "grey"; };
         };
 
       formatter = perSystem ({ pkgs, ... }: pkgs.nixfmt-rfc-style);
