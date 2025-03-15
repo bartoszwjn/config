@@ -4,9 +4,9 @@
   fetchFromGitHub,
   pkg-config,
   cmake,
-  qt6,
+  qt6Packages,
   boost,
-  libsecret,
+  libnotify,
   openssl,
 }:
 let
@@ -27,22 +27,23 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     cmake
     pkg-config
-    qt6.wrapQtAppsHook
+    qt6Packages.wrapQtAppsHook
   ];
   buildInputs = [
     boost
-    libsecret
+    libnotify
     openssl
-    qt6.qt5compat
-    qt6.qtbase
-    qt6.qtimageformats
-    qt6.qtsvg
-    qt6.qttools
-  ] ++ lib.optional stdenv.isLinux qt6.qtwayland;
+    qt6Packages.qt5compat
+    qt6Packages.qtbase
+    qt6Packages.qtimageformats
+    qt6Packages.qtkeychain
+    qt6Packages.qtsvg
+    qt6Packages.qttools
+  ] ++ lib.optional stdenv.isLinux qt6Packages.qtwayland;
 
   cmakeFlags = [
-    (lib.strings.cmakeBool "BUILD_WITH_QT6" true)
     (lib.strings.cmakeBool "CHATTERINO_UPDATER" false)
+    (lib.strings.cmakeBool "USE_SYSTEM_QTKEYCHAIN" true)
   ];
 
   env = {
@@ -53,5 +54,6 @@ stdenv.mkDerivation {
 
   meta = {
     license = lib.licenses.mit;
+    mainProgram = "chatterino";
   };
 }
