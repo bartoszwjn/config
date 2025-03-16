@@ -16,6 +16,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     private-config.url = "github:bartoszwjn/private-config";
   };
 
@@ -45,6 +49,7 @@
           f {
             inherit system;
             pkgs = pkgsFor.${system};
+            treefmt = inputs.treefmt-nix.lib.evalModule pkgsFor.${system} ./treefmt.nix;
           }
         );
     in
@@ -68,16 +73,17 @@
       );
 
       checks = perSystem (
-        { pkgs, system, ... }:
-        let
-          customChecks = lib.packagesFromDirectoryRecursive {
-            directory = ./checks;
-            # Use `self` instead of `./.` to avoid double-copying the source tree.
-            # https://github.com/NixOS/nix/issues/10627
-            callPackage = lib.callPackageWith (pkgs // { src = self; });
-          };
-        in
-        lib.attrsets.unionOfDisjoint customChecks self.packages.${system}
+        { system, treefmt, ... }:
+        lib.attrsets.unionOfDisjoint self.packages.${system} {
+          treefmt-test = treefmt.config.build.check self;
+        }
+      );
+
+      devShells = perSystem (
+        { treefmt, ... }:
+        {
+          default = treefmt.config.build.devShell;
+        }
       );
 
       nixosConfigurations =
@@ -104,7 +110,7 @@
           green = mkNixos { name = "green"; };
         };
 
-      formatter = perSystem ({ pkgs, ... }: pkgs.nixfmt-rfc-style);
+      formatter = perSystem ({ treefmt, ... }: treefmt.config.build.wrapper);
 
       templates = {
         python = {
