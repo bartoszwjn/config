@@ -42,8 +42,9 @@ export def main [
     let compared = ($evaled | each { compare-profile })
     (
         $compared
-        | select node profile status context
+        | select status node profile context
             ...(if $show_paths { [deployed_path local_path] } else { [] })
+        | update status { display-status }
         | print
     )
 }
@@ -128,4 +129,15 @@ def compare-profile []: record -> record {
         $other => { $other }
     }
     $profile | update status $status
+}
+
+def display-status []: string -> string {
+    match $in {
+        "up-to-date" => { $"(ansi green)up-to-date(ansi reset)" },
+        "outdated" => { $"(ansi yellow)outdated(ansi reset)" },
+        "invalid" => { $"(ansi red)invalid(ansi reset)" },
+        "missing" => { $"(ansi yellow)missing(ansi reset)" },
+        "unknown" => { $"(ansi dark_gray)unknown(ansi reset)" },
+        _ => { $in },
+    }
 }
