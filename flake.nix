@@ -42,6 +42,10 @@
         }
       );
 
+      treefmtFor = lib.genAttrs systems (
+        system: inputs.treefmt-nix.lib.evalModule pkgsFor.${system} ./treefmt.nix
+      );
+
       perSystem =
         f:
         lib.genAttrs systems (
@@ -49,7 +53,7 @@
           f {
             inherit system;
             pkgs = pkgsFor.${system};
-            treefmt = inputs.treefmt-nix.lib.evalModule pkgsFor.${system} ./treefmt.nix;
+            treefmt = treefmtFor.${system};
           }
         );
     in
