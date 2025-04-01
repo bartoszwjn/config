@@ -71,5 +71,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
     nmap("<Leader>wl", "[w]orkspace: [l]ist folders (LSP)", function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end)
-  end
+  end,
 })

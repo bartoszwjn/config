@@ -4,5 +4,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   group = ft_detect_group,
   pattern = "*.Jenkinsfile",
   desc = "use ft=groovy in Jenkinsfiles",
-  callback = function() vim.bo.filetype = "groovy" end,
+  callback = function()
+    vim.bo.filetype = "groovy"
+  end,
 })

@@ -1,5 +1,5 @@
-local substitute = require("substitute")
 local exchange = require("substitute.exchange")
+local substitute = require("substitute")
 
 substitute.setup {}
 

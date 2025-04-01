@@ -15,10 +15,18 @@ gitsigns.setup {
     end
 
     map("n", "]c", "move to next hunk", function()
-      if vim.wo.diff then vim.cmd.normal({ "]c", bang = true }) else gitsigns.nav_hunk("next") end
+      if vim.wo.diff then
+        vim.cmd.normal { "]c", bang = true }
+      else
+        gitsigns.nav_hunk("next")
+      end
     end)
     map("n", "[c", "move to previous hunk", function()
-      if vim.wo.diff then vim.cmd.normal({ "[c", bang = true }) else gitsigns.nav_hunk("prev") end
+      if vim.wo.diff then
+        vim.cmd.normal { "[c", bang = true }
+      else
+        gitsigns.nav_hunk("prev")
+      end
     end)
 
     map({ "n", "v" }, "<Leader>h", "git [h]unk", "<Nop>")
