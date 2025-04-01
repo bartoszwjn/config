@@ -42,7 +42,7 @@
         }
       );
 
-      treefmtFor = lib.genAttrs systems (
+      treefmtEvalFor = lib.genAttrs systems (
         system: inputs.treefmt-nix.lib.evalModule pkgsFor.${system} ./treefmt.nix
       );
 
@@ -53,7 +53,7 @@
           f {
             inherit system;
             pkgs = pkgsFor.${system};
-            treefmt = treefmtFor.${system};
+            treefmtEval = treefmtEvalFor.${system};
           }
         );
     in
@@ -61,7 +61,12 @@
       lib = import ./lib { inherit lib; };
 
       packages = perSystem (
-        { pkgs, system, ... }:
+        {
+          pkgs,
+          system,
+          treefmtEval,
+          ...
+        }:
         let
           customPackages = lib.packagesFromDirectoryRecursive {
             directory = ./packages;
@@ -73,20 +78,24 @@
             ) self.nixosConfigurations
           );
         in
-        lib.attrsets.unionOfDisjoint customPackages nixosToplevels
+        lib.lists.foldl' lib.attrsets.unionOfDisjoint { } [
+          customPackages
+          nixosToplevels
+          { treefmt-config = treefmtEval.config.build.configFile; }
+        ]
       );
 
       checks = perSystem (
-        { system, treefmt, ... }:
+        { system, treefmtEval, ... }:
         lib.attrsets.unionOfDisjoint self.packages.${system} {
-          treefmt-test = treefmt.config.build.check self;
+          treefmt-check = treefmtEval.config.build.check self;
         }
       );
 
       devShells = perSystem (
-        { treefmt, ... }:
+        { treefmtEval, ... }:
         {
-          default = treefmt.config.build.devShell;
+          default = treefmtEval.config.build.devShell;
         }
       );
 
@@ -114,7 +123,7 @@
           green = mkNixos { name = "green"; };
         };
 
-      formatter = perSystem ({ treefmt, ... }: treefmt.config.build.wrapper);
+      formatter = perSystem ({ treefmtEval, ... }: treefmtEval.config.build.wrapper);
 
       templates = {
         python = {
