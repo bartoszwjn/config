@@ -14,6 +14,17 @@ vim.keymap.set("n", "<Leader>.", function()
   end
 end, { expr = true, desc = "Edit file starting from this file's directory" })
 
+vim.keymap.set("n", "<Leader>cF", function()
+  local old_path = vim.fn.expand("%")
+  if old_path == "" then
+    vim.api.nvim_echo({ { "No file associated with the current buffer" } }, true, {})
+    return
+  end
+
+  vim.cmd.update()
+  vim.cmd("!treefmt --on-unmatched fatal -- %") -- TODO: --quiet starting with treefmt 2.2.0
+end, { desc = "[c]ode [F]ormat: treefmt" })
+
 vim.keymap.set("n", "<Leader>m", function()
   local old_path = vim.fn.expand("%")
   if old_path == "" then
@@ -22,4 +33,4 @@ vim.keymap.set("n", "<Leader>m", function()
   else
     return ":Mv " .. old_path
   end
-end, { expr = true, desc = "[M]ove file" })
+end, { expr = true, desc = "[m]ove file" })
