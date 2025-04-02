@@ -71,6 +71,13 @@ in
         gst = "git status";
         gsw = "git switch";
 
+        nb = "nix build --no-link --print-out-paths";
+        nd = "nix develop";
+        ne = "nix eval";
+        nfc = "nix flake check";
+        nr = "nix run";
+        ns = "nix shell";
+
         btctl = "bluetoothctl";
         diff = "diff --color";
         j = "just";
