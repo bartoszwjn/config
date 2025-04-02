@@ -71,10 +71,11 @@ in
         gst = "git status";
         gsw = "git switch";
 
-        sctl = "systemctl";
         btctl = "bluetoothctl";
+        diff = "diff --color";
         j = "just";
         lsblk = "lsblk -o NAME,MAJ:MIN,RM,TYPE,RO,SIZE,MOUNTPOINTS,LABEL,FSTYPE,PARTTYPENAME,UUID";
+        sctl = "systemctl";
       };
 
       envExtra = ''
