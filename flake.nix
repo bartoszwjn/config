@@ -49,16 +49,5 @@
       formatter = perSystem (outputs: outputs.formatter);
 
       nixosConfigurations = outputsFor.x86_64-linux.nixos;
-
-      templates = {
-        python = {
-          description = "A flake that builds a Python Poetry project using poetry2nix";
-          path = ./templates/python;
-        };
-        rust = {
-          description = "A flake that builds a Rust crate using fenix and crane";
-          path = ./templates/rust;
-        };
-      };
     };
 }
