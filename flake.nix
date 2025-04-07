@@ -34,11 +34,20 @@
       systems = import inputs.systems;
       nixosSystem = "x86_64-linux";
 
+      allowedUnfreePackages = [
+        "discord"
+        "obsidian"
+        "slack"
+        "spotify"
+        "steam"
+        "steam-unwrapped"
+      ];
+
       pkgsFor = lib.genAttrs systems (
         system:
         import nixpkgs {
           localSystem.system = system;
-          config.allowUnfreePredicate = self.lib.unfree-packages.isAllowed;
+          config.allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) allowedUnfreePackages;
         }
       );
 
@@ -66,8 +75,6 @@
         );
     in
     {
-      lib = import ./lib { inherit lib; };
-
       packages = perSystem (
         {
           pkgs,
