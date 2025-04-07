@@ -32,109 +32,23 @@
     let
       inherit (nixpkgs) lib;
       systems = import inputs.systems;
-      nixosSystem = "x86_64-linux";
 
-      allowedUnfreePackages = [
-        "discord"
-        "obsidian"
-        "slack"
-        "spotify"
-        "steam"
-        "steam-unwrapped"
-      ];
+      outputsFor = lib.genAttrs systems (system: import ./. { inherit inputs system; });
 
-      pkgsFor = lib.genAttrs systems (
-        system:
-        import nixpkgs {
-          localSystem.system = system;
-          config.allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) allowedUnfreePackages;
-        }
-      );
-
-      treefmtEvalFor = lib.genAttrs systems (
-        system: inputs.treefmt-nix.lib.evalModule pkgsFor.${system} ./treefmt.nix
-      );
-
-      customPkgsFor = lib.genAttrs systems (
-        system:
-        lib.packagesFromDirectoryRecursive {
-          directory = ./packages;
-          inherit (pkgsFor.${system}) callPackage;
-        }
-      );
-
-      perSystem =
-        f:
-        lib.genAttrs systems (
-          system:
-          f {
-            inherit system;
-            pkgs = pkgsFor.${system};
-            treefmtEval = treefmtEvalFor.${system};
-          }
-        );
+      perSystem = f: lib.genAttrs systems (system: f outputsFor.${system});
     in
     {
-      packages = perSystem (
-        {
-          pkgs,
-          system,
-          treefmtEval,
-          ...
-        }:
-        let
-          nixosToplevels = lib.optionalAttrs (system == nixosSystem) (
-            lib.mapAttrs' (
-              name: nixos: lib.nameValuePair "nixos/${name}" nixos.config.system.build.toplevel
-            ) self.nixosConfigurations
-          );
-        in
-        lib.lists.foldl' lib.attrsets.unionOfDisjoint { } [
-          customPkgsFor.${system}
-          nixosToplevels
-          { treefmt-config = treefmtEval.config.build.configFile; }
-        ]
-      );
+      packages = perSystem (outputs: outputs.packages);
 
-      checks = perSystem (
-        { system, treefmtEval, ... }:
-        lib.attrsets.unionOfDisjoint self.packages.${system} {
-          treefmt-check = treefmtEval.config.build.check self;
-        }
-      );
+      checks = perSystem (outputs: outputs.checks);
 
-      devShells = perSystem (
-        { treefmtEval, ... }:
-        {
-          default = treefmtEval.config.build.devShell;
-        }
-      );
+      devShells = perSystem (outputs: {
+        default = outputs.devShell;
+      });
 
-      nixosConfigurations =
-        let
-          mkNixos = import ./nixos.nix {
-            inherit lib;
-            pkgs = pkgsFor.${nixosSystem};
-            customPkgs = customPkgsFor.${nixosSystem};
-            inherit (inputs)
-              nixpkgs
-              home-manager
-              sops-nix
-              disko
-              private-config
-              ;
-          };
-        in
-        {
-          blue = mkNixos { name = "blue"; };
-          bootstrap = mkNixos {
-            name = "bootstrap";
-            readOnlyPkgs = false; # `nixos/modules/profiles/installation-device.nix` uses overlays
-          };
-          green = mkNixos { name = "green"; };
-        };
+      formatter = perSystem (outputs: outputs.formatter);
 
-      formatter = perSystem ({ treefmtEval, ... }: treefmtEval.config.build.wrapper);
+      nixosConfigurations = outputsFor.x86_64-linux.nixos;
 
       templates = {
         python = {
