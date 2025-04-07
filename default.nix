@@ -78,7 +78,7 @@ in
     }
   ];
 
-  devShell = treefmtEval.config.build.devShell;
+  devShell = pkgs.mkShellNoCC { inputsFrom = [ treefmtEval.config.build.devShell ]; };
 
   formatter = treefmtEval.config.build.wrapper;
 
