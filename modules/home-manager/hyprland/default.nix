@@ -2,14 +2,14 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
+  customPkgs,
   ...
 }:
 let
   inherit (lib) types;
   cfg = config.custom.hyprland;
   hyprlandPackage = config.wayland.windowManager.hyprland.finalPackage;
-  xkbKeymapPackage = flakeInputs.self.packages.${pkgs.hostPlatform.system}.xkb-keymap-ed;
+  xkbKeymapPackage = customPkgs.xkb-keymap-ed;
 
   colorBlue = "rgb(61afef)";
   colorCyan = "rgb(56b6c2)";
@@ -67,7 +67,7 @@ in
     );
 
     home.packages = [
-      flakeInputs.self.packages.${pkgs.hostPlatform.system}.wl-ss
+      customPkgs.wl-ss
       pkgs.grim
       pkgs.helvum
       pkgs.hyprlock

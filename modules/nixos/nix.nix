@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
   ...
 }:
 let
@@ -17,10 +16,7 @@ in
     nix = {
       package = pkgs.lix;
       channel.enable = false;
-      registry = {
-        home-manager.flake = flakeInputs.home-manager;
-        nixpkgs.flake = flakeInputs.nixpkgs;
-      };
+      nixPath = [ "nixpkgs=flake:nixpkgs" ];
       settings = {
         auto-optimise-store = true;
         experimental-features = [

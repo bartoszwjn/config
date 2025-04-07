@@ -2,11 +2,11 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
+  privateConfig,
   ...
 }:
 let
-  systemPrivateConfig = flakeInputs.private-config.lib.hosts.green;
+  systemPrivateConfig = privateConfig.hosts.green;
 in
 {
   users = {

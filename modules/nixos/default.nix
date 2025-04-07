@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
   ...
 }:
 {
@@ -22,7 +21,5 @@
     ./repo.nix
     ./virtualisation.nix
     ./zsh.nix
-    flakeInputs.disko.nixosModules.disko
-    flakeInputs.sops-nix.nixosModules.sops
   ];
 }

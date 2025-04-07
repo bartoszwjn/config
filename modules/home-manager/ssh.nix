@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
+  privateConfig,
   ...
 }:
 let
@@ -15,7 +15,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.file = {
-      ".ssh/config".source = flakeInputs.private-config.lib.common.ssh.config;
+      ".ssh/config".source = privateConfig.common.ssh.config;
       ".ssh/known_hosts" = lib.mkIf config.custom.syncthing.enable {
         source = config.lib.file.mkOutOfStoreSymlink (
           config.home.homeDirectory + "/syncthing/ssh/known_hosts"

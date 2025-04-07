@@ -46,6 +46,14 @@
         system: inputs.treefmt-nix.lib.evalModule pkgsFor.${system} ./treefmt.nix
       );
 
+      customPkgsFor = lib.genAttrs systems (
+        system:
+        lib.packagesFromDirectoryRecursive {
+          directory = ./packages;
+          inherit (pkgsFor.${system}) callPackage;
+        }
+      );
+
       perSystem =
         f:
         lib.genAttrs systems (
@@ -68,10 +76,6 @@
           ...
         }:
         let
-          customPackages = lib.packagesFromDirectoryRecursive {
-            directory = ./packages;
-            inherit (pkgs) callPackage;
-          };
           nixosToplevels = lib.optionalAttrs (system == nixosSystem) (
             lib.mapAttrs' (
               name: nixos: lib.nameValuePair "nixos/${name}" nixos.config.system.build.toplevel
@@ -79,7 +83,7 @@
           );
         in
         lib.lists.foldl' lib.attrsets.unionOfDisjoint { } [
-          customPackages
+          customPkgsFor.${system}
           nixosToplevels
           { treefmt-config = treefmtEval.config.build.configFile; }
         ]
@@ -101,18 +105,18 @@
 
       nixosConfigurations =
         let
-          mkNixos =
-            {
-              name,
-              readOnlyPkgs ? true,
-            }:
-            nixpkgs.lib.nixosSystem {
-              specialArgs.flakeInputs = inputs;
-              modules = [
-                ./hosts/${name}/configuration.nix
-                { nixpkgs.pkgs = pkgsFor.${nixosSystem}; }
-              ] ++ lib.optional readOnlyPkgs nixpkgs.nixosModules.readOnlyPkgs;
-            };
+          mkNixos = import ./nixos.nix {
+            inherit lib;
+            pkgs = pkgsFor.${nixosSystem};
+            customPkgs = customPkgsFor.${nixosSystem};
+            inherit (inputs)
+              nixpkgs
+              home-manager
+              sops-nix
+              disko
+              private-config
+              ;
+          };
         in
         {
           blue = mkNixos { name = "blue"; };

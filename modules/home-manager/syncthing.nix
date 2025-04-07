@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
+  privateConfig,
   ...
 }:
 let
@@ -129,32 +129,28 @@ in
 
       gui.address = cfg.guiAddress;
 
-      devices =
-        let
-          privateConfig = flakeInputs.private-config.lib;
-        in
-        {
-          arnold = {
-            deviceID = privateConfig.hosts.arnold.syncthing.deviceId;
-            addresses = [ "tcp://${privateConfig.hosts.arnold.tailscale.fqdn}:22000" ];
-          };
-          blue = {
-            deviceID = privateConfig.hosts.blue.bartoszwjn.syncthing.deviceId;
-            addresses = [ "tcp://${privateConfig.hosts.blue.tailscale.fqdn}:22000" ];
-          };
-          green = {
-            deviceID = privateConfig.hosts.green.bartoszwjn.syncthing.deviceId;
-            addresses = [ "tcp://${privateConfig.hosts.green.tailscale.fqdn}:22000" ];
-          };
-          green-bart3 = {
-            deviceID = privateConfig.hosts.green.bart3.syncthing.deviceId;
-            addresses = [ "tcp://${privateConfig.hosts.green.tailscale.fqdn}:22001" ];
-          };
-          red = {
-            deviceID = privateConfig.hosts.red.syncthing.deviceId;
-            addresses = [ "tcp://${privateConfig.hosts.red.tailscale.fqdn}:22000" ];
-          };
+      devices = {
+        arnold = {
+          deviceID = privateConfig.hosts.arnold.syncthing.deviceId;
+          addresses = [ "tcp://${privateConfig.hosts.arnold.tailscale.fqdn}:22000" ];
         };
+        blue = {
+          deviceID = privateConfig.hosts.blue.bartoszwjn.syncthing.deviceId;
+          addresses = [ "tcp://${privateConfig.hosts.blue.tailscale.fqdn}:22000" ];
+        };
+        green = {
+          deviceID = privateConfig.hosts.green.bartoszwjn.syncthing.deviceId;
+          addresses = [ "tcp://${privateConfig.hosts.green.tailscale.fqdn}:22000" ];
+        };
+        green-bart3 = {
+          deviceID = privateConfig.hosts.green.bart3.syncthing.deviceId;
+          addresses = [ "tcp://${privateConfig.hosts.green.tailscale.fqdn}:22001" ];
+        };
+        red = {
+          deviceID = privateConfig.hosts.red.syncthing.deviceId;
+          addresses = [ "tcp://${privateConfig.hosts.red.tailscale.fqdn}:22000" ];
+        };
+      };
 
       folders = {
         bartoszwjn-main = {

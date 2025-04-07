@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
   ...
 }:
 {
@@ -27,6 +26,5 @@
     ./syncthing.nix
     ./zathura.nix
     ./zsh.nix
-    flakeInputs.sops-nix.homeManagerModules.sops
   ];
 }

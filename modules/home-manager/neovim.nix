@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
+  customPkgs,
   ...
 }:
 let
@@ -15,7 +15,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home = {
-      packages = [ flakeInputs.self.packages.${pkgs.hostPlatform.system}.neovim-custom ];
+      packages = [ customPkgs.neovim-custom ];
       sessionVariables = {
         EDITOR = "nvim";
       };

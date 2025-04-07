@@ -2,11 +2,12 @@
   config,
   lib,
   pkgs,
-  flakeInputs,
+  customPkgs,
+  privateConfig,
   ...
 }:
 let
-  systemPrivateConfig = flakeInputs.private-config.lib.hosts.green;
+  systemPrivateConfig = privateConfig.hosts.green;
   userPrivateConfig = systemPrivateConfig.bartoszwjn;
 in
 {
@@ -77,7 +78,7 @@ in
     username = "bartoszwjn";
     stateVersion = "24.11";
     packages = builtins.attrValues {
-      inherit (flakeInputs.self.packages.${pkgs.hostPlatform.system}) chatterino2;
+      inherit (customPkgs) chatterino2;
       inherit (pkgs) discord;
     };
   };
