@@ -89,7 +89,7 @@ in
         typeset -U PATH path
       '';
 
-      initExtra = ''
+      initContent = ''
         setopt nomatch notify
         unsetopt autocd beep
 
