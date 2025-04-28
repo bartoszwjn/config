@@ -49,7 +49,12 @@ in
         enable = true;
         target = "hyprland-session.target";
       };
+    };
 
+    # Remove the `After=` dependency on `hyprland-session.target` resulting in cycles.
+    systemd.user.services.waybar.Unit.After = lib.mkForce [ "graphical-session-pre.target" ];
+
+    programs.waybar = {
       settings = [
         {
           layer = "bottom";
