@@ -59,7 +59,7 @@ let
     green = mkNixos { name = "green"; };
   };
 
-  toplevels = lib.mapAttrs' (name: nixos: lib.nameValuePair "nixos/${name}" nixos.system) nixos;
+  toplevels = lib.mapAttrs' (name: nixos: lib.nameValuePair "nixos-${name}" nixos.system) nixos;
 in
 
 {
