@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-use crate::{command::run, Region, Result};
+use crate::{Region, Result, command::run};
 
 #[derive(Clone, Debug, Deserialize)]
 struct ActiveWindow {
