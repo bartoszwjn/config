@@ -71,12 +71,12 @@ in
         gst = "git status";
         gsw = "git switch";
 
-        nb = "nix build --no-link --print-out-paths";
-        nd = "nix develop";
+        nb = "nix build --no-link --print-out-paths --log-format multiline";
+        nd = "nix develop --log-format multiline";
         ne = "nix eval";
-        nfc = "nix flake check";
-        nr = "nix run";
-        ns = "nix shell";
+        nfc = "nix flake check --log-format multiline";
+        nr = "nix run --log-format multiline";
+        ns = "nix shell --log-format multiline";
 
         btctl = "bluetoothctl";
         diff = "diff --color";
