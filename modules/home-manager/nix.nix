@@ -17,6 +17,7 @@ in
       experimental-features = [
         "nix-command"
         "flakes"
+        "repl-flake"
       ];
       nix-path = [ "nixpkgs=flake:nixpkgs" ];
     };
