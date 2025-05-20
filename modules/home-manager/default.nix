@@ -16,7 +16,7 @@
     ./keyring.nix
     ./kitty.nix
     ./neovim.nix
-    ./nix.nix
+    ./nix
     ./nushell
     ./packages.nix
     ./repo.nix

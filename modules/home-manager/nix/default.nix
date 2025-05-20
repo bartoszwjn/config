@@ -20,6 +20,7 @@ in
         "repl-flake"
       ];
       nix-path = [ "nixpkgs=flake:nixpkgs" ];
+      repl-overlays = [ ./repl-overlay.nix ];
     };
   };
 }
