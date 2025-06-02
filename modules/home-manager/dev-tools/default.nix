@@ -74,9 +74,9 @@ in
           black
           isort
           mypy
-          poetry
           pyright
           python3
+          uv
           ;
         inherit (pkgs.python3Packages) ipython;
       };
