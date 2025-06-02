@@ -19,7 +19,7 @@ in
       enable = true;
       enableScDaemon = true;
       defaultCacheTtl = 3600; # seconds
-      pinentryPackage = pkgs.pinentry-curses;
+      pinentry.package = pkgs.pinentry-curses;
     };
   };
 }
