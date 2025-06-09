@@ -18,6 +18,28 @@ let
   colorYellow = "rgb(d19a66)";
   colorBg = "rgb(282c34)";
   colorFg = "rgb(abb2bf)";
+
+  barsWidth = 320;
+  toggleBarsScript = pkgs.writeShellApplication {
+    name = "hyprland-toggle-bars";
+    runtimeInputs = [
+      hyprlandPackage
+      pkgs.jq
+    ];
+    extraShellCheckFlags = [ "--enable=all" ];
+    excludeShellChecks = [
+      "SC2250" # https://www.shellcheck.net/wiki/SC2250
+    ];
+    text = ''
+      value_json=$(hyprctl getoption -j general:gaps_out)
+      is_enabled=$(jq '.custom != "0 0 0 0"' <<< "$value_json")
+      if [[ $is_enabled = true ]]; then
+        hyprctl keyword general:gaps_out "0,0,0,0"
+      else
+        hyprctl keyword general:gaps_out "0,${toString barsWidth},0,${toString barsWidth}"
+      fi
+    '';
+  };
 in
 {
   imports = [ ./waybar.nix ];
@@ -199,8 +221,9 @@ in
             "SUPER+SHIFT, semicolon, exec, loginctl lock-session"
             "SUPER+SHIFT, semicolon, exec, sleep 0.5 && hyprctl dispatch dpms off"
             # layout
-            "SUPER, comma , splitratio, -0.06"
-            "SUPER, period, splitratio, +0.06"
+            "SUPER      , comma , splitratio, -0.06"
+            "SUPER      , period, splitratio, +0.06"
+            "SUPER+SHIFT, b     , exec, ${lib.getExe toggleBarsScript}"
             # focus
             "SUPER, h, movefocus, l"
             "SUPER, j, movefocus, d"
