@@ -32,8 +32,8 @@ in
     hyprland = {
       enable = true;
       monitors = {
-        "desc:Dell Inc. DELL S2522HG GQ6L1C3".config = "1920x1080@240, 0x0, 1";
-        "desc:Dell Inc. DELL U2412M YPPY089G14FB".config = "1920x1200@60, -1920x0, 1";
+        "desc:Dell Inc. DELL S2522HG".config = "1920x1080@240, 0x0, 1";
+        "desc:GIGA-BYTE TECHNOLOGY CO. LTD. GS27QXA".config = "2560x1440@240, 0x0, 1";
         "".config = "preferred, auto-right, 1";
       };
       waybar.monitors = [

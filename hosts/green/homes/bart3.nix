@@ -37,9 +37,9 @@ in
       monitors = {
         "eDP-1".config = "2880x1920@120, 0x0, 2";
         "eDP-1".isPrimary = true;
-        "desc:Dell Inc. DELL S2522HG GQ6L1C3".config = "1920x1080@240, auto-left, 1";
-        "desc:LG Electronics LG IPS QHD".config = "2560x1440@100, auto-left, 1";
-        "desc:LG Electronics LG Ultra HD 0x00049402".config = "1920x1080@60, auto-left, 1";
+        "desc:Dell Inc. DELL S2522HG".config = "1920x1080@240, auto-left, 1";
+        "desc:GIGA-BYTE TECHNOLOGY CO. LTD. GS27QXA".config = "2560x1440@144, -560x-1440, 1";
+        "desc:LG Electronics LG IPS QHD".config = "2560x1440@100, -560x-1440, 1";
         "".config = "preferred, auto-left, 1";
       };
       waybar.monitors = [
