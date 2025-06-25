@@ -9,8 +9,13 @@ let
 in
 {
   options.custom.keyring = {
-    enable = lib.mkEnableOption "system-wide config needed for user-level keyring configuration";
+    enable = lib.mkEnableOption "system-level keyring configuration";
   };
 
-  config = lib.mkIf cfg.enable { services.gnome.gnome-keyring.enable = true; };
+  config = lib.mkIf cfg.enable {
+    services.gnome = {
+      gcr-ssh-agent.enable = true;
+      gnome-keyring.enable = true;
+    };
+  };
 }
