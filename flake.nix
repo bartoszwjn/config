@@ -2,7 +2,7 @@
   description = "Nix and Home Manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small"; # for https://nixpk.gs/pr-tracker.html?pr=421138
     systems.url = "github:nix-systems/x86_64-linux";
     home-manager = {
       url = "github:nix-community/home-manager";
