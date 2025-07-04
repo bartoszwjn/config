@@ -39,7 +39,7 @@ def get-pids []: table -> list<int> {
         get pid
         | uniq
         # only wait for processes that are not part of a systemd unit
-        | filter {|pid| (^systemctl --user whoami $pid | complete | get exit_code) != 0 }
+        | where {|pid| (^systemctl --user whoami $pid | complete | get exit_code) != 0 }
     )
 }
 

@@ -157,7 +157,7 @@ def get-host-drv-path [host: string, rev?: string]: nothing -> any {
 }
 
 def build-host-drvs [drv_paths: list<any>]: nothing -> list<any> {
-    let installables = $drv_paths | filter { $in != null } | uniq | each { $"($in)^out" }
+    let installables = $drv_paths | where { $in != null } | uniq | each { $"($in)^out" }
     let build_results = do -c { ^nix build --no-link --json -- ...$installables } | from json
     assert equal ($installables | length) ($build_results | length)
 
