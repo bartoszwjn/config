@@ -20,26 +20,14 @@ let
   colorFg = "rgb(abb2bf)";
 
   barsWidth = 320;
-  toggleBarsScript = pkgs.writeShellApplication {
-    name = "hyprland-toggle-bars";
-    runtimeInputs = [
-      hyprlandPackage
-      pkgs.jq
+  updateBarsScript = pkgs.writers.writeNu "hyprland-update-bars" {
+    makeWrapperArgs = [
+      "--prefix"
+      "PATH"
+      ":"
+      (lib.makeBinPath [ hyprlandPackage ])
     ];
-    extraShellCheckFlags = [ "--enable=all" ];
-    excludeShellChecks = [
-      "SC2250" # https://www.shellcheck.net/wiki/SC2250
-    ];
-    text = ''
-      value_json=$(hyprctl getoption -j general:gaps_out)
-      is_enabled=$(jq '.custom != "0 0 0 0"' <<< "$value_json")
-      if [[ $is_enabled = true ]]; then
-        hyprctl keyword general:gaps_out "0,0,0,0"
-      else
-        hyprctl keyword general:gaps_out "0,${toString barsWidth},0,${toString barsWidth}"
-      fi
-    '';
-  };
+  } (lib.readFile ./update-bars.nu);
 in
 {
   imports = [ ./waybar.nix ];
@@ -223,7 +211,8 @@ in
             # layout
             "SUPER      , comma , splitratio, -0.06"
             "SUPER      , period, splitratio, +0.06"
-            "SUPER+SHIFT, b     , exec, ${lib.getExe toggleBarsScript}"
+            "SUPER+SHIFT, comma , exec, ${updateBarsScript} -80"
+            "SUPER+SHIFT, period, exec, ${updateBarsScript} +80"
             # focus
             "SUPER, h, movefocus, l"
             "SUPER, j, movefocus, d"
