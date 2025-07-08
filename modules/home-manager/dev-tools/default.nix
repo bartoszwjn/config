@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  customPkgs,
   ...
 }:
 let
@@ -64,6 +65,9 @@ in
           nix-tree
           nixfmt-rfc-style
           nvd
+          ;
+        inherit (customPkgs)
+          deploy-utils
           ;
       };
     })

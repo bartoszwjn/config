@@ -1,6 +1,7 @@
-use std
+use std/assert
+use std/iter
 
-# Completion function for arguments representing deploy-rs nodes
+# Completion function for arguments representing deploy-rs nodes.
 export def complete-node []: nothing -> list<string> {
     (
         do -c { ^nix eval '.#deploy.nodes' --apply builtins.attrNames --json }
@@ -9,10 +10,16 @@ export def complete-node []: nothing -> list<string> {
     )
 }
 
+# Returns information about all deploy-rs profiles defined in a flake.
 export def get-profile-info [
-    ...nodes: string@complete-node
-    --flake: string = "."
-]: nothing -> list<record> {
+    ...nodes: string@complete-node # Node(s) to return information about.
+    --flake: string = "." # The flake to use as a source of deploy-rs profiles.
+]: [
+    nothing -> table<
+        node: string, profile: string, hostname: string, profile_path: string,
+        ssh_user: string, ssh_opts: list<string>, user: string,
+    >
+] {
     let deploy = (eval-deploy --flake $flake)
     let deploy_cfg = ($deploy | get-level-connection-config)
 
@@ -42,7 +49,7 @@ export def get-profile-info [
     )
 
     for node in $nodes {
-        if ($profiles | std iter find { $in.node == $node }) == null {
+        if ($profiles | iter find { $in.node == $node }) == null {
             error make --unspanned { msg: $"No profiles defined for node ($node)" }
         }
     }
@@ -82,21 +89,21 @@ def get-level-connection-config []: record -> record {
 
 def get-connection-config [
     deploy_cfg: record, node_cfg: record, profile_cfg: record
-]: nothing -> record {
+]: nothing -> record<ssh_user: string, ssh_opts: list<string>, user: string> {
     let configured_ssh_user = (
         [$profile_cfg.ssh_user $node_cfg.ssh_user $deploy_cfg.ssh_user]
-        | std iter find { $in != null }
+        | iter find { $in != null }
     )
-    let ssh_user = ([$configured_ssh_user $env.USER?] | std iter find { $in != null })
-    std assert not equal $ssh_user null
+    let ssh_user = ([$configured_ssh_user $env.USER?] | iter find { $in != null })
+    assert not equal $ssh_user null
 
     let ssh_opts = ([$deploy_cfg.ssh_opts $node_cfg.ssh_opts $profile_cfg.ssh_opts] | flatten)
 
     let user = (
         [$profile_cfg.user $node_cfg.user $deploy_cfg.user $configured_ssh_user]
-        | std iter find { $in != null }
+        | iter find { $in != null }
     )
-    std assert not equal $user null
+    assert not equal $user null
 
     { ssh_user: $ssh_user, ssh_opts: $ssh_opts, user: $user }
 }

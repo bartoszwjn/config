@@ -1,31 +1,32 @@
-#!/usr/bin/env nu
+use ./log.nu
+use ./utils.nu
 
-use std
-
-use utils.nu
-
-# Check if deployed NixOS configurations are up to date with the local config
+# Check if deployed NixOS configurations are up to date with the local config.
 export def main [
-    ...nodes: string@"utils complete-node" # Check profiles from the given node(s) only
-    --flake: string = "." # The flake to use as a source of deploy-rs profiles
-    --eval-threads: int # The number of threads to use for Nix evaluation
-    --single-eval # Evaluate all store paths with a single invocation of Nix
-    --show-paths # Include profile store paths in the output
-]: nothing -> nothing {
-    $env.config.table.mode = "none"
-
+    ...nodes: string@"utils complete-node" # Check profiles from the given node(s) only.
+    --flake: string = "." # The flake to use as a source of deploy-rs profiles.
+    --eval-threads: int # The number of threads to use for Nix evaluation.
+    --single-eval # Evaluate all store paths with a single invocation of Nix.
+    --quiet (-q) # Be less verbose.
+]: nothing -> table {
     let profiles = (utils get-profile-info --flake $flake ...$nodes)
-    print $"Found ($profiles | length) defined profiles:"
-    $profiles | update ssh_opts { to json --raw } | print
+    if not $quiet {
+        log info $"Found ($profiles | length) defined profiles:"
+        $profiles | update ssh_opts { to json --raw } | print --stderr
+    }
 
-    print "Checking deployed profile paths"
+    if not $quiet {
+        log info "Checking deployed profile paths"
+    }
     let queried = (
         # This is bottlenecked by network latency, make a thread for each element to start every
         # connection immediately
         $profiles | par-each --keep-order --threads ($profiles | length) { query-profile }
     )
 
-    print "Evaluating local profile paths"
+    if not $quiet {
+        log info "Evaluating local profile paths"
+    }
     let evaled = match [$single_eval, $eval_threads] {
         [true, _] => {
             $queried | eval-all-profiles $flake
@@ -39,14 +40,7 @@ export def main [
         }
     }
 
-    let compared = ($evaled | each { compare-profile })
-    (
-        $compared
-        | select status node profile context
-            ...(if $show_paths { [deployed_path local_path] } else { [] })
-        | update status { display-status }
-        | print
-    )
+    $evaled | each { compare-profile }
 }
 
 def query-profile []: record -> record {
@@ -128,7 +122,7 @@ def compare-profile []: record -> record {
         }
         $other => { $other }
     }
-    $profile | update status $status
+    $profile | update status ($status | display-status)
 }
 
 def display-status []: string -> string {
