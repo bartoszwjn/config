@@ -13,7 +13,7 @@ export def main [
         $profiles | update ssh_opts { to json --raw } | print --stderr
     }
 
-    $profiles | each { copy-closure --flake $flake --quiet=$quiet }
+    $profiles | each { copy-closure --flake $flake --quiet=$quiet } | collect
 }
 
 def copy-closure [--flake: string, --quiet]: record -> record {
