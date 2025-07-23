@@ -47,7 +47,18 @@ def query-profile []: record -> record {
     let profile = $in
     let check_profile = '
         if [ -L "$1" ]; then
-            printf "valid;%s" "$(realpath "$1")"
+            deployed=$(realpath "$1")
+            if [ "$1" = "/nix/var/nix/profiles/system" ]; then
+                inner=$(dirname "$(realpath "$deployed/activate")")
+                active=$(realpath /run/current-system)
+                if [ "$inner" = "$active" ]; then
+                    printf "valid;%s" "$deployed"
+                else
+                    printf "needs-reboot;%s" "$deployed"
+                fi
+            else
+                printf "valid;%s" "$deployed"
+            fi
         elif [ -e "$1" ]; then
             printf "invalid;"
         else
@@ -64,9 +75,10 @@ def query-profile []: record -> record {
 
     let result_parsed = match $result {
         { exit_code: 0, stdout: $out } => {
-            let status = ($out | str replace --regex ";.*" "")
+            let result = $out | parse "{status};{deployed_path}" | get 0
+            let status = $result.status
             let $deployed_path = match $status {
-                "valid" => { $out | str replace "valid;" "" }
+                "valid" | "needs-reboot" => { $result.deployed_path }
                 _ => { null }
             }
             { status: $status, deployed_path: $deployed_path, context: null }
@@ -113,13 +125,9 @@ def eval-all-profiles [flake: string]: list<record> -> list<record> {
 def compare-profile []: record -> record {
     let profile = $in
     let status = match $profile.status {
-        "valid" => {
-            if $profile.deployed_path == $profile.local_path {
-                "up-to-date"
-            } else {
-                "outdated"
-            }
-        }
+        "valid" if $profile.deployed_path == $profile.local_path => { "up-to-date" }
+        "valid" if $profile.deployed_path != $profile.local_path => { "outdated" }
+        "needs-reboot" if $profile.deployed_path != $profile.local_path => { "outdated" }
         $other => { $other }
     }
     $profile | update status ($status | display-status)
@@ -128,6 +136,7 @@ def compare-profile []: record -> record {
 def display-status []: string -> string {
     match $in {
         "up-to-date" => { $"(ansi green)up-to-date(ansi reset)" },
+        "needs-reboot" => { $"(ansi yellow)needs-reboot(ansi reset)" },
         "outdated" => { $"(ansi yellow)outdated(ansi reset)" },
         "invalid" => { $"(ansi red)invalid(ansi reset)" },
         "missing" => { $"(ansi yellow)missing(ansi reset)" },
