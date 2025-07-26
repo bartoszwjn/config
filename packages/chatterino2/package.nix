@@ -39,7 +39,8 @@ stdenv.mkDerivation {
     qt6Packages.qtkeychain
     qt6Packages.qtsvg
     qt6Packages.qttools
-  ] ++ lib.optional stdenv.isLinux qt6Packages.qtwayland;
+  ]
+  ++ lib.optional stdenv.isLinux qt6Packages.qtwayland;
 
   cmakeFlags = [
     (lib.strings.cmakeBool "CHATTERINO_UPDATER" false)

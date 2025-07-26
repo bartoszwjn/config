@@ -66,25 +66,24 @@ in
             "hyprland/window"
           ];
           modules-center = [ ];
-          modules-right =
-            [
-              "systemd-failed-units"
-              "idle_inhibitor"
-            ]
-            ++ lib.optional cfg.powerProfiles.enable "power-profiles-daemon"
-            ++ lib.optional cfg.battery.enable "battery"
-            ++ [
-              "cpu"
-              "memory"
-              "disk"
-            ]
-            ++ lib.optional cfg.backlight.enable "backlight"
-            ++ [
-              "network"
-              "pulseaudio"
-              "clock"
-              "tray"
-            ];
+          modules-right = [
+            "systemd-failed-units"
+            "idle_inhibitor"
+          ]
+          ++ lib.optional cfg.powerProfiles.enable "power-profiles-daemon"
+          ++ lib.optional cfg.battery.enable "battery"
+          ++ [
+            "cpu"
+            "memory"
+            "disk"
+          ]
+          ++ lib.optional cfg.backlight.enable "backlight"
+          ++ [
+            "network"
+            "pulseaudio"
+            "clock"
+            "tray"
+          ];
 
           "hyprland/workspaces" = {
             active-only = false;

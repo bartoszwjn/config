@@ -36,7 +36,8 @@ let
           { _module.args = { inherit customPkgs privateConfig; }; }
         ];
       }
-    ] ++ lib.optional readOnlyPkgs (nixpkgs + "/nixos/modules/misc/nixpkgs/read-only.nix");
+    ]
+    ++ lib.optional readOnlyPkgs (nixpkgs + "/nixos/modules/misc/nixpkgs/read-only.nix");
   };
 in
 {
