@@ -1,4 +1,4 @@
-use std
+use std/config
 
 $env.config.show_banner = false
 
@@ -8,7 +8,7 @@ $env.config.cursor_shape = {
     vi_normal: underscore
 }
 
-$env.config.color_config = (std config dark-theme | merge {
+$env.config.color_config = (config dark-theme | merge {
     nothing: light_gray
 })
 

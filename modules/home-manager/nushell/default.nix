@@ -16,6 +16,7 @@ in
     home.packages = [ pkgs.nushell ];
 
     xdg.configFile = {
+      "nushell/autoload".source = ./autoload;
       "nushell/config.nu".source = ./config.nu;
       "nushell/env.nu".source = ./env.nu;
     };
