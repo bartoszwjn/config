@@ -4,9 +4,14 @@ use std::{
     sync::LazyLock,
 };
 
+use unicode_width::UnicodeWidthStr;
+
 use crate::{
     cli::Cli,
-    color::{BLUE, CYAN, GREEN, GREEN_BOLD, MAGENTA, RED_BOLD, YELLOW},
+    color::{
+        BLUE, BRIGHT_BLACK_BOLD, BRIGHT_YELLOW_BOLD, CYAN, GREEN, GREEN_BOLD, MAGENTA, RED_BOLD,
+        YELLOW,
+    },
     git, nix,
 };
 
@@ -221,4 +226,146 @@ impl std::fmt::Display for GitRev {
             }
         }
     }
+}
+
+pub(crate) fn diff_item_pair(pair: &ItemPair, store_paths: Option<(&str, &str)>) -> [String; 3] {
+    let mut cols = vec![
+        [
+            format!("{RED_BOLD}-{RED_BOLD:#}"),
+            match store_paths {
+                None => String::new(),
+                Some((l, r)) if l == r => format!("{BRIGHT_BLACK_BOLD}={BRIGHT_BLACK_BOLD:#}"),
+                Some(_) => format!("{BRIGHT_YELLOW_BOLD}!{BRIGHT_YELLOW_BOLD:#}"),
+            },
+            format!("{GREEN_BOLD}+{GREEN_BOLD:#}"),
+        ],
+        [" ".to_owned(), " ".to_owned(), " ".to_owned()],
+    ];
+    if let Some((l, r)) = store_paths {
+        cols.append(&mut diff_elems(
+            [l.to_owned(), " ".to_owned()],
+            [r.to_owned(), " ".to_owned()],
+        ));
+    }
+    cols.append(&mut diff_source_types(&pair.old.source, &pair.new.source));
+    cols.append(&mut diff_elems(
+        [format!("{CYAN}{}{CYAN:#}", pair.old.attr_path)],
+        [format!("{CYAN}{}{CYAN:#}", pair.new.attr_path)],
+    ));
+    cols.push([" ".to_owned(), " ".to_owned(), " ".to_owned()]);
+    cols.append(&mut diff_git_revs(&pair.old.git_rev, &pair.new.git_rev));
+    layout_elements(cols)
+}
+
+fn diff_source_types(old: &SourceType, new: &SourceType) -> Vec<[String; 3]> {
+    diff_elems(source_type_elements(old), source_type_elements(new))
+    // (-f ./foo.nix   ).attr.path
+    //     .            #attr.path
+    //     path:foo/bar #attr.path
+}
+
+fn diff_git_revs(old: &GitRev, new: &GitRev) -> Vec<[String; 3]> {
+    match (old, new) {
+        (GitRev::Worktree, GitRev::Worktree) => {
+            vec![[String::new(), git_rev_worktree_element(), String::new()]]
+        }
+        (GitRev::Worktree, GitRev::Rev { orig_ref, rev }) => {
+            vec![[
+                git_rev_worktree_element(),
+                "".to_owned(),
+                git_rev_rev_elements(orig_ref, rev).join(""),
+            ]]
+        }
+        (GitRev::Rev { orig_ref, rev }, GitRev::Worktree) => {
+            vec![[
+                git_rev_rev_elements(orig_ref, rev).join(""),
+                "".to_owned(),
+                git_rev_worktree_element(),
+            ]]
+        }
+        (
+            GitRev::Rev {
+                orig_ref: orig_ref_old,
+                rev: rev_old,
+            },
+            GitRev::Rev {
+                orig_ref: orig_ref_new,
+                rev: rev_new,
+            },
+        ) => diff_elems(
+            git_rev_rev_elements(orig_ref_old, rev_old),
+            git_rev_rev_elements(orig_ref_new, rev_new),
+        ),
+    }
+}
+
+fn diff_elems<const N: usize>(old: [String; N], new: [String; N]) -> Vec<[String; 3]> {
+    old.into_iter()
+        .zip(new)
+        .map(|(elem_old, elem_new)| {
+            if elem_old == elem_new {
+                [String::new(), elem_old, String::new()]
+            } else {
+                [elem_old, String::new(), elem_new]
+            }
+        })
+        .collect()
+}
+
+fn source_type_elements(source_type: &SourceType) -> [String; 6] {
+    match source_type {
+        SourceType::FlakeCurrentDir => [
+            String::new(),
+            String::new(),
+            String::new(),
+            format!("{BLUE}.{BLUE:#}"),
+            String::new(),
+            format!("{CYAN}#{CYAN:#}"),
+        ],
+        SourceType::File(path) => [
+            format!("{YELLOW}({YELLOW:#}"),
+            "-f".to_owned(),
+            " ".to_owned(),
+            format!("{BLUE}{}{BLUE:#}", path.display()),
+            format!("{YELLOW}){YELLOW:#}"),
+            format!("{CYAN}.{CYAN:#}"),
+        ],
+    }
+}
+
+fn git_rev_rev_elements(orig_ref: &str, rev: &str) -> [String; 5] {
+    use GREEN as G;
+    use YELLOW as Y;
+    [
+        format!("{Y}({Y:#}"),
+        format!("{G}{orig_ref}{G:#}"),
+        String::from(" "),
+        rev.to_owned(),
+        format!("{Y}){Y:#}"),
+    ]
+}
+
+fn git_rev_worktree_element() -> String {
+    format!("{MAGENTA}[worktree]{MAGENTA:#}")
+}
+
+fn layout_elements<const N: usize>(columns: impl IntoIterator<Item = [String; N]>) -> [String; N] {
+    let mut lines = [const { String::new() }; N];
+    for col in columns {
+        for i in 0..lines.len() {
+            lines[i].push_str(col[i].as_ref());
+        }
+        let widths = col.map(|elem| element_width(elem.as_ref()));
+        let width = widths.into_iter().max().unwrap_or(0);
+        for i in 0..lines.len() {
+            for _ in 0..(width - widths[i]) {
+                lines[i].push(' ');
+            }
+        }
+    }
+    lines
+}
+
+fn element_width(element: &str) -> usize {
+    UnicodeWidthStr::width(anstream::adapter::strip_str(element).to_string().as_str())
 }

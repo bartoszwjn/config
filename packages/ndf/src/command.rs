@@ -1,3 +1,5 @@
+//! Helpers for running external commands.
+
 use std::{borrow::Cow, ffi::OsStr, process::Command};
 
 use anyhow::Context as _;
@@ -38,6 +40,19 @@ pub(crate) fn output(command: &mut Command) -> anyhow::Result<Vec<u8>> {
 pub(crate) fn output_json<T: DeserializeOwned>(command: &mut Command) -> anyhow::Result<T> {
     serde_json::from_slice(&output(command)?)
         .with_context(|| format!("failed to decode output of {}", show_cmd(command)))
+}
+
+pub(crate) fn output_json_lines<T: DeserializeOwned>(
+    command: &mut Command,
+) -> anyhow::Result<Vec<T>> {
+    let output = output(command)?;
+    let add_ctx = || format!("failed to decode output of {}", show_cmd(command));
+    let output_str = String::from_utf8(output).with_context(add_ctx)?;
+    output_str
+        .lines()
+        .map(|line| serde_json::from_str::<T>(line))
+        .collect::<Result<Vec<_>, _>>()
+        .with_context(add_ctx)
 }
 
 fn show_cmd(command: &Command) -> String {

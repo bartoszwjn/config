@@ -9,6 +9,8 @@ pub(crate) const YELLOW: Style = AnsiColor::Yellow.on_default();
 // keep-sorted end
 
 // keep-sorted start
+pub(crate) const BRIGHT_BLACK_BOLD: Style = AnsiColor::BrightBlack.on_default().bold();
+pub(crate) const BRIGHT_YELLOW_BOLD: Style = AnsiColor::BrightYellow.on_default().bold();
 pub(crate) const GREEN_BOLD: Style = AnsiColor::Green.on_default().bold();
 pub(crate) const RED_BOLD: Style = AnsiColor::Red.on_default().bold();
 // keep-sorted end
