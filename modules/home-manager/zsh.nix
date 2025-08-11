@@ -126,7 +126,7 @@ in
       settings = {
         format = ''
           $username$hostname$time$directory$cmd_duration
-          $git_branch$git_commit$git_status$git_state$package$python$rust
+          $shell$git_branch$git_commit$git_status$git_state$package$python$rust
            $shlvl$jobs$status$character
         '';
         add_newline = true;
@@ -161,6 +161,10 @@ in
         rust = {
           style = "bold yellow";
           symbol = " ";
+        };
+        shell = {
+          disabled = false;
+          style = "bright-black";
         };
         shlvl = {
           disabled = false;
