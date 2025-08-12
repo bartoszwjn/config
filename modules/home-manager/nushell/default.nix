@@ -22,6 +22,12 @@ in
         source = ./autoload;
         recursive = true;
       };
+      "nushell/autoload/starship.nu".source =
+        pkgs.runCommand "starship-nushell-config.nu"
+          { nativeBuildInputs = [ config.programs.starship.package ]; }
+          ''
+            starship init nu > "$out"
+          '';
       "nushell/autoload/zoxide.nu".source =
         pkgs.runCommand "zoxide-nushell-config.nu"
           { nativeBuildInputs = [ config.programs.zoxide.package ]; }
