@@ -27,7 +27,7 @@ in
       settings = {
         format = ''
           $username$hostname$time$directory$cmd_duration
-          $shell$git_branch$git_commit$git_status$git_state$package$python$rust
+          $shell$git_branch$git_commit$git_status$git_state$package$python$rust$direnv
            $shlvl$jobs$status$character
         '';
         add_newline = true;
@@ -43,6 +43,17 @@ in
           style = "bold blue";
           truncate_to_repo = false;
           truncation_length = 5;
+        };
+        direnv = {
+          disabled = false;
+          format = "[$symbol]($style)( [$loaded](green))( [$allowed](red)) ";
+          symbol = "direnv";
+          style = "none";
+          loaded_msg = "loaded";
+          unloaded_msg = "";
+          allowed_msg = "";
+          not_allowed_msg = "not allowed";
+          denied_msg = "denied";
         };
         git_commit = {
           style = "bold purple";
