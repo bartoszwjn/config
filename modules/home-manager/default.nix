@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    # keep-sorted start
     ./alacritty
     ./dev-tools
     ./dunst.nix
@@ -21,10 +22,12 @@
     ./packages.nix
     ./repo.nix
     ./rofi.nix
+    ./shell.nix
     ./ssh.nix
     ./styling.nix
     ./syncthing.nix
     ./zathura.nix
     ./zsh.nix
+    # keep-sorted end
   ];
 }

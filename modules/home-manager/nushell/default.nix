@@ -13,6 +13,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    custom.shell.enable = true;
+
     home.packages = [ pkgs.nushell ];
 
     xdg.configFile = {
