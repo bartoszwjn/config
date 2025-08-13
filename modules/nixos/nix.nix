@@ -10,11 +10,17 @@ in
 {
   options.custom.nix = {
     enable = lib.mkEnableOption "Nix configuration";
+    lixPackageSet = lib.mkOption {
+      type = lib.types.raw;
+      readOnly = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
+    custom.nix.lixPackageSet = pkgs.lixPackageSets.lix_2_93;
+
     nix = {
-      package = pkgs.lix;
+      package = cfg.lixPackageSet.lix;
       channel.enable = false;
       nixPath = [ "nixpkgs=flake:nixpkgs" ];
       settings = {

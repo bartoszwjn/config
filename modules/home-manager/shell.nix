@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  osConfig,
   ...
 }:
 let
@@ -19,7 +20,10 @@ in
 
     programs.direnv = {
       enable = true;
-      nix-direnv.enable = true;
+      nix-direnv = {
+        enable = true;
+        package = osConfig.custom.nix.lixPackageSet.nix-direnv;
+      };
     };
 
     programs.starship = {
