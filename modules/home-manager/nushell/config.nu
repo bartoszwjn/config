@@ -33,3 +33,50 @@ $env.config.table.trim = {
     methodology: truncating
     truncating_suffix: "…"
 }
+
+$env.config.menus ++= do {
+    let style = {
+        text: default
+        description_text: yellow
+        selected_text: { attr: bu }
+        match_text: { attr: u }
+        selected_match_text: { attr: bu }
+    }
+    let completion_menu = {
+        name: completion_menu
+        only_buffer_difference: false
+        marker: "| "
+        type: {
+            layout: columnar
+            columns: 4
+            col_width: 20
+            col_padding: 2
+        }
+        style: $style
+    }
+    let history_menu = {
+        name: history_menu
+        only_buffer_difference: true
+        marker: "? "
+        type: {
+            layout: list
+            page_size: 10
+        }
+        style: $style
+    }
+    let help_menu = {
+        name: help_menu
+        only_buffer_difference: true
+        marker: "? "
+        type: {
+            layout: description
+            columns: 4
+            col_width: 20
+            col_padding: 2
+            selection_rows: 4
+            description_rows: 20
+        }
+        style: $style
+    }
+    [$completion_menu $history_menu $help_menu]
+}
