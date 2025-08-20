@@ -115,6 +115,7 @@ in
       '';
     };
 
+    programs.carapace.enableZshIntegration = true;
     programs.direnv.enableZshIntegration = true;
     programs.starship.enableZshIntegration = true;
     programs.zoxide.enableZshIntegration = true;

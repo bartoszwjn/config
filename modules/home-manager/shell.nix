@@ -18,6 +18,8 @@ in
       pkgs.fzf # zoxide
     ];
 
+    programs.carapace.enable = true;
+
     programs.direnv = {
       enable = true;
       nix-direnv = {

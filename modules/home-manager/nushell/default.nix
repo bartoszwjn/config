@@ -22,6 +22,13 @@ in
         source = ./autoload;
         recursive = true;
       };
+      "nushell/autoload/carapace.nu".source =
+        pkgs.runCommand "carapace-nushell-config.nu"
+          { nativeBuildInputs = [ config.programs.carapace.package ]; }
+          ''
+            carapace _carapace nushell > "$out"
+            substituteInPlace "$out" --replace-fail '"/homeless-shelter' '$"($env.HOME)'
+          '';
       "nushell/autoload/starship.nu".source =
         pkgs.runCommand "starship-nushell-config.nu"
           { nativeBuildInputs = [ config.programs.starship.package ]; }
