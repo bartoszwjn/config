@@ -23,7 +23,18 @@ module sd {
 
         if ($dir | path type) == dir {
             ls --all --short-names $dir | each {
-                { value: ($in.name + " "), description: $in.type }
+                let item = $in
+                let description = if $item.type == file and ($item.name | str ends-with .nu) {
+                    let help = try {
+                        run-external ($dir | path join $item.name) "--help"
+                    } catch {
+                        null
+                    }
+                    $help | default "" | lines | get 0? | default $item.type
+                } else {
+                    $item.type
+                }
+                { value: ($item.name + " "), description: $description }
             }
         } else {
             []

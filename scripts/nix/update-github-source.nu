@@ -1,7 +1,8 @@
 #!/usr/bin/env nu
 
+# Update the revision and hash of a source stored in a source-info.json file
 def main [
-  file: path # Path to source.json file
+  file: path # Path to source-info.json file
   --dry-run # Print the new contents instead of modifying the file in place
 ] {
   let old = (open --raw $file | from json)
