@@ -8,8 +8,12 @@ $env.config.cursor_shape = {
     vi_normal: underscore
 }
 
+$env.config.highlight_resolved_externals = true
 $env.config.color_config = (config dark-theme | merge {
     nothing: light_gray
+    shape_external: red
+    shape_external_resolved: cyan
+    shape_externalarg: green
 })
 
 $env.config.datetime_format = {
