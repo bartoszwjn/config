@@ -2,32 +2,17 @@
   config,
   lib,
   pkgs,
-  osConfig,
   ...
 }:
 let
-  cfg = config.custom.shell;
+  cfg = config.custom.shell.starship;
 in
 {
-  options.custom.shell = {
-    enable = lib.mkEnableOption "common shell configuration";
+  options.custom.shell.starship = {
+    enable = lib.mkEnableOption "starship shell prompt";
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      pkgs.fzf # zoxide
-    ];
-
-    programs.carapace.enable = true;
-
-    programs.direnv = {
-      enable = true;
-      nix-direnv = {
-        enable = true;
-        package = osConfig.custom.nix.lixPackageSet.nix-direnv;
-      };
-    };
-
     programs.starship = {
       enable = true;
       settings = {
@@ -104,6 +89,13 @@ in
       };
     };
 
-    programs.zoxide.enable = true;
+    programs.starship.enableZshIntegration = true;
+
+    custom.shell.nu.extraAutoloadFiles."starship.nu" =
+      pkgs.runCommand "starship-nushell-config.nu"
+        { nativeBuildInputs = [ config.programs.starship.package ]; }
+        ''
+          starship init nu > "$out"
+        '';
   };
 }

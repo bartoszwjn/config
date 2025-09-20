@@ -5,16 +5,14 @@
   ...
 }:
 let
-  cfg = config.custom.zsh;
+  cfg = config.custom.shell.zsh;
 in
 {
-  options.custom.zsh = {
+  options.custom.shell.zsh = {
     enable = lib.mkEnableOption "zsh with custom config";
   };
 
   config = lib.mkIf cfg.enable {
-    custom.shell.enable = true;
-
     home.packages = [
       pkgs.zsh-completions
     ];
@@ -114,10 +112,5 @@ in
         }
       '';
     };
-
-    programs.carapace.enableZshIntegration = true;
-    programs.direnv.enableZshIntegration = true;
-    programs.starship.enableZshIntegration = true;
-    programs.zoxide.enableZshIntegration = true;
   };
 }

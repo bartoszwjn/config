@@ -18,16 +18,14 @@
     ./kitty.nix
     ./neovim.nix
     ./nix
-    ./nushell
     ./packages.nix
     ./repo.nix
     ./rofi.nix
-    ./shell.nix
+    ./shell
     ./ssh.nix
     ./styling.nix
     ./syncthing.nix
     ./zathura.nix
-    ./zsh.nix
     # keep-sorted end
   ];
 }

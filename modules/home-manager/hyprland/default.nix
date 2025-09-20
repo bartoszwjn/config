@@ -68,7 +68,7 @@ in
   config = lib.mkIf cfg.enable {
     custom.hyprland.waybar.enable = lib.mkDefault true;
 
-    programs.zsh.loginExtra = lib.mkIf config.custom.zsh.enable (
+    programs.zsh.loginExtra = lib.mkIf config.custom.shell.zsh.enable (
       lib.mkAfter ''
         if [[ "$TTY" = "/dev/tty1" ]]; then
           Hyprland

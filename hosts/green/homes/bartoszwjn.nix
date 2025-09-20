@@ -54,10 +54,10 @@ in
     kitty.enable = true;
     neovim.enable = true;
     nix.enable = true;
-    nushell.enable = true;
     packages.cli = true;
     packages.gui = true;
     rofi.enable = true;
+    shell.enable = true;
     ssh.enable = true;
     styling.enable = true;
     syncthing = {
@@ -72,7 +72,6 @@ in
       };
     };
     zathura.enable = true;
-    zsh.enable = true;
   };
 
   home = {
