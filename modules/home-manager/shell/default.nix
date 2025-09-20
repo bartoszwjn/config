@@ -31,5 +31,9 @@ in
       starship.enable = true;
       zoxide.enable = true;
     };
+
+    # Make nu the default shell launched by terminal emulators and `nix shell`
+    # without changing the user's login shell.
+    home.sessionVariables.SHELL = "${config.home.profileDirectory}/bin/nu";
   };
 }
