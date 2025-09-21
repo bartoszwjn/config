@@ -20,17 +20,14 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    crane.url = "github:ipetkov/crane";
     private-config.url = "github:bartoszwjn/private-config";
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      ...
-    }:
+    inputs:
     let
-      inherit (nixpkgs) lib;
+      inherit (inputs.nixpkgs) lib;
       systems = import inputs.systems;
 
       outputsFor = lib.genAttrs systems (system: import ./. { inherit inputs system; });

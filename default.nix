@@ -7,6 +7,7 @@
   sops-nix ? inputs.sops-nix,
   disko ? inputs.disko,
   treefmt-nix ? inputs.treefmt-nix,
+  crane ? inputs.crane,
   private-config ? inputs.private-config,
 }:
 
@@ -33,11 +34,20 @@ let
   fs = lib.fileset;
 
   treefmtEval = (import treefmt-nix).evalModule pkgs ./treefmt.nix;
+  craneLib = import crane { inherit pkgs; };
 
   customPkgs = lib.packagesFromDirectoryRecursive {
     directory = ./packages;
-    inherit (pkgs) callPackage;
+    callPackage = lib.callPackageWith (pkgs // { inherit craneLib; });
   };
+  customPkgTests = lib.foldl' lib.attrsets.unionOfDisjoint { } (
+    lib.mapAttrsToList (
+      pkgName: pkg:
+      lib.mapAttrs' (testName: test: lib.nameValuePair "${pkgName}-test-${testName}" test) (
+        pkg.tests or { }
+      )
+    ) (lib.removeAttrs customPkgs [ "neovim-custom" ])
+  );
 
   mkNixos = import ./nixos.nix {
     inherit lib pkgs customPkgs;
@@ -67,6 +77,7 @@ in
 
   checks = lib.lists.foldl' lib.attrsets.unionOfDisjoint { } [
     customPkgs
+    customPkgTests
     toplevels
     {
       treefmt-check = treefmtEval.config.build.check (

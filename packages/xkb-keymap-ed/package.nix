@@ -1,7 +1,7 @@
 {
   lib,
   runCommand,
-  xkbcomp,
+  xorg,
 }:
 runCommand "xkb-keymap-ed"
   {
@@ -14,7 +14,7 @@ runCommand "xkb-keymap-ed"
       ];
     };
 
-    nativeBuildInputs = [ xkbcomp ];
+    nativeBuildInputs = [ xorg.xkbcomp ];
   }
   ''
     xkbcomp -xkb -I$src $src/keymap.xkb keymap.xkb
