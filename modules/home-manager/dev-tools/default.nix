@@ -68,6 +68,7 @@ in
           ;
         inherit (customPkgs)
           deploy-utils
+          ndf
           ;
       };
     })
