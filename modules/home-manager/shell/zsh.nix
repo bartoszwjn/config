@@ -46,14 +46,17 @@ in
       };
       shellAliases = {
         ls = "eza --group-directories-first";
+        # keep-sorted start
         l = "ls --long --all --header --group --binary --time-style=iso";
         ll = "l --git --git-repos --total-size";
         t = "ls --tree";
-        tl = "t --long --header --group --binary --time-style=iso";
-        tll = "tl --git --git-repos --total-size";
         ta = "t --all";
+        tl = "t --long --header --group --binary --time-style=iso";
         tla = "tl --all";
+        tll = "tl --git --git-repos --total-size";
+        # keep-sorted end
 
+        # keep-sorted start
         ga = "git add";
         gb = "git branch";
         gc = "git commit";
@@ -69,19 +72,25 @@ in
         gsps = "git stash push";
         gst = "git status";
         gsw = "git switch";
+        # keep-sorted end
 
+        # keep-sorted start
         nb = "nix build --no-link --print-out-paths --log-format multiline";
         nd = "nix develop --log-format multiline";
         ne = "nix eval";
         nfc = "nix flake check --log-format multiline";
         nr = "nix run --log-format multiline";
         ns = "nix shell --log-format multiline";
+        # keep-sorted end
 
+        # keep-sorted start
         btctl = "bluetoothctl";
         diff = "diff --color";
         j = "just";
         lsblk = "lsblk -o NAME,MAJ:MIN,RM,TYPE,RO,SIZE,MOUNTPOINTS,LABEL,FSTYPE,PARTTYPENAME,UUID";
         sctl = "systemctl";
+        ssh-no-host-key = "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=accept-new";
+        # keep-sorted end
       };
 
       envExtra = ''
