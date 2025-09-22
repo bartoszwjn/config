@@ -13,16 +13,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    documentation.dev.enable = true;
-
-    documentation.man = {
+    programs.man = {
       enable = true;
       generateCaches = true;
     };
-
-    environment.systemPackages = [
-      pkgs.man-pages
-      pkgs.man-pages-posix
-    ];
   };
 }

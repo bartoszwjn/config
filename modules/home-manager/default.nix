@@ -9,6 +9,7 @@
     # keep-sorted start
     ./alacritty
     ./dev-tools
+    ./documentation.nix
     ./dunst.nix
     ./gpg.nix
     ./gui-services.nix
