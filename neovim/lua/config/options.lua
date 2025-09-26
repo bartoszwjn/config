@@ -57,3 +57,6 @@ vim.o.completeopt = "menuone,noselect"
 
 -- hide startup message
 vim.opt.shortmess:append("I")
+
+-- shell
+vim.o.shell = "bash"
