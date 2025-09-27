@@ -22,6 +22,10 @@
     };
     crane.url = "github:ipetkov/crane";
     private-config.url = "github:bartoszwjn/private-config";
+    ndf = {
+      url = "github:bartoszwjn/ndf";
+      flake = false;
+    };
   };
 
   outputs =

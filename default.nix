@@ -9,6 +9,7 @@
   treefmt-nix ? inputs.treefmt-nix,
   crane ? inputs.crane,
   private-config ? inputs.private-config,
+  ndf ? inputs.ndf,
 }:
 
 let
@@ -36,18 +37,27 @@ let
   treefmtEval = (import treefmt-nix).evalModule pkgs ./treefmt.nix;
   craneLib = import crane { inherit pkgs; };
 
-  customPkgs = lib.packagesFromDirectoryRecursive {
-    directory = ./packages;
-    callPackage = lib.callPackageWith (pkgs // { inherit craneLib; });
-  };
-  customPkgTests = lib.foldl' lib.attrsets.unionOfDisjoint { } (
-    lib.mapAttrsToList (
-      pkgName: pkg:
-      lib.mapAttrs' (testName: test: lib.nameValuePair "${pkgName}-test-${testName}" test) (
-        pkg.tests or { }
-      )
-    ) (lib.removeAttrs customPkgs [ "neovim-custom" ])
-  );
+  customPkgs =
+    lib.packagesFromDirectoryRecursive {
+      directory = ./packages;
+      inherit (pkgs) callPackage;
+    }
+    // {
+      ndf = pkgs.callPackage (ndf + "/package.nix") { inherit craneLib; };
+    };
+  customPkgTests =
+    let
+      excludedPkgs = [
+        "ndf"
+        "neovim-custom"
+      ];
+    in
+    lib.foldl' lib.attrsets.unionOfDisjoint { } (
+      lib.mapAttrsToList (
+        pkgName: pkg:
+        lib.mapAttrs' (testName: lib.nameValuePair "${pkgName}-test-${testName}") (pkg.tests or { })
+      ) (lib.removeAttrs customPkgs excludedPkgs)
+    );
 
   mkNixos = import ./nixos.nix {
     inherit lib pkgs customPkgs;

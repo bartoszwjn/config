@@ -55,6 +55,22 @@
         "type": "github"
       }
     },
+    "ndf": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1758978548,
+        "narHash": "sha256-3X4gICtMCOJqgBcP5gytvGHqZryX4wJAhYoDcRi7Qog=",
+        "owner": "bartoszwjn",
+        "repo": "ndf",
+        "rev": "8c3b1926f7dd189be8b24670e036666875ad17a8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bartoszwjn",
+        "repo": "ndf",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1753399495,
@@ -91,6 +107,7 @@
         "crane": "crane",
         "disko": "disko",
         "home-manager": "home-manager",
+        "ndf": "ndf",
         "nixpkgs": "nixpkgs",
         "private-config": "private-config",
         "sops-nix": "sops-nix",
