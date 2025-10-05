@@ -15,7 +15,6 @@ in
   config = lib.mkIf cfg.enable {
     programs.rofi = {
       enable = true;
-      package = pkgs.rofi-wayland;
       terminal = "kitty";
       cycle = true;
       location = "center";
