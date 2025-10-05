@@ -168,9 +168,8 @@ in
     services.syncthing = {
       enable = true;
       extraOptions = [
-        "--no-default-folder"
         "--no-upgrade"
-        "--skip-port-probing"
+        "--no-port-probing"
         "--home=${cfg.homeDir}"
         "--gui-address=${cfg.guiAddress}"
       ];
