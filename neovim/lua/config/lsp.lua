@@ -1,6 +1,5 @@
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local fidget = require("fidget")
-local lspconfig = require("lspconfig")
 local neodev = require("neodev")
 local tb = require("telescope.builtin")
 
@@ -21,13 +20,15 @@ neodev.setup {
   end,
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+vim.lsp.config(
+  "*",
+  { capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()) }
+)
 
-lspconfig.lua_ls.setup { capabilities = capabilities }
-lspconfig.nushell.setup { capabilities = capabilities }
-lspconfig.pyright.setup { capabilities = capabilities }
-lspconfig.rust_analyzer.setup { capabilities = capabilities }
+vim.lsp.enable("lua_ls") -- TODO: https://github.com/neovim/nvim-lspconfig/blob/master/lsp/lua_ls.lua
+vim.lsp.enable("nushell")
+vim.lsp.enable("pyright")
+vim.lsp.enable("rust_analyzer")
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("LspUserConfig", { clear = true }),
