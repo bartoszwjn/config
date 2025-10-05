@@ -7,8 +7,8 @@
 let
   cfg = config.custom.dns;
 
-  # Using `config.systemd.services.dnscrypt-proxy2.serviceConfig` to define
-  # `services.dnscrypt-proxy2.settings` results in infinite recursion
+  # Using `config.systemd.services.dnscrypt-proxy.serviceConfig` to define
+  # `services.dnscrypt-proxy.settings` results in infinite recursion
   systemdDir = "dnscrypt-proxy";
   cacheDirectory = "/var/cache/${systemdDir}";
   logsDirectory = "/var/log/${systemdDir}";
@@ -32,7 +32,7 @@ in
 
     assertions =
       let
-        systemdCfg = config.systemd.services.dnscrypt-proxy2.serviceConfig;
+        systemdCfg = config.systemd.services.dnscrypt-proxy.serviceConfig;
         dirs = [
           "CacheDirectory"
           "LogsDirectory"
@@ -58,7 +58,7 @@ in
     services = {
       resolved.enable = true;
 
-      dnscrypt-proxy2 = {
+      dnscrypt-proxy = {
         enable = true;
         upstreamDefaults = false;
         settings = {
