@@ -64,7 +64,7 @@ in
     })
 
     (lib.mkIf cfg.general.enable {
-      home.packages = builtins.attrValues {
+      home.packages = lib.attrValues {
         inherit (pkgs)
           cmake
           gnumake
@@ -75,7 +75,7 @@ in
     })
 
     (lib.mkIf cfg.jsonnet.enable {
-      home.packages = builtins.attrValues {
+      home.packages = lib.attrValues {
         inherit (pkgs) go-jsonnet jsonnet-bundler jsonnet-language-server;
       };
     })
@@ -83,7 +83,7 @@ in
     (lib.mkIf cfg.lua.enable { home.packages = [ pkgs.lua-language-server ]; })
 
     (lib.mkIf cfg.nix.enable {
-      home.packages = builtins.attrValues {
+      home.packages = lib.attrValues {
         inherit (pkgs)
           alejandra
           nix-diff
@@ -102,7 +102,7 @@ in
     })
 
     (lib.mkIf cfg.python.enable {
-      home.packages = builtins.attrValues {
+      home.packages = lib.attrValues {
         inherit (pkgs)
           black
           isort
@@ -117,7 +117,7 @@ in
 
     (lib.mkIf cfg.rust.enable {
       home = {
-        packages = builtins.attrValues {
+        packages = lib.attrValues {
           inherit (pkgs)
             cargo
             cargo-edit
@@ -172,7 +172,7 @@ in
       programs.git = {
         enable = true;
         userName = "Bartosz Wojno";
-        userEmail = lib.mkIf (builtins.isString cfg.vcs.userEmail) cfg.vcs.userEmail;
+        userEmail = lib.mkIf (lib.isString cfg.vcs.userEmail) cfg.vcs.userEmail;
         extraConfig = {
           advice.detachedHead = false;
           diff.sops.textconv = "sops decrypt";
@@ -180,7 +180,7 @@ in
           log.date = "format:%a %F %T %z";
           pull.ff = "only";
         };
-        includes = lib.mkIf (builtins.isAttrs cfg.vcs.userEmail) (
+        includes = lib.mkIf (lib.isAttrs cfg.vcs.userEmail) (
           lib.mapAttrsToList (dir: email: {
             condition = "gitdir:${dir}";
             contents.user.email = email;
@@ -203,8 +203,8 @@ in
 
       custom.dev-tools.vcs.jujutsu.settings = {
         user.name = "Bartosz Wojno";
-        user.email = lib.mkIf (builtins.isString cfg.vcs.userEmail) cfg.vcs.userEmail;
-        "--scope" = lib.mkIf (builtins.isAttrs cfg.vcs.userEmail) (
+        user.email = lib.mkIf (lib.isString cfg.vcs.userEmail) cfg.vcs.userEmail;
+        "--scope" = lib.mkIf (lib.isAttrs cfg.vcs.userEmail) (
           lib.mapAttrsToList (dir: email: {
             "--when".repositories = [ dir ];
             user.email = email;

@@ -14,7 +14,7 @@ in
 
   config = lib.mkIf cfg.enable {
     environment = {
-      systemPackages = builtins.attrValues {
+      systemPackages = lib.attrValues {
         inherit (pkgs)
           file
           git

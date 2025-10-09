@@ -217,7 +217,7 @@ in
     systemd.user.services.syncthing-config =
       let
         newConfig = cfg.settings // {
-          devices = builtins.attrValues cfg.settings.devices;
+          devices = lib.attrValues cfg.settings.devices;
           folders = lib.attrsets.mapAttrsToList (_: folder: mkFolder folder) cfg.settings.folders;
         };
         mkFolder = folder: folder // { devices = map mkFolderDevice folder.devices; };
@@ -263,7 +263,7 @@ in
               # Keep the old API key to not break things like syncthingtray
               ${jq} --compact-output --rawfile apiKey "$RUNTIME_DIRECTORY/api_key" \
                 '. * {"gui": {"apiKey": ($apiKey | rtrimstr("\n"))}}' \
-                <<< ${lib.escapeShellArg (builtins.toJSON newConfig)} \
+                <<< ${lib.escapeShellArg (lib.strings.toJSON newConfig)} \
                 > "$RUNTIME_DIRECTORY/new_config"
 
               (

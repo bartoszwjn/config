@@ -9,7 +9,7 @@ let
   config = vimUtils.buildVimPlugin {
     name = "config";
     src = ../neovim;
-    dependencies = builtins.attrValues {
+    dependencies = lib.attrValues {
       inherit (vimPlugins)
         cmp-cmdline
         cmp-nvim-lsp

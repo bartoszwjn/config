@@ -73,7 +73,7 @@ in
   home = {
     username = "bart3";
     stateVersion = "24.11";
-    packages = builtins.attrValues {
+    packages = lib.attrValues {
       inherit (pkgs)
         awscli2
         git-review

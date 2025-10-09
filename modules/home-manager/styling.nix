@@ -17,7 +17,7 @@ in
 
     fonts.fontconfig.enable = true;
 
-    home.packages = builtins.attrValues {
+    home.packages = lib.attrValues {
       inherit (pkgs) arc-icon-theme arc-theme;
       inherit (pkgs.nerd-fonts) sauce-code-pro;
     };

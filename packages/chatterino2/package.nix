@@ -21,7 +21,7 @@ stdenv.mkDerivation {
     inherit (source-info) owner repo fetchSubmodules;
     inherit (source-info) rev hash;
     # use the same store path as `nix-prefetch-github`
-    name = "${source-info.repo}-${builtins.substring 0 7 source-info.rev}";
+    name = "${source-info.repo}-${lib.substring 0 7 source-info.rev}";
   };
 
   nativeBuildInputs = [

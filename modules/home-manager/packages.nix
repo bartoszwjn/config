@@ -15,7 +15,7 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.cli {
-      home.packages = builtins.attrValues {
+      home.packages = lib.attrValues {
         inherit (pkgs)
           age
           bat
@@ -41,7 +41,7 @@ in
     })
 
     (lib.mkIf cfg.gui {
-      home.packages = builtins.attrValues {
+      home.packages = lib.attrValues {
         inherit (pkgs)
           feh
           firefox
