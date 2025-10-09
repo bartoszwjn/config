@@ -211,6 +211,7 @@ in
           }) cfg.vcs.userEmail
         );
 
+        ui.default-command = "log";
         ui.diff-editor = ":builtin";
         ui.pager = ":builtin";
       };
