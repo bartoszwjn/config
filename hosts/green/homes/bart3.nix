@@ -14,7 +14,7 @@ in
     alacritty.enable = true;
     dev-tools = {
       enableAll = true;
-      git.userEmail = {
+      vcs.userEmail = {
         "~/repos/" = "bartoszwjn@gmail.com";
         "~/qed/" = "bart3@qed.ai";
       };

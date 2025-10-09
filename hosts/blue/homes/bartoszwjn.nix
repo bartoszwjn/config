@@ -16,7 +16,7 @@ in
     dev-tools = {
       enableAll = true;
       terraform.enable = false;
-      git.userEmail = "bartoszwjn@gmail.com";
+      vcs.userEmail = "bartoszwjn@gmail.com";
     };
     documentation.enable = true;
     dunst.enable = true;

@@ -7,6 +7,8 @@
 }:
 let
   cfg = config.custom.dev-tools;
+
+  tomlFormat = pkgs.formats.toml { };
 in
 {
   options.custom.dev-tools = {
@@ -20,8 +22,17 @@ in
     rust.enable = lib.mkEnableOption "Rust dev tools";
     terraform.enable = lib.mkEnableOption "terraform config";
 
-    git = {
-      enable = lib.mkEnableOption "git with custom config";
+    vcs = {
+      git.enable = lib.mkEnableOption "git with custom config";
+
+      jujutsu = {
+        enable = lib.mkEnableOption "jujutsu with custom config";
+        settings = lib.mkOption {
+          type = tomlFormat.type;
+          description = "Options to add to jujutsu's `config.toml` file.";
+        };
+      };
+
       userEmail = lib.mkOption {
         type = lib.types.oneOf [
           lib.types.str
@@ -47,7 +58,8 @@ in
         rust.enable = true;
         terraform.enable = true;
 
-        git.enable = true;
+        vcs.git.enable = true;
+        vcs.jujutsu.enable = true;
       };
     })
 
@@ -154,13 +166,13 @@ in
       ];
     })
 
-    (lib.mkIf cfg.git.enable {
+    (lib.mkIf cfg.vcs.git.enable {
       home.packages = [ pkgs.gitui ];
 
       programs.git = {
         enable = true;
         userName = "Bartosz Wojno";
-        userEmail = lib.mkIf (builtins.isString cfg.git.userEmail) cfg.git.userEmail;
+        userEmail = lib.mkIf (builtins.isString cfg.vcs.userEmail) cfg.vcs.userEmail;
         extraConfig = {
           advice.detachedHead = false;
           diff.sops.textconv = "sops decrypt";
@@ -168,17 +180,36 @@ in
           log.date = "format:%a %F %T %z";
           pull.ff = "only";
         };
-        includes = lib.mkIf (builtins.isAttrs cfg.git.userEmail) (
+        includes = lib.mkIf (builtins.isAttrs cfg.vcs.userEmail) (
           lib.mapAttrsToList (dir: email: {
             condition = "gitdir:${dir}";
             contents.user.email = email;
-          }) cfg.git.userEmail
+          }) cfg.vcs.userEmail
         );
       };
 
       xdg.configFile = {
         "gitui/key_bindings.ron".source = ./gitui-key-bindings.ron;
         "gitui/key_symbols.ron".source = ./gitui-key-symbols.ron;
+      };
+    })
+
+    (lib.mkIf cfg.vcs.jujutsu.enable {
+      home.packages = [ pkgs.jujutsu ];
+
+      xdg.configFile."jj/config.toml" = lib.mkIf (cfg.vcs.jujutsu.settings != { }) {
+        source = tomlFormat.generate "jj-config.toml" cfg.vcs.jujutsu.settings;
+      };
+
+      custom.dev-tools.vcs.jujutsu.settings = {
+        user.name = "Bartosz Wojno";
+        user.email = lib.mkIf (builtins.isString cfg.vcs.userEmail) cfg.vcs.userEmail;
+        "--scope" = lib.mkIf (builtins.isAttrs cfg.vcs.userEmail) (
+          lib.mapAttrsToList (dir: email: {
+            "--when".repositories = [ dir ];
+            user.email = email;
+          }) cfg.vcs.userEmail
+        );
       };
     })
   ];
