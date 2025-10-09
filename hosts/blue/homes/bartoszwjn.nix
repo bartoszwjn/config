@@ -61,7 +61,7 @@ in
 
   home = {
     username = "bartoszwjn";
-    stateVersion = "24.11";
+    stateVersion = "25.05";
     packages = lib.attrValues {
       inherit (customPkgs) chatterino2;
       inherit (pkgs) discord;
