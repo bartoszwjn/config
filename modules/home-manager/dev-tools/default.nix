@@ -10,13 +10,15 @@ let
 in
 {
   options.custom.dev-tools = {
-    general = lib.mkEnableOption "general dev tools";
-    jsonnet = lib.mkEnableOption "jsonnet dev tools";
-    lua = lib.mkEnableOption "Lua dev tools";
-    nix = lib.mkEnableOption "Nix dev tools";
-    python = lib.mkEnableOption "Python dev tools";
-    rust = lib.mkEnableOption "Rust dev tools";
-    terraform = lib.mkEnableOption "terraform config";
+    enableAll = lib.mkEnableOption "all dev tools";
+
+    general.enable = lib.mkEnableOption "general dev tools";
+    jsonnet.enable = lib.mkEnableOption "jsonnet dev tools";
+    lua.enable = lib.mkEnableOption "Lua dev tools";
+    nix.enable = lib.mkEnableOption "Nix dev tools";
+    python.enable = lib.mkEnableOption "Python dev tools";
+    rust.enable = lib.mkEnableOption "Rust dev tools";
+    terraform.enable = lib.mkEnableOption "terraform config";
 
     git = {
       enable = lib.mkEnableOption "git with custom config";
@@ -35,7 +37,21 @@ in
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.general {
+    (lib.mkIf cfg.enableAll {
+      custom.dev-tools = lib.mkDefault {
+        general.enable = true;
+        jsonnet.enable = true;
+        lua.enable = true;
+        nix.enable = true;
+        python.enable = true;
+        rust.enable = true;
+        terraform.enable = true;
+
+        git.enable = true;
+      };
+    })
+
+    (lib.mkIf cfg.general.enable {
       home.packages = builtins.attrValues {
         inherit (pkgs)
           cmake
@@ -46,15 +62,15 @@ in
       };
     })
 
-    (lib.mkIf cfg.jsonnet {
+    (lib.mkIf cfg.jsonnet.enable {
       home.packages = builtins.attrValues {
         inherit (pkgs) go-jsonnet jsonnet-bundler jsonnet-language-server;
       };
     })
 
-    (lib.mkIf cfg.lua { home.packages = [ pkgs.lua-language-server ]; })
+    (lib.mkIf cfg.lua.enable { home.packages = [ pkgs.lua-language-server ]; })
 
-    (lib.mkIf cfg.nix {
+    (lib.mkIf cfg.nix.enable {
       home.packages = builtins.attrValues {
         inherit (pkgs)
           alejandra
@@ -73,7 +89,7 @@ in
       };
     })
 
-    (lib.mkIf cfg.python {
+    (lib.mkIf cfg.python.enable {
       home.packages = builtins.attrValues {
         inherit (pkgs)
           black
@@ -87,7 +103,7 @@ in
       };
     })
 
-    (lib.mkIf cfg.rust {
+    (lib.mkIf cfg.rust.enable {
       home = {
         packages = builtins.attrValues {
           inherit (pkgs)
@@ -126,7 +142,7 @@ in
       };
     })
 
-    (lib.mkIf cfg.terraform {
+    (lib.mkIf cfg.terraform.enable {
       home.file.".terraformrc".text = ''
         plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
       '';

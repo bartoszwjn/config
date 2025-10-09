@@ -14,16 +14,9 @@ in
   custom = {
     alacritty.enable = true;
     dev-tools = {
-      general = true;
-      jsonnet = true;
-      lua = true;
-      nix = true;
-      python = true;
-      rust = true;
-      git = {
-        enable = true;
-        userEmail = "bartoszwjn@gmail.com";
-      };
+      enableAll = true;
+      terraform.enable = false;
+      git.userEmail = "bartoszwjn@gmail.com";
     };
     documentation.enable = true;
     dunst.enable = true;

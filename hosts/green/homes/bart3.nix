@@ -13,19 +13,10 @@ in
   custom = {
     alacritty.enable = true;
     dev-tools = {
-      general = true;
-      jsonnet = true;
-      lua = true;
-      nix = true;
-      python = true;
-      rust = true;
-      terraform = true;
-      git = {
-        enable = true;
-        userEmail = {
-          "~/repos/" = "bartoszwjn@gmail.com";
-          "~/qed/" = "bart3@qed.ai";
-        };
+      enableAll = true;
+      git.userEmail = {
+        "~/repos/" = "bartoszwjn@gmail.com";
+        "~/qed/" = "bart3@qed.ai";
       };
     };
     documentation.enable = true;
