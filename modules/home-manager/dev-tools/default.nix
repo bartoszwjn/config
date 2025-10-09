@@ -210,6 +210,9 @@ in
             user.email = email;
           }) cfg.vcs.userEmail
         );
+
+        ui.diff-editor = ":builtin";
+        ui.pager = ":builtin";
       };
     })
   ];
