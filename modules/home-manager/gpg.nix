@@ -21,5 +21,9 @@ in
       defaultCacheTtl = 3600; # seconds
       pinentry.package = pkgs.pinentry-curses;
     };
+
+    custom.shell.nu.extraAutoloadFiles."gpg-agent.nu" = pkgs.writeText "gpg-agent-nushell-config.nu" ''
+      $env.GPG_TTY = (tty)
+    '';
   };
 }
