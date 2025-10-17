@@ -225,6 +225,11 @@ in
             "git"
             "push"
           ];
+          "la" = [
+            "log"
+            "-r"
+            "all()"
+          ];
           # keep-sorted end
         };
       };
