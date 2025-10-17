@@ -6,6 +6,13 @@
 }:
 let
   cfg = config.custom.shell.starship;
+
+  gitModules = [
+    "git_branch"
+    "git_commit"
+    "git_status"
+    "git_state"
+  ];
 in
 {
   options.custom.shell.starship = {
@@ -16,11 +23,15 @@ in
     programs.starship = {
       enable = true;
       settings = {
-        format = ''
-          $username$hostname$time$directory$cmd_duration
-          $shell$direnv$package$python$rust$git_branch$git_commit$git_status$git_state
-           $shlvl$jobs$status$character
-        '';
+        format =
+          let
+            vcs = lib.concatMapStrings (s: "\${custom.${s}}") (gitModules ++ [ "jj" ]);
+          in
+          ''
+            $username$hostname$time$directory$cmd_duration
+            $shell$direnv$package$python$rust${vcs}
+             $shlvl$jobs$status$character
+          '';
         add_newline = true;
         scan_timeout = 30;
         command_timeout = 200;
@@ -28,6 +39,50 @@ in
           min_time = 1000;
           show_milliseconds = true;
         };
+        custom = {
+          jj = {
+            description = "Show current jj status";
+            shell = [ "sh" ];
+            when = "jj root --ignore-working-copy";
+            format = "on $output ";
+            style = "blue";
+            command = ''
+              jj log --no-graph --color always --revisions @ --template '
+                separate(" ",
+                  change_id.shortest(8),
+                  truncate_end(50, bookmarks, "…"),
+                  "|",
+                  concat(
+                    if(conflict, label("conflict", " ")),
+                    if(divergent, label("divergent", " ")),
+                    if(immutable, " "),
+                    if(hidden, "󰊠 "),
+                  ),
+                  if(empty, label("log commit empty", "(empty)")),
+                  label(
+                    separate(" ",
+                      "log commit",
+                      if(description.len() == 0 && empty, "empty"),
+                      "description",
+                      if(description.len() == 0, "placeholder"),
+                    ),
+                    coalesce(
+                      truncate_end(50, description.first_line(), "…"),
+                      "(no description set)",
+                    ),
+                  ),
+                )
+              '
+            '';
+          };
+        }
+        // lib.genAttrs gitModules (module: {
+          description = "Show ${module} only if we're not in a jj repo";
+          shell = [ "sh" ];
+          when = "! jj root --ignore-working-copy";
+          command = "starship module ${module}";
+          style = "";
+        });
         directory = {
           fish_style_pwd_dir_length = 1;
           format = "in [$path]($style) [$read_only]($read_only_style)";
