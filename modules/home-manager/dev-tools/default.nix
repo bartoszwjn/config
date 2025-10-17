@@ -214,6 +214,19 @@ in
         ui.default-command = "log";
         ui.diff-editor = ":builtin";
         ui.pager = ":builtin";
+
+        aliases = {
+          # keep-sorted start block=yes
+          "gf" = [
+            "git"
+            "fetch"
+          ];
+          "gp" = [
+            "git"
+            "push"
+          ];
+          # keep-sorted end
+        };
       };
     })
   ];
