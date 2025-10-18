@@ -18,7 +18,7 @@ in
       settings = {
         format = ''
           $username$hostname$time$directory$cmd_duration
-          $shell$git_branch$git_commit$git_status$git_state$package$python$rust$direnv
+          $shell$direnv$package$python$rust$git_branch$git_commit$git_status$git_state
            $shlvl$jobs$status$character
         '';
         add_newline = true;
