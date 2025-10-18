@@ -51,7 +51,7 @@ in
                 separate(" ",
                   change_id.shortest(8),
                   truncate_end(50, bookmarks, "…"),
-                  "|",
+                  label("separator", "|"),
                   concat(
                     if(conflict, label("conflict", " ")),
                     if(divergent, label("divergent", " ")),
