@@ -66,7 +66,7 @@ in
                       if(description.len() == 0, "placeholder"),
                     ),
                     coalesce(
-                      truncate_end(50, description.first_line(), "…"),
+                      truncate_end(72, description.first_line(), "…"),
                       "(no description set)",
                     ),
                   ),
