@@ -45,7 +45,6 @@ in
             shell = [ "sh" ];
             when = "jj root --ignore-working-copy";
             format = "on $output ";
-            style = "blue";
             command = ''
               jj log --no-graph --color always --revisions @ --template '
                 separate(" ",
@@ -80,8 +79,8 @@ in
           description = "Show ${module} only if we're not in a jj repo";
           shell = [ "sh" ];
           when = "! jj root --ignore-working-copy";
+          format = "($output )";
           command = "starship module ${module}";
-          style = "";
         });
         directory = {
           fish_style_pwd_dir_length = 1;
