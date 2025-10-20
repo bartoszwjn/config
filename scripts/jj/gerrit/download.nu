@@ -43,17 +43,44 @@ def main [
 }
 
 def get_newest_patchset_number [remote: string, change_number: int]: nothing -> int {
-    let remote_ref_pattern = get_gerrit_ref $change_number "*"
-    let result = run_cmd git ls-remote --refs $remote $remote_ref_pattern
-    let patchsets = (
-        $result
-        | lines
-        | parse --regex "^[0-9a-f]{40}\trefs/changes/[0-9]{2}/[0-9]+/(?<patchset>[0-9]+)$"
-    )
-    if ($patchsets | is-empty) {
-        error make -u { msg: $"No patchsets found for change ($change_number)" }
+    let parsed_url = parse_gerrit_remote_url (git remote get-url $remote)
+
+    match $parsed_url.scheme {
+        "ssh" => { get_newest_patchset_over_ssh $parsed_url $change_number }
+        "http" | "https" => { get_newest_patchset_over_http $parsed_url $change_number }
+        $other => { error make -u { msg: $"Unsupported URL scheme for Gerrit remote: ($other)" } }
     }
-    $patchsets | get patchset | into int | math max
+}
+
+def parse_gerrit_remote_url [
+    remote_url: string
+]: nothing -> record<scheme: string, username: string, host: string, port: string, project: string> {
+    # Based on the implemenation of `git-review -d`
+    # https://opendev.org/opendev/git-review/src/commit/45c94b63fbe0653d187c8afc1d316b9d3ac45176/git_review/cmd.py#L655
+
+    let parsed = if ($remote_url | str contains "://") {
+        $remote_url | url parse | select scheme username host port path
+    } else {
+        # scp-style address: [user@]host:[path]
+        # https://opendev.org/opendev/git-review/src/commit/45c94b63fbe0653d187c8afc1d316b9d3ac45176/git_review/cmd.py#L610
+        let parts = $remote_url | parse -r "^(?:(?<username>[^@:]*)@)?(?<host>[^:]*):(?<path>.+)?$"
+        if ($parts | is-empty) {
+            error make -u { msg: $"Invalid remote URL: ($remote_url)" }
+        }
+        $parts | get 0 | merge { scheme: "ssh", port: "22" }
+    }
+
+    # XXX: git-review supports http remotes where the Gerrit "root" can have a non-empty path
+    let project = $parsed.path | str replace --all --regex '^/|\.git$' ''
+    $parsed | reject path | insert project $project
+}
+
+def get_newest_patchset_over_ssh [ parsed_url: record, change_number: int ]: nothing -> int {
+    assert false "not implemented yet"
+}
+
+def get_newest_patchset_over_http [ parsed_url: record, change_number: int ]: nothing -> int {
+    assert false "not implemented yet"
 }
 
 def get_gerrit_ref [change_number: int, patchset_number: oneof<int, string>]: nothing -> string {
