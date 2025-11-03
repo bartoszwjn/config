@@ -31,10 +31,12 @@ def main [
         warn (
             "Consider setting snapshot.auto-track to ignore files that were untracked before:\n"
             + ($untracked_files | each { $"  ($in)\n" } | str join)
-            + "Approximate command:\n"
+            + "Approximate commands:\n"
             + "jj config set --repo snapshot.auto-track '"
             + ($untracked_files | each { $"root-file:($in)" } | prepend ["all()"] | str join " ~ ")
-            + "'"
+            + "'\n"
+            + $"jj file untrack "
+            + ($untracked_files | str join ' ')
         )
     }
 }
