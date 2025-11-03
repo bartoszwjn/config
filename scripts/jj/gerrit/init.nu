@@ -1,16 +1,22 @@
 #!/usr/bin/env nu
 
 # Initialize jj in a Git repo with Gerrit-specific configuration
-def main []: nothing -> nothing {
+def main [
+    --default-branch: string # Default branch for submitting changes (default: taken from .gitreview)
+    --default-remote: string # Default remote for submitting changes (default: taken from .gitreview)
+]: nothing -> nothing {
     let repo_root = git rev-parse --show-toplevel
     if $env.PWD != $repo_root {
         print_cmd cd $repo_root
         cd $repo_root
     }
 
-    let git_review_config = open .gitreview | from ini
-    let default_branch = $git_review_config.gerrit.defaultbranch
-    let default_remote = $git_review_config.gerrit.defaultremote
+    let default_branch = $default_branch | default {
+        open .gitreview | from ini | get gerrit.defaultbranch
+    }
+    let default_remote = $default_remote | default {
+        open .gitreview | from ini | get gerrit.defaultremote
+    }
     let untracked_files = git ls-files --other --exclude-standard
     let untracked_files = $untracked_files | lines
 
