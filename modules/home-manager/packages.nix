@@ -17,8 +17,10 @@ in
     (lib.mkIf cfg.cli {
       home.packages = lib.attrValues {
         inherit (pkgs)
+          # keep-sorted start
           age
           bat
+          bluetui
           brightnessctl
           eza
           fd
@@ -36,6 +38,7 @@ in
           vim
           wally-cli
           zip
+          # keep-sorted end
           ;
       };
     })
@@ -43,6 +46,7 @@ in
     (lib.mkIf cfg.gui {
       home.packages = lib.attrValues {
         inherit (pkgs)
+          # keep-sorted start
           feh
           firefox
           keepassxc
@@ -52,6 +56,7 @@ in
           seahorse
           spotify
           xournalpp
+          # keep-sorted end
           ;
       };
     })
