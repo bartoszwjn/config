@@ -10,7 +10,7 @@
   hardware = {
     bluetooth = {
       enable = true;
-      powerOnBoot = false;
+      powerOnBoot = true;
     };
     cpu.amd.updateMicrocode = true;
     keyboard.zsa.enable = true;
