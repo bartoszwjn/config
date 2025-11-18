@@ -46,7 +46,21 @@ in
             when = "jj root --ignore-working-copy";
             format = "on $output ";
             command = ''
-              jj log --no-graph --color always --revisions @ --template '
+              to_wc=$(
+                jj log --no-graph --revisions 'trunk()..@-' --template 1
+              )
+              if [ "''${#to_wc}" -gt 0 ]; then
+                printf "%s\e[32m+\e[0m " "''${#to_wc}"
+              fi
+
+              to_trunk=$(
+                jj log --ignore-working-copy --no-graph --revisions '@..trunk()' --template 1
+              )
+              if [ "''${#to_trunk}" -gt 0 ]; then
+                printf "%s\e[31m-\e[0m " "''${#to_trunk}"
+              fi
+
+              jj log --ignore-working-copy --no-graph --color always --revisions @ --template '
                 separate(" ",
                   change_id.shortest(8),
                   truncate_end(50, bookmarks, "…"),
