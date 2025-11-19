@@ -45,48 +45,55 @@ in
             shell = [ "sh" ];
             when = "jj root --ignore-working-copy";
             format = "on $output ";
-            command = ''
-              to_wc=$(
-                jj log --no-graph --revisions 'trunk()..@-' --template 1
-              )
-              if [ "''${#to_wc}" -gt 0 ]; then
-                printf "%s\e[32m+\e[0m " "''${#to_wc}"
-              fi
-
-              to_trunk=$(
-                jj log --ignore-working-copy --no-graph --revisions '@..trunk()' --template 1
-              )
-              if [ "''${#to_trunk}" -gt 0 ]; then
-                printf "%s\e[31m-\e[0m " "''${#to_trunk}"
-              fi
-
-              jj log --ignore-working-copy --no-graph --color always --revisions @ --template '
-                separate(" ",
-                  change_id.shortest(8),
-                  truncate_end(50, bookmarks, "…"),
-                  label("separator", "|"),
-                  concat(
-                    if(conflict, label("conflict", " ")),
-                    if(divergent, label("divergent", " ")),
-                    if(immutable, " "),
-                    if(hidden, "󰊠 "),
-                  ),
-                  if(empty, label("log commit empty", "(empty)")),
-                  label(
-                    separate(" ",
-                      "log commit",
-                      if(description.len() == 0 && empty, "empty"),
-                      "description",
-                      if(description.len() == 0, "placeholder"),
-                    ),
-                    coalesce(
-                      truncate_end(72, description.first_line(), "…"),
-                      "(no description set)",
-                    ),
-                  ),
+            command =
+              let
+                bold = ''\e[1m'';
+                green = ''\e[32m'';
+                red = ''\e[31m'';
+                reset = ''\e[0m'';
+              in
+              ''
+                to_wc=$(
+                  jj log --no-graph --revisions 'trunk()..@-' --template 1
                 )
-              '
-            '';
+                if [ "''${#to_wc}" -gt 0 ]; then
+                  printf "${bold}%s${green}+${reset} " "''${#to_wc}"
+                fi
+
+                to_trunk=$(
+                  jj log --ignore-working-copy --no-graph --revisions '@..trunk()' --template 1
+                )
+                if [ "''${#to_trunk}" -gt 0 ]; then
+                  printf "${bold}%s${red}-${reset} " "''${#to_trunk}"
+                fi
+
+                jj log --ignore-working-copy --no-graph --color always --revisions @ --template '
+                  separate(" ",
+                    change_id.shortest(8),
+                    truncate_end(50, bookmarks, "…"),
+                    label("separator", "|"),
+                    concat(
+                      if(conflict, label("conflict", " ")),
+                      if(divergent, label("divergent", " ")),
+                      if(immutable, " "),
+                      if(hidden, "󰊠 "),
+                    ),
+                    if(empty, label("log commit empty", "(empty)")),
+                    label(
+                      separate(" ",
+                        "log commit",
+                        if(description.len() == 0 && empty, "empty"),
+                        "description",
+                        if(description.len() == 0, "placeholder"),
+                      ),
+                      coalesce(
+                        truncate_end(72, description.first_line(), "…"),
+                        "(no description set)",
+                      ),
+                    ),
+                  )
+                '
+              '';
           };
         }
         // lib.genAttrs gitModules (module: {
