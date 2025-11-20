@@ -213,6 +213,7 @@ in
 
         ui.default-command = "log";
         ui.diff-editor = ":builtin";
+        ui.movement.edit = true;
         ui.pager = ":builtin";
 
         aliases = {
