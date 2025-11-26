@@ -27,7 +27,6 @@
     };
     cpu.amd.updateMicrocode = true;
     enableRedistributableFirmware = true;
-    keyboard.zsa.enable = true;
     logitech.wireless.enable = true;
     sensor.iio.enable = true;
   };

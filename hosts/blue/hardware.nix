@@ -13,7 +13,6 @@
       powerOnBoot = true;
     };
     cpu.amd.updateMicrocode = true;
-    keyboard.zsa.enable = true;
     logitech.wireless.enable = true;
   };
 

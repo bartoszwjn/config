@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    # keep-sorted start
     ./admin-tools.nix
     ./console.nix
     ./dns
@@ -20,6 +21,8 @@
     ./printing.nix
     ./repo.nix
     ./virtualisation.nix
+    ./zsa.nix
     ./zsh.nix
+    # keep-sorted end
   ];
 }
