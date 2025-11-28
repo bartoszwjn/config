@@ -89,11 +89,11 @@
     },
     "private-config": {
       "locked": {
-        "lastModified": 1758545552,
-        "narHash": "sha256-K3HycpFYJEMjyOlfx1WAIJBmauZmXI25dvW0KhdwO4Q=",
+        "lastModified": 1764357191,
+        "narHash": "sha256-Rujyyz/cDQf37JhG1qsxkFemg3OaCQBSSOOC+RrmS0A=",
         "owner": "bartoszwjn",
         "repo": "private-config",
-        "rev": "0fd744a91e9afc72b640770699edce3dcd157b8b",
+        "rev": "ed4d9067ff80da8205428c98a612f7dd52bbf4fd",
         "type": "github"
       },
       "original": {
