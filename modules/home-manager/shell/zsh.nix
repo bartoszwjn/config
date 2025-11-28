@@ -84,12 +84,17 @@ in
         # keep-sorted end
 
         # keep-sorted start
+        scp-no-host-key = "scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=accept-new";
+        ssh-copy-id-no-host-key = "ssh-copy-id -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=accept-new";
+        ssh-no-host-key = "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=accept-new";
+        # keep-sorted end
+
+        # keep-sorted start
         btctl = "bluetoothctl";
         diff = "diff --color";
         j = "just";
         lsblk = "lsblk -o NAME,MAJ:MIN,RM,TYPE,RO,SIZE,MOUNTPOINTS,LABEL,FSTYPE,PARTTYPENAME,UUID";
         sctl = "systemctl";
-        ssh-no-host-key = "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=accept-new";
         # keep-sorted end
       };
 

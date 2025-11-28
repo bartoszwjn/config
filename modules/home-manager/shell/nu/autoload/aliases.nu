@@ -54,11 +54,19 @@ alias ns = nix shell --log-format multiline
 # ========================= other =========================
 # keep-sorted start
 
+alias scp-no-host-key = scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=accept-new
+alias ssh-copy-id-no-host-key = ssh-copy-id -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=accept-new
+alias ssh-no-host-key = ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=accept-new
+
+# keep-sorted end
+
+# ========================= other =========================
+# keep-sorted start
+
 alias btctl = bluetoothctl
 alias diff = diff --color
 alias j = just
 alias lsblk = lsblk -o NAME,MAJ:MIN,RM,TYPE,RO,SIZE,MOUNTPOINTS,LABEL,FSTYPE,PARTTYPENAME,UUID
 alias sctl = systemctl
-alias ssh-no-host-key = ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=accept-new
 
 # keep-sorted end
