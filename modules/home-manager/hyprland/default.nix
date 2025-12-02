@@ -179,7 +179,7 @@ in
 
         windowrulev2 = [
           "workspace 5 silent, class:^(Slack)$"
-          "workspace 6 silent, class:^(signal)$"
+          "workspace 6 silent, class:^(?i:signal)$"
           "workspace 7 silent, class:^(obsidian)$"
           "workspace 9 silent, class:^(spotify)$"
           # pavucontrol
