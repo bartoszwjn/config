@@ -171,9 +171,9 @@ in
 
       programs.git = {
         enable = true;
-        userName = "Bartosz Wojno";
-        userEmail = lib.mkIf (lib.isString cfg.vcs.userEmail) cfg.vcs.userEmail;
-        extraConfig = {
+        settings = {
+          user.name = "Bartosz Wojno";
+          user.email = lib.mkIf (lib.isString cfg.vcs.userEmail) cfg.vcs.userEmail;
           advice.detachedHead = false;
           diff.sops.textconv = "sops decrypt";
           init.defaultBranch = "main";
