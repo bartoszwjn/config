@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  customPkgs,
   privateConfig,
   ...
 }:
@@ -72,12 +71,7 @@ in
     username = "bartoszwjn";
     stateVersion = "25.05";
     packages = lib.attrValues {
-      inherit (customPkgs) chatterino2;
       inherit (pkgs) discord;
     };
   };
-
-  xdg.dataFile."chatterino/Settings".source = config.lib.file.mkOutOfStoreSymlink (
-    config.home.homeDirectory + "/syncthing/chatterino-settings"
-  );
 }

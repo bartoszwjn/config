@@ -314,7 +314,6 @@ in
           bind=SUPER, o, submap, open
           submap=open
         ''
-        + mkOpen "c" "chatterino"
         + mkOpen "f" "firefox"
         + mkOpen "k" "keepassxc"
         + mkOpen "m" "signal-desktop"
