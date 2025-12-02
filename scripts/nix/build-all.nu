@@ -30,7 +30,7 @@ def main [
 }
 
 def get_packages [flake_ref: string, flake: record, system: string]: nothing -> list<string> {
-  let packages = ($flake | get -i packages | get -i $system)
+  let packages = ($flake | get -o packages | get -o $system)
   if $packages == null {
     []
   } else {
@@ -39,7 +39,7 @@ def get_packages [flake_ref: string, flake: record, system: string]: nothing -> 
 }
 
 def get_checks [flake_ref: string, flake: record, system: string]: nothing -> list<string> {
-  let checks = ($flake | get -i checks | get -i $system)
+  let checks = ($flake | get -o checks | get -o $system)
   if $checks == null {
     []
   } else {
@@ -48,7 +48,7 @@ def get_checks [flake_ref: string, flake: record, system: string]: nothing -> li
 }
 
 def get_nixos_configurations [flake_ref: string, flake: record]: nothing -> list<string> {
-  let nixos_configurations = ($flake | get -i nixosConfigurations)
+  let nixos_configurations = ($flake | get -o nixosConfigurations)
   if $nixos_configurations == null {
     []
   } else {
