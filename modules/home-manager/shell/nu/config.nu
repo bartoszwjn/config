@@ -33,6 +33,12 @@ $env.config.explore = {
     selected_cell: { bg: light_blue },
 }
 
+$env.config.history = {
+    file_format: sqlite
+    max_size: 1_000_000
+    isolation: false
+}
+
 $env.config.table.trim = {
     methodology: truncating
     truncating_suffix: "…"
