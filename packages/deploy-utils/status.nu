@@ -68,7 +68,9 @@ def query-profile []: record -> record {
     let result = (
         $check_profile
         | ^ssh -T
-            -o "ConnectTimeout=3" -o $"User=($profile.ssh_user)"
+            -o "ConnectTimeout=3"
+            ...$profile.ssh_opts
+            -o $"User=($profile.ssh_user)"
             $profile.hostname -- bash -s $profile.profile_path
         | complete
     )
