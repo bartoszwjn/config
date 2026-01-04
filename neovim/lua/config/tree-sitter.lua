@@ -1,43 +1,102 @@
-local configs = require("nvim-treesitter.configs")
-local parsers = require("nvim-treesitter.parsers")
+local textobjects = require("nvim-treesitter-textobjects")
+local treesitter = require("nvim-treesitter")
 
-local parser_config = parsers.get_parser_configs()
-parser_config.nu = {
-  install_info = {
-    url = "https://github.com/nushell/tree-sitter-nu",
-    files = { "src/parser.c" },
-    branch = "main",
-    requires_generate_from_grammar = false,
-  },
-  filetype = "nu",
+treesitter.setup {}
+
+local enabled_filetypes = {
+  "bash",
+  "c",
+  "cpp",
+  "css",
+  "csv",
+  "cue",
+  "desktop",
+  "diff",
+  "dockerfile",
+  "editorconfig",
+  "gitattributes",
+  "gitcommit",
+  "gitconfig",
+  "gitignore",
+  "gitrebase",
+  "go",
+  "gomod",
+  "groovy",
+  "haskell",
+  "hcl",
+  "hjson",
+  "html",
+  "http",
+  "java",
+  "javascript",
+  "jq",
+  "json",
+  "json5",
+  "jsonnet",
+  "just",
+  "kdl",
+  "kotlin",
+  "lua",
+  "make",
+  "markdown",
+  "nginx",
+  "nix",
+  "nu",
+  "passwd",
+  "perl",
+  "prolog",
+  "proto",
+  "python",
+  "query",
+  "requirements",
+  "rst",
+  "ruby",
+  "rust",
+  "scala",
+  "sh",
+  "sql",
+  "sshconfig",
+  "strace",
+  "swift",
+  "terraform",
+  "toml",
+  "tsv",
+  "typescript",
+  "typst",
+  "vim",
+  "xml",
+  "yaml",
+  "zig",
+  "zsh",
 }
 
-configs.setup {
-  ensure_installed = {},
-  sync_install = false,
-  ignore_install = {},
-  auto_install = false,
-  modules = {},
+local indent_disabled = { "bash", "sh", "zsh" }
 
-  highlight = { enable = true },
-  indent = { enable = true, disable = { "markdown", "nix" } },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = false,
-      include_surrounding_whitespace = false,
-      keymaps = {
-        ["aa"] = "@parameter.outer",
-        ["ia"] = "@parameter.inner",
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-      },
-      selection_modes = {
-        ["@function.inner"] = "v",
-        ["@function.outer"] = "v",
-        ["@parameter.inner"] = "v",
-        ["@parameter.outer"] = "v",
-      },
-    },
+for _, ft in ipairs(enabled_filetypes) do
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = ft,
+    callback = function(args)
+      vim.treesitter.start()
+      if not vim.list_contains(indent_disabled, ft) then
+        vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+      end
+    end,
+  })
+end
+
+textobjects.setup {
+  select = {
+    lookahead = false,
   },
 }
+
+local function map_select_textobject(lhs, rhs)
+  vim.keymap.set({ "x", "o" }, lhs, function()
+    require("nvim-treesitter-textobjects.select").select_textobject(rhs, "textobjects")
+  end)
+end
+
+map_select_textobject("aa", "@parameter.outer")
+map_select_textobject("ia", "@parameter.inner")
+map_select_textobject("af", "@function.outer")
+map_select_textobject("if", "@function.inner")
