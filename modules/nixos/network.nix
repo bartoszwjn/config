@@ -13,7 +13,15 @@ in
   options.custom.network = {
     enable = lib.mkEnableOption "network configuration";
 
-    enableWireless = lib.mkEnableOption "wpa_supplicant configuration";
+    wireless = {
+      enable = lib.mkEnableOption "wpa_supplicant configuration";
+      controllingUsers = lib.mkOption {
+        type = types.listOf types.str;
+        description = ''
+          Names of users who are allowed to control wpa_supplicant using `wpa_cli` or `wpa_gui`.
+        '';
+      };
+    };
 
     networks = lib.mkOption {
       type = types.listOf types.str;
@@ -27,15 +35,20 @@ in
       useNetworkd = true;
       firewall.enable = true;
 
-      wireless = lib.mkIf cfg.enableWireless {
+      wireless = lib.mkIf cfg.wireless.enable {
         enable = true;
-        userControlled = {
-          enable = true;
-          group = "wheel";
-        };
+        userControlled = true;
         allowAuxiliaryImperativeNetworks = true;
       };
     };
+
+    users.users = lib.optionalAttrs cfg.wireless.enable (
+      lib.listToAttrs (
+        lib.forEach cfg.wireless.controllingUsers (
+          user: lib.nameValuePair user { extraGroups = [ "wpa_supplicant" ]; }
+        )
+      )
+    );
 
     systemd.network = {
       enable = true;
