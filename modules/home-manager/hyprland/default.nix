@@ -71,7 +71,7 @@ in
     programs.zsh.loginExtra = lib.mkIf config.custom.shell.zsh.enable (
       lib.mkAfter ''
         if [[ "$TTY" = "/dev/tty1" ]]; then
-          Hyprland
+          start-hyprland
         fi
       ''
     );
