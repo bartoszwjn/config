@@ -20,9 +20,8 @@ stdenv.mkDerivation {
   buildInputs = [ bison ];
 
   env.NIX_CFLAGS_COMPILE = ''
+    -std=gnu89
     -Wno-error=format-security
-    -Wno-error=implicit-function-declaration
-    -Wno-error=implicit-int
   '';
 
   meta = {
