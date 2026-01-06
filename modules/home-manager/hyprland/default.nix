@@ -177,19 +177,19 @@ in
           "NIXOS_OZONE_WL, 1"
         ];
 
-        windowrulev2 = [
-          "workspace 5 silent, class:^(Slack)$"
-          "workspace 6 silent, class:^(?i:signal)$"
-          "workspace 7 silent, class:^(obsidian)$"
-          "workspace 9 silent, class:^(spotify)$"
-          # pavucontrol
-          "float, class:^(org\\.pulseaudio\\.pavucontrol)$"
-          "move onscreen cursor 0 0, class:^(org\\.pulseaudio\\.pavucontrol)$"
-          "size 600 800, class:^(org\\.pulseaudio\\.pavucontrol)$"
-          # syncthingtray
-          "float, class:^()$, title:^(Syncthing Tray)$"
-          "move onscreen cursor 0 0, class:^()$, title:^(Syncthing Tray)$"
-          "size 600 800, class:^()$, title:^(Syncthing Tray)$"
+        windowrule = [
+          "match:class ^(?i:slack)$, workspace 5 silent"
+          "match:class ^(?i:signal)$, workspace 6 silent"
+          "match:class ^(obsidian)$, workspace 7 silent"
+          "match:class ^(spotify)$, workspace 9 silent"
+          (lib.concatStringsSep ", " [
+            "match:class ^(org\\.pulseaudio\\.pavucontrol)$"
+            "float true, size 600 800, move (cursor_x-window_w) cursor_y"
+          ])
+          (lib.concatStringsSep ", " [
+            "match:class ^()$, match:title ^(Syncthing Tray)$"
+            "float true, size 600 800, move (cursor_x-window_w) cursor_y"
+          ])
         ];
 
         bindm = [
