@@ -18,22 +18,22 @@ in
       vcs.userEmail = "bartoszwjn@gmail.com";
     };
     documentation.enable = true;
-    dunst.enable = true;
+    # dunst.enable = true;
     gpg.enable = true;
     gui-services.enableAll = true;
     home.enable = true;
-    hyprland = {
-      enable = true;
-      monitors = {
-        "desc:Dell Inc. DELL S2522HG".config = "1920x1080@240, 0x0, 1";
-        "desc:GIGA-BYTE TECHNOLOGY CO. LTD. GS27QXA".config = "2560x1440@240, 0x0, 1";
-        "".config = "preferred, auto-right, 1";
-      };
-      waybar.monitors = [
-        "DP-1"
-        "HDMI-A-1"
-      ];
-    };
+    # hyprland = {
+    #   enable = true;
+    #   monitors = {
+    #     "desc:Dell Inc. DELL S2522HG".config = "1920x1080@240, 0x0, 1";
+    #     "desc:GIGA-BYTE TECHNOLOGY CO. LTD. GS27QXA".config = "2560x1440@240, 0x0, 1";
+    #     "".config = "preferred, auto-right, 1";
+    #   };
+    #   waybar.monitors = [
+    #     "DP-1"
+    #     "HDMI-A-1"
+    #   ];
+    # };
     keyring.enable = true;
     kitty.enable = true;
     neovim.enable = true;

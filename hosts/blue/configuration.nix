@@ -23,10 +23,11 @@
   custom = {
     admin-tools.enable = true;
     console.enable = true;
+    cosmic.enable = true;
     documentation.enable = true;
     games.steam.enable = true;
     home-manager.enable = true;
-    hyprland.enable = true;
+    # hyprland.enable = true;
     i18n.enable = true;
     keyring.enable = true;
     nix.enable = true;
