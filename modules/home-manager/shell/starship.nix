@@ -34,7 +34,7 @@ in
           '';
         add_newline = true;
         scan_timeout = 30;
-        command_timeout = 200;
+        command_timeout = 500;
         cmd_duration = {
           min_time = 1000;
           show_milliseconds = true;
@@ -53,18 +53,14 @@ in
                 reset = ''\e[0m'';
               in
               ''
-                to_wc=$(
-                  jj log --no-graph --revisions 'trunk()..@-' --template 1
-                )
-                if [ "''${#to_wc}" -gt 0 ]; then
-                  printf "${bold}%s${green}+${reset} " "''${#to_wc}"
+                to_wc=$(jj log --count --revisions 'trunk()..@-')
+                if [ "''${to_wc}" -gt 0 ]; then
+                  printf "${bold}%s${green}+${reset} " "''${to_wc}"
                 fi
 
-                to_trunk=$(
-                  jj log --ignore-working-copy --no-graph --revisions '@..trunk()' --template 1
-                )
-                if [ "''${#to_trunk}" -gt 0 ]; then
-                  printf "${bold}%s${red}-${reset} " "''${#to_trunk}"
+                to_trunk=$(jj log --ignore-working-copy --count --revisions '@..trunk()')
+                if [ "''${to_trunk}" -gt 0 ]; then
+                  printf "${bold}%s${red}-${reset} " "''${to_trunk}"
                 fi
 
                 jj log --ignore-working-copy --no-graph --color always --revisions @ --template '
