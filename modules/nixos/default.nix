@@ -9,6 +9,7 @@
     # keep-sorted start
     ./admin-tools.nix
     ./console.nix
+    ./cosmic.nix
     ./documentation.nix
     ./games.nix
     ./home-manager.nix

@@ -19,6 +19,9 @@ let
       base = import nixpkgs {
         localSystem.system = system;
         config.allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) allowedUnfreePackages;
+        overlays = [
+          (import ./overlays/cosmic.nix)
+        ];
       };
       allowedUnfreePackages = [
         "discord"
