@@ -5,12 +5,9 @@
   ...
 }:
 {
-  custom = {
-    dns.enable = true;
-    network = {
-      enable = true;
-      controllingUsers = [ "bartoszwjn" ];
-    };
+  custom.network = {
+    enable = true;
+    controllingUsers = [ "bartoszwjn" ];
   };
 
   networking = {
