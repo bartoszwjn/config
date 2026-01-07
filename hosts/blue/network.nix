@@ -7,7 +7,10 @@
 {
   custom = {
     dns.enable = true;
-    network.enable = true;
+    network = {
+      enable = true;
+      controllingUsers = [ "bartoszwjn" ];
+    };
   };
 
   networking = {

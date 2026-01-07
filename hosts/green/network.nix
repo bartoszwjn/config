@@ -9,13 +9,10 @@
     dns.enable = true;
     network = {
       enable = true;
-      wireless = {
-        enable = true;
-        controllingUsers = [
-          "bartoszwjn"
-          "bart3"
-        ];
-      };
+      controllingUsers = [
+        "bartoszwjn"
+        "bart3"
+      ];
     };
   };
 

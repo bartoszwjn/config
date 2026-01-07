@@ -13,13 +13,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = config.custom.network.enable;
-        message = "Custom DNS config requires custom network config to be enabled as well";
-      }
-    ];
-
     networking.nameservers = [
       "2620:fe::fe#dns.quad9.net"
       "2620:fe::9#dns.quad9.net"
@@ -45,10 +38,6 @@ in
       };
     };
 
-    systemd.network.networks = lib.genAttrs config.custom.network.networks (network: {
-      dhcpV4Config.UseDNS = false;
-      dhcpV6Config.UseDNS = false;
-      ipv6AcceptRAConfig.UseDNS = false;
-    });
+    networking.networkmanager.dns = lib.mkOverride 75 "none"; # between `mkForce` and the default
   };
 }
