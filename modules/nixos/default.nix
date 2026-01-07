@@ -20,6 +20,7 @@
     ./printing.nix
     ./repo.nix
     ./virtualisation.nix
+    ./xkb.nix
     ./zsa.nix
     ./zsh.nix
     # keep-sorted end

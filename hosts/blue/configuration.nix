@@ -31,6 +31,7 @@
     keyring.enable = true;
     nix.enable = true;
     printing.enable = true;
+    xkb.enable = true;
     zsa.enable = true;
     zsh.enable = true;
   };

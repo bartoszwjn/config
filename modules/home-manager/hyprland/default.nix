@@ -9,7 +9,7 @@ let
   inherit (lib) types;
   cfg = config.custom.hyprland;
   hyprlandPackage = config.wayland.windowManager.hyprland.finalPackage;
-  xkbKeymapPackage = customPkgs.xkb-keymap-ed;
+  xkbKeymapPackage = customPkgs.xkb-keymap-custom;
 
   colorBlue = "rgb(61afef)";
   colorCyan = "rgb(56b6c2)";
@@ -121,7 +121,7 @@ in
         };
 
         input = {
-          kb_file = "${xkbKeymapPackage}/keymap.xkb";
+          kb_file = "${xkbKeymapPackage}";
           mouse_refocus = false;
           float_switch_override_focus = 2;
           special_fallthrough = true;

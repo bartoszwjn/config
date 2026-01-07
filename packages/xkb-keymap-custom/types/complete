@@ -1,0 +1,4 @@
+default xkb_types "complete" {
+    include "%S/complete"
+    include "custom"
+};

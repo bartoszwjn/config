@@ -1,8 +1,6 @@
-// My custom layout for an ErgoDox keyboard
+default xkb_symbols "custom" {
 
-default xkb_symbols "ed" {
-
-    name[group1]="ErgoDox Custom";
+    name[group1]="Custom";
 
 
 
