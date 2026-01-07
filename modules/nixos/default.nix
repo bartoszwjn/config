@@ -9,7 +9,7 @@
     # keep-sorted start
     ./admin-tools.nix
     ./console.nix
-    ./dns
+    ./dns.nix
     ./documentation.nix
     ./games.nix
     ./home-manager.nix
