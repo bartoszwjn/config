@@ -83,7 +83,6 @@ in
       pkgs.hyprlock
       pkgs.pavucontrol
       pkgs.slurp
-      pkgs.wl-clipboard-rs
     ];
 
     wayland.windowManager.hyprland = {

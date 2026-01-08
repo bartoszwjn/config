@@ -37,6 +37,7 @@ in
           unzip
           vim
           wally-cli
+          wl-clipboard-rs
           zip
           # keep-sorted end
           ;
