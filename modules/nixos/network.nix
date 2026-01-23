@@ -63,6 +63,9 @@ in
       };
     };
     # Do not use nameservers obtained from DHCP.
-    networking.networkmanager.dns = lib.mkOverride 75 "none"; # between `mkForce` and the default
+    networking.networkmanager = {
+      dns = lib.mkOverride 75 "none"; # between `mkForce` and the default
+      settings.main.systemd-resolved = false;
+    };
   };
 }
