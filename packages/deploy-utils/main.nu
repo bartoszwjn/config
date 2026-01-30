@@ -13,10 +13,14 @@ def "main copy" [
     ...nodes: string # Node(s) to copy to.
     --flake: string = "." # The flake to use as a source of deploy-rs profiles.
     --quiet (-q) # Be less verbose.
+    --no-substitute-on-destination (-S) # Do not try substitutes on the destination node
 ]: nothing -> nothing {
     $env.config.table.mode = "none"
     (
-        copy --flake $flake --quiet=$quiet ...$nodes
+        copy ...$nodes
+            --flake $flake
+            --quiet=$quiet
+            --no-substitute-on-destination=$no_substitute_on_destination
         | select node profile status
         | print
     )
