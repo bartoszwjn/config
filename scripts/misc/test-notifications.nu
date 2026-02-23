@@ -1,18 +1,25 @@
 #!/usr/bin/env nu
 
-# Send some notifications with dunst to see how they look
+# Send some test notifications with notify-send
 def main [] {
-    [0 2 1] | each {|i|
-        do -c {
-            ^dunstify --timeout 0 --urgency $i --appname "Test app" "Summary" "Notification content"
-        }
-    }
-
-    do -c {
+    for urgency in [normal low critical] {
         (
-            ^dunstify --timeout 0 --urgency 1 --appname "Test app"
-                "Now with icons" "This one has an icon!!!"
-                --icon audio-volume-medium-symbolic
+            ^notify-send
+            --expire-time 0
+            --urgency $urgency
+            --app-name "Test app"
+            "Summary"
+            $"Notification content \(($urgency) urgency\)"
         )
     }
+
+    (
+        ^notify-send
+        --expire-time 0
+        --urgency normal
+        --app-name "Test app"
+        "Now with icons"
+        "This one has an icon!!!"
+        --icon audio-volume-medium-symbolic
+    )
 }
