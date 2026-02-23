@@ -13,7 +13,6 @@
     ./documentation.nix
     ./games.nix
     ./home-manager.nix
-    ./hyprland.nix
     ./i18n.nix
     ./keyring.nix
     ./network.nix

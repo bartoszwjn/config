@@ -14,7 +14,6 @@
     ./gpg.nix
     ./gui-services.nix
     ./home.nix
-    ./hyprland
     ./keyring.nix
     ./kitty.nix
     ./neovim.nix

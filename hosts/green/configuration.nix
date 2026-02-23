@@ -27,7 +27,6 @@
     cosmic.enable = true;
     documentation.enable = true;
     home-manager.enable = true;
-    # hyprland.enable = true;
     i18n.enable = true;
     keyring.enable = true;
     nix.enable = true;
