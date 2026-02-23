@@ -20,7 +20,6 @@ in
       };
     };
     documentation.enable = true;
-    # dunst.enable = true;
     gpg.enable = true;
     gui-services.enableAll = true;
     home.enable = true;

@@ -10,7 +10,6 @@
     ./alacritty
     ./dev-tools
     ./documentation.nix
-    ./dunst.nix
     ./gpg.nix
     ./gui-services.nix
     ./home.nix
