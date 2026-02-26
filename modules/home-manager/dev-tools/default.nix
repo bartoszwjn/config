@@ -91,7 +91,7 @@ in
           nix-prefetch-git
           nix-prefetch-github
           nix-tree
-          nixfmt-rfc-style
+          nixfmt
           nvd
           ;
         inherit (customPkgs)

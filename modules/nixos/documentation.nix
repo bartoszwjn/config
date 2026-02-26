@@ -17,7 +17,7 @@ in
 
     documentation.man = {
       enable = true;
-      generateCaches = true;
+      cache.enable = true;
     };
 
     environment.systemPackages = [
