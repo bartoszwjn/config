@@ -29,7 +29,7 @@ in
           in
           ''
             $username$hostname$time$directory$cmd_duration
-            $shell$direnv$package$python$rust${vcs}
+            $shell$direnv$package$deno$python$rust${vcs}
              $shlvl$jobs$status$character
           '';
         add_newline = true;
@@ -99,6 +99,10 @@ in
           format = "($output )";
           command = "starship module ${module}";
         });
+        deno = {
+          style = "bold green";
+          symbol = " ";
+        };
         directory = {
           fish_style_pwd_dir_length = 1;
           format = "in [$path]($style) [$read_only]($read_only_style)";
