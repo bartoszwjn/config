@@ -1,23 +1,16 @@
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local fidget = require("fidget")
-local neodev = require("neodev")
+local lazydev = require("lazydev")
 local tb = require("telescope.builtin")
 
 fidget.setup {}
 
-neodev.setup {
-  override = function(root_dir, options)
-    local config_repo_root = vim.env.CONFIG_REPO_ROOT
-    if config_repo_root ~= nil then
-      local config_root = vim.fs.normalize(config_repo_root .. "/neovim", { expand_env = false })
-      if root_dir:find(config_root, 1, true) == 1 then
-        options.enabled = true
-        options.runtime = true
-        options.types = true
-        options.plugins = true
-      end
-    end
-  end,
+lazydev.setup {
+  integrations = {
+    lspconfig = true,
+    cmp = true,
+    coq = false,
+  },
 }
 
 vim.lsp.config(

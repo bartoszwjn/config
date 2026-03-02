@@ -23,9 +23,9 @@ let
         git-messenger-vim
         gitsigns-nvim
         indent-blankline-nvim
+        lazydev-nvim
         leap-nvim
         luasnip
-        neodev-nvim
         neogit
         nvim-autopairs
         nvim-cmp
