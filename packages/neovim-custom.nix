@@ -31,7 +31,7 @@ let
         nvim-cmp
         nvim-lspconfig
         nvim-surround
-        # nvim-treesitter-textobjects overridden below
+        nvim-treesitter-textobjects
         onedark-nvim
         plenary-nvim # required dep for neogit, telescope-nvim
         rainbow-delimiters-nvim
@@ -39,15 +39,6 @@ let
         telescope-nvim # optional dep for neogit
         ;
       nvim-treesitter = nvim-treesitter-with-plugins;
-
-      # NOTE: waiting for https://github.com/NixOS/nixpkgs/pull/475611
-      nvim-treesitter-textobjects = vimPlugins.nvim-treesitter-textobjects.overrideAttrs (old: {
-        version = "0-unstable-2025-12-27";
-        src = old.src.override {
-          rev = "ecd03f5811eb5c66d2fa420b79121b866feecd82";
-          hash = "sha256-mMxCAkrGqTstEgaf/vwQMEF7D8swH3oyUJtaxuXzpcs=";
-        };
-      });
     };
   };
 
