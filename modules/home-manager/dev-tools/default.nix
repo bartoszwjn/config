@@ -21,6 +21,7 @@ in
     python.enable = lib.mkEnableOption "Python dev tools";
     rust.enable = lib.mkEnableOption "Rust dev tools";
     terraform.enable = lib.mkEnableOption "terraform config";
+    typescript.enable = lib.mkEnableOption "TypeScript dev tools";
 
     vcs = {
       git.enable = lib.mkEnableOption "git with custom config";
@@ -57,6 +58,7 @@ in
         python.enable = true;
         rust.enable = true;
         terraform.enable = true;
+        typescript.enable = true;
 
         vcs.git.enable = true;
         vcs.jujutsu.enable = true;
@@ -164,6 +166,10 @@ in
         "d    %h/.terraform.d              0755 -    -     -"
         "d    %h/.terraform.d/plugin-cache 0755 -    -     -"
       ];
+    })
+
+    (lib.mkIf cfg.typescript.enable {
+      home.packages = [ pkgs.deno ];
     })
 
     (lib.mkIf cfg.vcs.git.enable {
