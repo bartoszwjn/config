@@ -21,6 +21,10 @@ in
       };
     };
 
+    environment.systemPackages = [
+      pkgs.cosmic-ext-applet-minimon
+    ];
+
     # Disable some "good to have defaults" enabled by `services.desktopManager.cosmic.enable`,
     # unless they are enabled explicitly by something else.
     hardware.bluetooth.enable = lib.mkOverride 999 false;
