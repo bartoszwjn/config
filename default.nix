@@ -9,6 +9,7 @@
   treefmt-nix ? inputs.treefmt-nix,
   crane ? inputs.crane,
   private-config ? inputs.private-config,
+  cosmic-applet-disk-space ? inputs.cosmic-applet-disk-space,
   ndf ? inputs.ndf,
 }:
 
@@ -43,11 +44,15 @@ let
       inherit (pkgs) callPackage;
     }
     // {
+      cosmic-applet-disk-space = pkgs.callPackage (cosmic-applet-disk-space + "/package.nix") {
+        inherit craneLib;
+      };
       ndf = pkgs.callPackage (ndf + "/package.nix") { inherit craneLib; };
     };
   customPkgTests =
     let
       excludedPkgs = [
+        "cosmic-applet-disk-space"
         "ndf"
         "neovim-custom"
       ];

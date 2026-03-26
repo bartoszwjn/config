@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "cosmic-applet-disk-space": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774533525,
+        "narHash": "sha256-E1ViKzBv+ZO1XQ1zUIXLL208t2XD+5ng0J83fR9yz7s=",
+        "owner": "bartoszwjn",
+        "repo": "cosmic-applet-disk-space",
+        "rev": "33b8a2619617a2f0442e874ba5ccf7468488abda",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bartoszwjn",
+        "ref": "0.1.0",
+        "repo": "cosmic-applet-disk-space",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1772080396,
@@ -67,6 +84,7 @@
       },
       "original": {
         "owner": "bartoszwjn",
+        "ref": "0.1.1",
         "repo": "ndf",
         "type": "github"
       }
@@ -104,6 +122,7 @@
     },
     "root": {
       "inputs": {
+        "cosmic-applet-disk-space": "cosmic-applet-disk-space",
         "crane": "crane",
         "disko": "disko",
         "home-manager": "home-manager",

@@ -22,8 +22,12 @@
     };
     crane.url = "github:ipetkov/crane";
     private-config.url = "github:bartoszwjn/private-config";
+    cosmic-applet-disk-space = {
+      url = "github:bartoszwjn/cosmic-applet-disk-space/0.1.0";
+      flake = false;
+    };
     ndf = {
-      url = "github:bartoszwjn/ndf";
+      url = "github:bartoszwjn/ndf/0.1.1";
       flake = false;
     };
   };

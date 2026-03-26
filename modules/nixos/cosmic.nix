@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  customPkgs,
   ...
 }:
 let
@@ -22,6 +23,7 @@ in
     };
 
     environment.systemPackages = [
+      customPkgs.cosmic-applet-disk-space
       pkgs.cosmic-ext-applet-minimon
     ];
 
