@@ -27,7 +27,6 @@ let
         _module.args = { inherit customPkgs privateConfig; };
         nixpkgs.pkgs = pkgs;
         nix.registry = {
-          home-manager.flake = home-manager;
           nixpkgs.flake = nixpkgs;
         };
 
