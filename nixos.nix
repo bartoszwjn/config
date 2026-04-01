@@ -2,6 +2,8 @@
   lib,
   pkgs,
   customPkgs,
+  lanzaboote,
+
   nixpkgs,
   home-manager,
   sops-nix,
@@ -23,6 +25,7 @@ let
       (home-manager + "/nixos")
       (sops-nix + "/modules/sops")
       (disko + "/module.nix")
+      lanzaboote.nixosModules.lanzaboote
       {
         _module.args = { inherit customPkgs privateConfig; };
         nixpkgs.pkgs = pkgs;
