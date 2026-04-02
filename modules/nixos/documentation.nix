@@ -24,6 +24,7 @@ in
       if options ? documentation.man.cache then
         {
           cache.enable = true;
+          cache.generateAtRuntime = true;
         }
       # TODO: no longer needed in 26.05
       else
