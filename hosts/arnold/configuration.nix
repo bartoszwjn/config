@@ -17,8 +17,6 @@
     ./hardware.nix
     ./home-assistant.nix
     ./network.nix
-    ./sops.nix
-    ./ssh.nix
     ./syncthing.nix
     ./users.nix
   ];
@@ -35,10 +33,25 @@
     wheelNeedsPassword = false;
   };
 
+  services.openssh = {
+    enable = true;
+    settings = {
+      AuthenticationMethods = "publickey";
+      PermitRootLogin = "prohibit-password";
+    };
+  };
+
   programs.zsh.enable = true;
 
   services.avahi = {
     enable = true;
     nssmdns4 = true;
   };
+
+  sops = {
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    gnupg.sshKeyPaths = [ ];
+  };
+
+  time.timeZone = "UTC";
 }
