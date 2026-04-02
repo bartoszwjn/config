@@ -17,7 +17,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    custom.nix.lixPackageSet = pkgs.lixPackageSets.lix_2_93;
+    custom.nix.lixPackageSet = pkgs.lixPackageSets.latest;
 
     nix = {
       package = cfg.lixPackageSet.lix;
