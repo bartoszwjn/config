@@ -9,6 +9,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    ../../modules/nixos
     ./admin-tools.nix
     ./assertions.nix
     ./boot.nix

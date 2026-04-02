@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  options,
   ...
 }:
 let
@@ -17,8 +18,19 @@ in
 
     documentation.man = {
       enable = true;
-      cache.enable = true;
-    };
+    }
+    // (
+      # Added in https://github.com/NixOS/nixpkgs/pull/488395
+      if options ? documentation.man.cache then
+        {
+          cache.enable = true;
+        }
+      # TODO: no longer needed in 26.05
+      else
+        {
+          generateCaches = true;
+        }
+    );
 
     environment.systemPackages = [
       pkgs.man-pages

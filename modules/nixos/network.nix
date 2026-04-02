@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  options,
   ...
 }:
 let
@@ -48,23 +49,37 @@ in
     services = {
       resolved = {
         enable = true;
-        settings = {
-          Resolve = {
-            DNSSEC = "false";
-            DNSOverTLS = "true";
-            FallbackDNS = [
-              "1.1.1.1#cloudflare-dns.com"
-              "8.8.8.8#dns.google"
-              "1.0.0.1#cloudflare-dns.com"
-              "8.8.4.4#dns.google"
-              "2606:4700:4700::1111#cloudflare-dns.com"
-              "2001:4860:4860::8888#dns.google"
-              "2606:4700:4700::1001#cloudflare-dns.com"
-              "2001:4860:4860::8844#dns.google"
-            ];
+      }
+      // (
+        let
+          settings = {
+            Resolve = {
+              DNSSEC = "false";
+              DNSOverTLS = "true";
+              FallbackDNS = [
+                "1.1.1.1#cloudflare-dns.com"
+                "8.8.8.8#dns.google"
+                "1.0.0.1#cloudflare-dns.com"
+                "8.8.4.4#dns.google"
+                "2606:4700:4700::1111#cloudflare-dns.com"
+                "2001:4860:4860::8888#dns.google"
+                "2606:4700:4700::1001#cloudflare-dns.com"
+                "2001:4860:4860::8844#dns.google"
+              ];
+            };
           };
-        };
-      };
+        in
+        # Added in https://github.com/NixOS/nixpkgs/pull/416720
+        if options ? services.resolved.settings then
+          { inherit settings; }
+        # TODO: no longer needed in 26.05
+        else
+          {
+            dnssec = settings.Resolve.DNSSEC;
+            dnsovertls = settings.Resolve.DNSOverTLS;
+            fallbackDns = settings.Resolve.FallbackDNS;
+          }
+      );
     };
     # Do not use nameservers obtained from DHCP.
     networking.networkmanager = {
