@@ -26,6 +26,7 @@
   custom = {
     admin-tools.enable = true;
     nix.enable = true;
+    zsh.enable = true;
   };
 
   security.sudo = {
@@ -40,8 +41,6 @@
       PermitRootLogin = "prohibit-password";
     };
   };
-
-  programs.zsh.enable = true;
 
   services.avahi = {
     enable = true;
