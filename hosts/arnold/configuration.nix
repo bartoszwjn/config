@@ -18,7 +18,6 @@
     ./hardware.nix
     ./home-assistant.nix
     ./network.nix
-    ./nix.nix
     ./sops.nix
     ./ssh.nix
     ./syncthing.nix
@@ -26,6 +25,10 @@
   ];
 
   system.stateVersion = "24.05";
+
+  custom = {
+    nix.enable = true;
+  };
 
   security.sudo = {
     execWheelOnly = true;
