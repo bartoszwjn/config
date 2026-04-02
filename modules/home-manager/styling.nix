@@ -39,6 +39,8 @@ in
       iconTheme.package = pkgs.arc-icon-theme;
       theme.name = "Arc-Dark";
       theme.package = pkgs.arc-theme;
+
+      gtk4.theme = null;
     };
   };
 }
