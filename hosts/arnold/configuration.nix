@@ -10,7 +10,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../../modules/nixos
-    ./admin-tools.nix
     ./assertions.nix
     ./boot.nix
     ./caddy.nix
@@ -27,6 +26,7 @@
   system.stateVersion = "24.05";
 
   custom = {
+    admin-tools.enable = true;
     nix.enable = true;
   };
 
