@@ -11,7 +11,7 @@
     ../../modules/nixos
   ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   custom = {
     admin-tools.enable = true;
