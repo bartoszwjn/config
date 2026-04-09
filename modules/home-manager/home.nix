@@ -37,10 +37,5 @@ in
         "/run/current-system/sw/bin"
       ]
     );
-
-    systemd.user.tmpfiles.rules = [
-      #Type Path           Mode User Group Age Argument
-      "d    %h/screenshots 0755 -    -     -   -"
-    ];
   };
 }
