@@ -17,4 +17,6 @@
     admin-tools.enable = true;
     nix.enable = true;
   };
+
+  isoImage.volumeID = "nixos-usb";
 }
