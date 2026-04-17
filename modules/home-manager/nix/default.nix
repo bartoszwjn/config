@@ -14,6 +14,9 @@ in
 
   config = lib.mkIf cfg.enable {
     nix.settings = {
+      deprecated-features = [
+        "broken-string-escape" # https://github.com/serokell/deploy-rs/pull/361
+      ];
       experimental-features = [
         "nix-command"
         "flakes"
