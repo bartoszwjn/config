@@ -1,5 +1,3 @@
-#!/usr/bin/env nu
-
 use ./copy.nu
 use ./status.nu
 
