@@ -70,7 +70,7 @@ local enabled_filetypes = {
   "zsh",
 }
 
-local indent_disabled = { "bash", "sh", "zsh" }
+local indent_disabled = { "bash", "nix", "sh", "zsh" }
 
 for _, ft in ipairs(enabled_filetypes) do
   vim.api.nvim_create_autocmd("FileType", {
