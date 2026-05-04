@@ -41,11 +41,11 @@
     # Personal
     private-config.url = "github:bartoszwjn/private-config";
     cosmic-applet-disk-space = {
-      url = "github:bartoszwjn/cosmic-applet-disk-space/0.1.0";
+      url = "github:bartoszwjn/cosmic-applet-disk-space";
       flake = false;
     };
     ndf = {
-      url = "github:bartoszwjn/ndf/0.1.1";
+      url = "github:bartoszwjn/ndf";
       flake = false;
     };
   };
