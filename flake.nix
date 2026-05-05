@@ -44,6 +44,10 @@
       url = "github:bartoszwjn/cosmic-applet-disk-space";
       flake = false;
     };
+    deploy-utils = {
+      url = "github:bartoszwjn/deploy-utils";
+      flake = false;
+    };
     ndf = {
       url = "github:bartoszwjn/ndf";
       flake = false;

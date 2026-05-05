@@ -16,6 +16,7 @@
   # Personal
   private-config ? inputs.private-config,
   cosmic-applet-disk-space ? inputs.cosmic-applet-disk-space,
+  deploy-utils ? inputs.deploy-utils,
   ndf ? inputs.ndf,
 }:
 
@@ -44,37 +45,33 @@ let
 
       craneLib = import crane { inherit pkgs; };
 
-      customPkgs = {
-        bash_3_2 = pkgs.callPackage ./packages/bash_3_2.nix { };
-        neovim-custom = pkgs.callPackage ./packages/neovim-custom.nix { };
-        deploy-utils = pkgs.callPackage ./packages/deploy-utils/package.nix { };
-        xkb-keymap-custom = pkgs.callPackage ./packages/xkb-keymap-custom/package.nix { };
-
+      externPkgs = {
         cosmic-applet-disk-space = pkgs.callPackage (cosmic-applet-disk-space + "/package.nix") {
           inherit craneLib;
         };
+        deploy-utils = pkgs.callPackage (deploy-utils + "/package.nix") { inherit craneLib; };
         ndf = pkgs.callPackage (ndf + "/package.nix") { inherit craneLib; };
       };
 
-      customPkgTests = lib.foldl' lib.attrsets.unionOfDisjoint { } (
-        lib.mapAttrsToList
-          (
-            pkgName: pkg:
-            lib.mapAttrs' (testName: lib.nameValuePair "${pkgName}-test-${testName}") (pkg.tests or { })
-          )
-          (
-            lib.removeAttrs customPkgs [
-              "cosmic-applet-disk-space"
-              "ndf"
-              "neovim-custom"
-            ]
-          )
+      localPkgs = {
+        bash_3_2 = pkgs.callPackage ./packages/bash_3_2.nix { };
+        neovim-custom = pkgs.callPackage ./packages/neovim-custom.nix { };
+        xkb-keymap-custom = pkgs.callPackage ./packages/xkb-keymap-custom/package.nix { };
+      };
+
+      localPkgTests = lib.foldl' lib.attrsets.unionOfDisjoint { } (
+        lib.mapAttrsToList (
+          pkgName: pkg:
+          lib.mapAttrs' (testName: lib.nameValuePair "${pkgName}-${testName}") (pkg.tests or { })
+        ) (lib.removeAttrs localPkgs [ "neovim-custom" ])
       );
+
+      customPkgs = lib.attrsets.unionOfDisjoint externPkgs localPkgs;
     in
     {
       inherit pkgs;
       inherit (pkgs) lib;
-      inherit customPkgs customPkgTests;
+      inherit customPkgs localPkgTests;
 
       mkNixos = import ./nixos.nix {
         inherit (pkgs) lib;
@@ -140,7 +137,7 @@ in
 
   checks = lib.lists.foldl' lib.attrsets.unionOfDisjoint { } [
     default.customPkgs
-    default.customPkgTests
+    default.localPkgTests
     toplevels
     {
       inherit treefmt-check;

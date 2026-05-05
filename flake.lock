@@ -53,6 +53,22 @@
         "type": "github"
       }
     },
+    "deploy-utils": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777941480,
+        "narHash": "sha256-5QceeWyx04r5KJb5H8HsNrpAwCMNXGF/xzP2yEg5TAc=",
+        "owner": "bartoszwjn",
+        "repo": "deploy-utils",
+        "rev": "8b07dd26447fc215362332494f9d00a7cda31af6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bartoszwjn",
+        "repo": "deploy-utils",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -203,6 +219,7 @@
         "cosmic-applet-disk-space": "cosmic-applet-disk-space",
         "crane": "crane",
         "deploy-rs": "deploy-rs",
+        "deploy-utils": "deploy-utils",
         "disko": "disko",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
