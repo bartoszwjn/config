@@ -154,11 +154,11 @@
     "ndf": {
       "flake": false,
       "locked": {
-        "lastModified": 1777903764,
-        "narHash": "sha256-k9e3GykCx9vg0V5mmFHsNE/tmK6AyXgfnWXQrokRv7M=",
+        "lastModified": 1778113292,
+        "narHash": "sha256-CYqQCeSKpvfSLklJNkmp7TgawqFqa7wQ6WmSHOAZyJ4=",
         "owner": "bartoszwjn",
         "repo": "ndf",
-        "rev": "68497f725252d5ed484459b84de177e32c3f336b",
+        "rev": "8208cd4d36723f2110067e48ce7c49b70020dd0a",
         "type": "github"
       },
       "original": {
