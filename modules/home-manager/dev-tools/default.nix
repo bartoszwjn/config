@@ -224,6 +224,13 @@ in
 
         aliases = {
           # keep-sorted start block=yes
+          "get-commit" = [
+            "log"
+            "--no-graph"
+            "--template"
+            "commit_id ++ \"\\n\""
+            "-r"
+          ];
           "gf" = [
             "git"
             "fetch"
