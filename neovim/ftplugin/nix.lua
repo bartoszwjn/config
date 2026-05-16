@@ -4,7 +4,7 @@ local function nmap(lhs, description, rhs)
   vim.keymap.set("n", lhs, rhs, { buffer = true, desc = description })
 end
 
-nmap("<Leader>cf", "[c]ode [f]ormat (Nix): nixfmt", function()
+nmap("<Leader>cf", "[c]ode [f]ormat (Nix)", function()
   vim.cmd.update()
   vim.cmd("!nixfmt --width=" .. vim.o.textwidth .. " %")
 end)
