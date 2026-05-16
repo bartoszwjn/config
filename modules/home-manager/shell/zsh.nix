@@ -75,12 +75,12 @@ in
         # keep-sorted end
 
         # keep-sorted start
-        nb = "nix build --no-link --print-out-paths --log-format multiline";
-        nd = "nix develop --log-format multiline";
+        nb = "nix build --no-link --print-out-paths";
+        nd = "nix develop";
         ne = "nix eval";
-        nfc = "nix flake check --log-format multiline";
-        nr = "nix run --log-format multiline";
-        ns = "nix shell --log-format multiline";
+        nfc = "nix flake check";
+        nr = "nix run";
+        ns = "nix shell";
         # keep-sorted end
 
         # keep-sorted start

@@ -22,7 +22,7 @@ export def main [
   validate_data_fs $data_fs_type $data_fs_label $spans
   common validate_device $device $spans.device
 
-  let packages = run_cmd nix build --no-link --print-out-paths --log-format multiline ...[
+  let packages = run_cmd nix build --no-link --print-out-paths ...[
     nixpkgs#gptfdisk^out
     nixpkgs#dosfstools^out
     nixpkgs#e2fsprogs^bin

@@ -21,6 +21,7 @@ in
         "nix-command"
         "flakes"
       ];
+      log-format = "multiline";
       nix-path = [ "nixpkgs=flake:nixpkgs" ];
       repl-overlays = [ "${./repl-overlay.nix}" ];
     };

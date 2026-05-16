@@ -38,7 +38,7 @@ export def build_iso_image [flake: string, attr: string]: nothing -> path {
     $".nixosConfigurations.($attr).config.system.build.isoImage"
   }
   let installable = $"($flake)#($attr)"
-  let output = run_cmd nix build --print-out-paths --no-link --log-format multiline -- $installable
+  let output = run_cmd nix build --print-out-paths --no-link -- $installable
 
   let files = ls --all --full-paths ($output | path join "iso")
 

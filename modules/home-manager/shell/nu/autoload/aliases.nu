@@ -42,12 +42,12 @@ alias gsw = git switch
 # ========================= nix =========================
 # keep-sorted start
 
-alias nb = nix build --no-link --print-out-paths --log-format multiline
-alias nd = nix develop --log-format multiline
+alias nb = nix build --no-link --print-out-paths
+alias nd = nix develop
 alias ne = nix eval
-alias nfc = nix flake check --log-format multiline
-alias nr = nix run --log-format multiline
-alias ns = nix shell --log-format multiline
+alias nfc = nix flake check
+alias nr = nix run
+alias ns = nix shell
 
 # keep-sorted end
 
