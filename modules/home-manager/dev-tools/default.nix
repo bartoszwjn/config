@@ -17,6 +17,7 @@ in
     general.enable = lib.mkEnableOption "general dev tools";
     jsonnet.enable = lib.mkEnableOption "jsonnet dev tools";
     lua.enable = lib.mkEnableOption "Lua dev tools";
+    nickel.enable = lib.mkEnableOption "Nickel dev tools";
     nix.enable = lib.mkEnableOption "Nix dev tools";
     python.enable = lib.mkEnableOption "Python dev tools";
     rust.enable = lib.mkEnableOption "Rust dev tools";
@@ -54,6 +55,7 @@ in
         general.enable = true;
         jsonnet.enable = true;
         lua.enable = true;
+        nickel.enable = true;
         nix.enable = true;
         python.enable = true;
         rust.enable = true;
@@ -83,6 +85,13 @@ in
     })
 
     (lib.mkIf cfg.lua.enable { home.packages = [ pkgs.lua-language-server ]; })
+
+    (lib.mkIf cfg.nickel.enable {
+      home.packages = [
+        pkgs.nickel
+        pkgs.nls
+      ];
+    })
 
     (lib.mkIf cfg.nix.enable {
       home.packages = lib.attrValues {
