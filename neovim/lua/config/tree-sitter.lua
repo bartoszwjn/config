@@ -4,6 +4,7 @@ local treesitter = require("nvim-treesitter")
 treesitter.setup {}
 
 local enabled_filetypes = {
+  -- keep-sorted start
   "bash",
   "c",
   "cpp",
@@ -40,6 +41,7 @@ local enabled_filetypes = {
   "make",
   "markdown",
   "nginx",
+  "nickel",
   "nix",
   "nu",
   "passwd",
@@ -68,9 +70,10 @@ local enabled_filetypes = {
   "yaml",
   "zig",
   "zsh",
+  -- keep-sorted end
 }
 
-local indent_disabled = { "bash", "nix", "sh", "zsh" }
+local indent_disabled = { "bash", "nickel", "nix", "sh", "zsh" }
 
 for _, ft in ipairs(enabled_filetypes) do
   vim.api.nvim_create_autocmd("FileType", {

@@ -11,6 +11,7 @@ let
     src = ../neovim;
     dependencies = lib.attrValues {
       inherit (vimPlugins)
+        # keep-sorted start
         cmp-cmdline
         cmp-nvim-lsp
         cmp-nvim-lsp-signature-help
@@ -37,6 +38,7 @@ let
         rainbow-delimiters-nvim
         substitute-nvim
         telescope-nvim # optional dep for neogit
+        # keep-sorted end
         ;
       nvim-treesitter = nvim-treesitter-with-plugins;
     };
@@ -46,6 +48,7 @@ let
     plugins:
     lib.attrValues {
       inherit (plugins)
+        # keep-sorted start
         bash
         c
         cpp
@@ -56,11 +59,11 @@ let
         diff
         dockerfile
         editorconfig
+        git-config
+        git-rebase
         gitattributes
         gitcommit
-        git-config
         gitignore
-        git-rebase
         go
         gomod
         groovy
@@ -82,6 +85,7 @@ let
         make
         markdown
         nginx
+        nickel
         nix
         nu
         passwd
@@ -109,6 +113,7 @@ let
         yaml
         zig
         zsh
+        # keep-sorted end
         ;
     }
   );

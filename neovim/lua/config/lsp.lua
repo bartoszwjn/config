@@ -18,11 +18,14 @@ vim.lsp.config(
   { capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()) }
 )
 
+-- keep-sorted start
 vim.lsp.enable("denols")
 vim.lsp.enable("lua_ls") -- TODO: https://github.com/neovim/nvim-lspconfig/blob/master/lsp/lua_ls.lua
+vim.lsp.enable("nickel_ls")
 vim.lsp.enable("nushell")
 vim.lsp.enable("pyright")
 vim.lsp.enable("rust_analyzer")
+-- keep-sorted end
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("LspUserConfig", { clear = true }),
