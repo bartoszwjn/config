@@ -38,6 +38,7 @@ let
             "spotify"
             "steam"
             "steam-unwrapped"
+            "steamcmd"
           ];
       };
       libVersionInfoOverlay = import (nixpkgs + "/lib/flake-version-info.nix") nixpkgs;

@@ -17,5 +17,9 @@ in
       enable = true;
       extest.enable = true;
     };
+
+    environment.systemPackages = [
+      pkgs.steamcmd
+    ];
   };
 }
