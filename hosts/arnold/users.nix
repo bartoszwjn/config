@@ -18,6 +18,7 @@
         openssh.authorizedKeys.keyFiles = [
           privateConfig.hosts.blue.bartoszwjn.ssh.publicKeyFile
           privateConfig.hosts.green.bartoszwjn.ssh.publicKeyFile
+          privateConfig.hosts.red.ssh.publicKeyFile
         ];
       };
     };
