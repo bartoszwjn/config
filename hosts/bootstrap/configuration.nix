@@ -18,5 +18,7 @@
     nix.enable = true;
   };
 
+  boot.zfs.forceImportRoot = false;
+
   isoImage.volumeID = "nixos-usb";
 }
