@@ -16,6 +16,7 @@ in
     environment = {
       systemPackages = lib.attrValues {
         inherit (pkgs)
+          # keep-sorted start
           file
           git
           htop
@@ -26,10 +27,12 @@ in
           ldns
           lshw
           lsof
+          ncdu
           ntfs3g
           openssh
           pciutils
           vim
+          # keep-sorted end
           ;
         inherit (config.boot.kernelPackages) cpupower;
       };
