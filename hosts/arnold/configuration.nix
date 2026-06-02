@@ -23,8 +23,11 @@
 
   system.stateVersion = "26.05";
 
+  home-manager.users.bartoszwjn = ./homes/bartoszwjn.nix;
+
   custom = {
     admin-tools.enable = true;
+    home-manager.enable = true;
     nix.enable = true;
     zsh.enable = true;
   };
