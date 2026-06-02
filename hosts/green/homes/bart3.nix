@@ -27,8 +27,11 @@ in
     kitty.enable = true;
     neovim.enable = true;
     nix.enable = true;
-    packages.cli = true;
-    packages.gui = true;
+    packages = {
+      cli.core.enable = true;
+      cli.ext.enable = true;
+      gui.enable = true;
+    };
     rofi.enable = true;
     shell.enable = true;
     ssh.enable = true;

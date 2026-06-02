@@ -9,42 +9,51 @@ let
 in
 {
   options.custom.packages = {
-    cli = lib.mkEnableOption "common misc CLI packages";
-    gui = lib.mkEnableOption "common misc GUI packages";
+    cli.core.enable = lib.mkEnableOption "common core CLI packages";
+    cli.ext.enable = lib.mkEnableOption "common misc CLI packages";
+    gui.enable = lib.mkEnableOption "common misc GUI packages";
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.cli {
+    (lib.mkIf cfg.cli.core.enable {
       home.packages = lib.attrValues {
         inherit (pkgs)
           # keep-sorted start
           age
           bat
-          bluetui
-          brightnessctl
           eza
           fd
           jq
-          nasm
           ncdu
-          optipng
-          playerctl
-          pulsemixer
-          rclone
           ripgrep
           rsync
           sops
           unzip
           vim
-          wally-cli
-          wl-clipboard-rs
           zip
           # keep-sorted end
           ;
       };
     })
 
-    (lib.mkIf cfg.gui {
+    (lib.mkIf cfg.cli.ext.enable {
+      home.packages = lib.attrValues {
+        inherit (pkgs)
+          # keep-sorted start
+          bluetui
+          brightnessctl
+          optipng
+          playerctl
+          pulsemixer
+          rclone
+          wally-cli
+          wl-clipboard-rs
+          # keep-sorted end
+          ;
+      };
+    })
+
+    (lib.mkIf cfg.gui.enable {
       home.packages = lib.attrValues {
         inherit (pkgs)
           # keep-sorted start
