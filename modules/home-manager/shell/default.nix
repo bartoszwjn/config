@@ -22,7 +22,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    custom.shell = {
+    custom.shell = lib.mkDefault {
       nu.enable = true;
       zsh.enable = true;
 
