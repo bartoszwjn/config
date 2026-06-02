@@ -80,5 +80,14 @@
       nixosConfigurations = outputsFor.x86_64-linux.nixos;
 
       deploy = outputsFor.x86_64-linux.deploy;
+
+      templates = {
+        default = inputs.self.templates.basic-flake;
+
+        basic-flake = {
+          path = ./templates/basic-flake;
+          description = "A basic flake skeleton with `nixpkgs` and `systems` inputs";
+        };
+      };
     };
 }
