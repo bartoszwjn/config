@@ -1,7 +1,7 @@
 module sd {
     def complete [context: string] {
         let last_char_is_whitespace = ($context | split chars | last | str trim) == ''
-        let args = $context | split words | skip 1
+        let args = $context | split row --regex "\\s+" | skip 1
         let args = if $last_char_is_whitespace {
             $args
         } else {
