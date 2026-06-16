@@ -34,16 +34,7 @@ in
   };
 
   systemd.services.caddy = {
-    requires = [ "tailscaled.service" ];
-    after = [ "tailscaled.service" ];
-    # waiting for tailscaled is not enough, and it still fails on boot with
-    # `cannot assign requested address`, so we try restarting a few times
-    serviceConfig = {
-      Restart = "on-failure";
-      RestartSec = lib.mkForce "3s";
-      RestartPreventExitStatus = lib.mkForce "";
-    };
-    startLimitIntervalSec = lib.mkForce 60;
-    startLimitBurst = lib.mkForce 20;
+    requires = [ "tailscale-online.service" ];
+    after = [ "tailscale-online.service" ];
   };
 }
