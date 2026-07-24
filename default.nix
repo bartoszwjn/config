@@ -3,7 +3,6 @@
   system ? builtins.currentSystem,
 
   nixpkgs ? inputs.nixpkgs,
-  nixpkgs-stable ? inputs.nixpkgs-stable,
   # NixOS modules
   home-manager ? inputs.home-manager,
   sops-nix ? inputs.sops-nix,
@@ -21,12 +20,10 @@
 }:
 
 let
-  lib = import (nixpkgs + "/lib");
-
-  mkScope =
-    nixpkgs:
+  inherit (pkgs) lib;
+  pkgs =
     let
-      pkgsBase = import nixpkgs {
+      base = import nixpkgs {
         localSystem.system = system;
         overlays = [ (import deploy-rs).overlays.default ];
         config.allowUnfreePredicate =
@@ -42,59 +39,50 @@ let
           ];
       };
       libVersionInfoOverlay = import (nixpkgs + "/lib/flake-version-info.nix") nixpkgs;
-      pkgs = pkgsBase.extend (final: prev: { lib = prev.lib.extend libVersionInfoOverlay; });
-
-      craneLib = import crane { inherit pkgs; };
-
-      externPkgs = {
-        cosmic-applet-disk-space = pkgs.callPackage (cosmic-applet-disk-space + "/package.nix") {
-          inherit craneLib;
-        };
-        deploy-utils = pkgs.callPackage (deploy-utils + "/package.nix") { inherit craneLib; };
-        ndf = pkgs.callPackage (ndf + "/package.nix") { inherit craneLib; };
-      };
-
-      localPkgs = {
-        bash_3_2 = pkgs.callPackage ./packages/bash_3_2.nix { };
-        neovim-custom = pkgs.callPackage ./packages/neovim-custom.nix { };
-        xkb-keymap-custom = pkgs.callPackage ./packages/xkb-keymap-custom/package.nix { };
-      };
-
-      localPkgTests = lib.foldl' lib.attrsets.unionOfDisjoint { } (
-        lib.mapAttrsToList (
-          pkgName: pkg:
-          lib.mapAttrs' (testName: lib.nameValuePair "${pkgName}-${testName}") (pkg.tests or { })
-        ) (lib.removeAttrs localPkgs [ "neovim-custom" ])
-      );
-
-      customPkgs = lib.attrsets.unionOfDisjoint externPkgs localPkgs;
     in
-    {
-      inherit pkgs;
-      inherit (pkgs) lib;
-      inherit customPkgs localPkgTests;
+    base.extend (final: prev: { lib = prev.lib.extend libVersionInfoOverlay; });
 
-      mkNixos = import ./nixos.nix {
-        inherit (pkgs) lib;
-        inherit pkgs customPkgs;
-        lanzaboote = import lanzaboote {
-          inherit pkgs;
-          crane = craneLib;
-        };
-        inherit
-          nixpkgs
-          home-manager
-          sops-nix
-          disko
-          private-config
-          ;
-      };
+  craneLib = import crane { inherit pkgs; };
+
+  externPkgs = {
+    cosmic-applet-disk-space = pkgs.callPackage (cosmic-applet-disk-space + "/package.nix") {
+      inherit craneLib;
     };
+    deploy-utils = pkgs.callPackage (deploy-utils + "/package.nix") { inherit craneLib; };
+    ndf = pkgs.callPackage (ndf + "/package.nix") { inherit craneLib; };
+  };
 
-  default = mkScope nixpkgs;
-  stable = mkScope nixpkgs-stable;
+  localPkgs = {
+    bash_3_2 = pkgs.callPackage ./packages/bash_3_2.nix { };
+    neovim-custom = pkgs.callPackage ./packages/neovim-custom.nix { };
+    xkb-keymap-custom = pkgs.callPackage ./packages/xkb-keymap-custom/package.nix { };
+  };
 
-  treefmtEval = (import treefmt-nix).evalModule default.pkgs ./treefmt.nix;
+  localPkgTests = lib.foldl' lib.attrsets.unionOfDisjoint { } (
+    lib.mapAttrsToList (
+      pkgName: pkg:
+      lib.mapAttrs' (testName: lib.nameValuePair "${pkgName}-${testName}") (pkg.tests or { })
+    ) (lib.removeAttrs localPkgs [ "neovim-custom" ])
+  );
+
+  customPkgs = lib.attrsets.unionOfDisjoint externPkgs localPkgs;
+
+  mkNixos = import ./nixos.nix {
+    inherit lib pkgs customPkgs;
+    lanzaboote = import lanzaboote {
+      inherit pkgs;
+      crane = craneLib;
+    };
+    inherit
+      nixpkgs
+      home-manager
+      sops-nix
+      disko
+      private-config
+      ;
+  };
+
+  treefmtEval = (import treefmt-nix).evalModule pkgs ./treefmt.nix;
   treefmt-check = treefmtEval.config.build.check (
     lib.fileset.toSource {
       root = ./.;
@@ -103,14 +91,14 @@ let
   );
 
   nixos = {
-    blue = default.mkNixos { name = "blue"; };
-    bootstrap = default.mkNixos {
+    blue = mkNixos { name = "blue"; };
+    bootstrap = mkNixos {
       name = "bootstrap";
       readOnlyPkgs = false; # `nixos/modules/profiles/installation-device.nix` uses overlays
     };
-    green = default.mkNixos { name = "green"; };
+    green = mkNixos { name = "green"; };
 
-    arnold = stable.mkNixos { name = "arnold"; };
+    arnold = mkNixos { name = "arnold"; };
   };
 
   toplevels = lib.mapAttrs' (name: nixos: lib.nameValuePair "nixos-${name}" nixos.system) nixos;
@@ -120,33 +108,33 @@ let
       arnold = {
         hostname = nixos.arnold.config.networking.fqdn;
         user = "root";
-        profiles.system.path = stable.pkgs.deploy-rs.lib.activate.nixos nixos.arnold;
+        profiles.system.path = pkgs.deploy-rs.lib.activate.nixos nixos.arnold;
       };
     };
   };
 in
 
 {
-  packages = default.customPkgs;
+  packages = customPkgs;
 
   apps = {
     deploy = {
       type = "app";
-      program = "${stable.pkgs.deploy-rs.deploy-rs}/bin/deploy";
+      program = "${pkgs.deploy-rs.deploy-rs}/bin/deploy";
     };
   };
 
   checks = lib.lists.foldl' lib.attrsets.unionOfDisjoint { } [
-    default.customPkgs
-    default.localPkgTests
+    customPkgs
+    localPkgTests
     toplevels
     {
       inherit treefmt-check;
-      inherit (stable.pkgs.deploy-rs.lib.deployChecks deploy) deploy-activate deploy-schema;
+      inherit (pkgs.deploy-rs.lib.deployChecks deploy) deploy-activate deploy-schema;
     }
   ];
 
-  devShell = default.pkgs.mkShellNoCC { inputsFrom = [ treefmtEval.config.build.devShell ]; };
+  devShell = pkgs.mkShellNoCC { inputsFrom = [ treefmtEval.config.build.devShell ]; };
 
   formatter = treefmtEval.config.build.wrapper;
 
