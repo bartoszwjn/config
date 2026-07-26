@@ -46,7 +46,6 @@ local enabled_filetypes = {
   "nu",
   "passwd",
   "perl",
-  "prolog",
   "proto",
   "python",
   "query",

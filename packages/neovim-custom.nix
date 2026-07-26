@@ -90,7 +90,6 @@ let
         nu
         passwd
         perl
-        prolog
         proto
         python
         query
