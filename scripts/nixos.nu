@@ -82,6 +82,30 @@ def --wrapped "main boot" [
     switch-to-configuration $path boot --install-bootloader=$install_bootloader
 }
 
+# Check if the currently active NixOS configuration is up to date.
+def "main status" [] {
+    let flake = $env.CONFIG_REPO_ROOT
+    let host = sys host | get hostname
+    let expected = run-cmd "nix" ...[
+        "eval"
+        "--raw"
+        $"git+file://($flake)#nixosConfigurations.($host).config.system.build.toplevel.outPath"
+    ]
+
+    let current_system = run-cmd realpath /run/current-system
+    let current_profile = run-cmd realpath /nix/var/nix/profiles/system
+
+    let status = match [($expected == $current_system), ($expected == $current_profile)] {
+        [true, true] => { $"(ansi green)up to date(ansi reset)" },
+        [true, false] => { $"(ansi yellow)up to date \(current boot only\)(ansi reset)" },
+        [false, true] => { $"(ansi yellow)needs reboot(ansi reset)" },
+        [false, false] => { $"(ansi red)outdated(ansi reset)" },
+        _ => { error make -u "unreachable" },
+    }
+
+    print $"(ansi blue)($host)(ansi reset) ($status)"
+}
+
 # Switch to a specialisation of the system configuration
 #
 # If no specialisation name is given, switch to the default, unspecialised configuration.
@@ -127,5 +151,6 @@ def --wrapped run-cmd [cmd: string, ...args: string] {
 
 alias "main b" = main build
 alias "main s" = main switch
+alias "main st" = main status
 alias "main spec" = main specialisation
 alias "main t" = main test
