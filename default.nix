@@ -30,6 +30,7 @@ let
           pkg:
           lib.elem (lib.getName pkg) [
             "discord"
+            "discord-unwrapped"
             "obsidian"
             "slack"
             "spotify"
