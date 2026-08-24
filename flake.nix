@@ -2,7 +2,7 @@
   description = "Nix and Home Manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
     systems.url = "github:nix-systems/x86_64-linux";
 
     # NixOS modules
