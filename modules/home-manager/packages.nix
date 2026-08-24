@@ -61,7 +61,7 @@ in
           firefox
           keepassxc
           libnotify
-          libreoffice-fresh
+          libreoffice-stable
           obsidian
           seahorse
           spotify
