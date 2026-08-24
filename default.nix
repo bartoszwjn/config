@@ -11,6 +11,7 @@
   # Misc
   treefmt-nix ? inputs.treefmt-nix,
   crane ? inputs.crane,
+  rust-overlay ? inputs.rust-overlay,
   deploy-rs ? inputs.deploy-rs,
   # Personal
   private-config ? inputs.private-config,
@@ -71,7 +72,7 @@ let
   mkNixos = import ./nixos.nix {
     inherit lib pkgs customPkgs;
     lanzaboote = import lanzaboote {
-      inherit pkgs;
+      inherit pkgs rust-overlay;
       crane = craneLib;
     };
     inherit
