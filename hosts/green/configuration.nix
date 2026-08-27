@@ -48,5 +48,7 @@
 
   time.timeZone = "Europe/Warsaw";
 
-  # services.pcscd.enable = true;
+  specialisation.fallback-dns.configuration = {
+    networking.nameservers = lib.mkForce [];
+  };
 }
