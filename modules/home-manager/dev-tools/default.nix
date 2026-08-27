@@ -262,6 +262,11 @@ in
             "new"
             "trunk()"
           ];
+          "rt" = [
+            "rebase"
+            "-o"
+            "trunk()"
+          ];
           # keep-sorted end
         };
       };
