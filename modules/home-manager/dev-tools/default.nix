@@ -253,6 +253,15 @@ in
             "-r"
             "all()"
           ];
+          "lfp" = [
+            "log"
+            "-r"
+            "fork_point(@ | trunk())::"
+          ];
+          "nt" = [
+            "new"
+            "trunk()"
+          ];
           # keep-sorted end
         };
       };
