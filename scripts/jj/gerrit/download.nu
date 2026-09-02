@@ -1,7 +1,6 @@
 #!/usr/bin/env nu
 
-use std assert
-use std log
+use std/assert
 
 # Download a change from Gerrit into a local branch
 def main [
