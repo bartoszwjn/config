@@ -226,6 +226,8 @@ in
           }) cfg.vcs.userEmail
         );
 
+        revsets.bookmark-advance-to = "closest_pushable(@)";
+
         ui.default-command = "log";
         ui.diff-editor = ":builtin";
         ui.movement.edit = true;
@@ -268,6 +270,12 @@ in
             "trunk()"
           ];
           # keep-sorted end
+        };
+
+        revset-aliases = {
+          "closest_pushable(to)" = ''
+            heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))
+          '';
         };
       };
     })
