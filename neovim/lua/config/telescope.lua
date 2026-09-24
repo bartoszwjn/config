@@ -35,6 +35,10 @@ local function nmap(lhs, description, rhs)
   vim.keymap.set("n", lhs, rhs, { desc = description })
 end
 
+local function vmap(lhs, description, rhs)
+  vim.keymap.set("v", lhs, rhs, { desc = description })
+end
+
 nmap("<Leader>s", "[s]earch", "<Nop>")
 nmap("<Leader>s:", "[s]earch [:] commands", builtin.commands)
 nmap("<Leader>sb", "[s]earch [b]uffers", function()
@@ -62,6 +66,24 @@ nmap("<Leader>sf", "[s]earch [f]iles", function()
 end)
 nmap("<Leader>sF", "[s]earch [F]iles (incl. ignored)", function()
   builtin.find_files { hidden = true, no_ignore = true, no_ignore_parent = true }
+end)
+nmap("<Leader>sgc", "[s]earch [g]it [c]ommits (current buffer)", function()
+  builtin.git_bcommits { use_file_path = true }
+end)
+vmap("<Leader>sgc", "[s]earch [g]it [c]ommits (current line range)", function()
+  builtin.git_bcommits_range { use_file_path = true }
+end)
+nmap("<Leader>sgC", "[s]earch [g]it [C]ommits (whole repo)", function()
+  builtin.git_commits { use_file_path = true }
+end)
+nmap("<Leader>sgf", "[s]earch [g]it [f]iles", function()
+  builtin.git_files { show_untracked = true, use_file_path = true }
+end)
+nmap("<Leader>sgF", "[s]earch [g]it [F]iles (with submodules)", function()
+  builtin.git_files { recurse_submodules = true, use_file_path = true }
+end)
+nmap("<Leader>sgs", "[s]earch [g]it [s]tatus", function()
+  builtin.git_status { use_file_path = true }
 end)
 nmap("<Leader>sh", "[s]earch [h]elp", builtin.help_tags)
 nmap("<Leader>sj", "[s]earch [j]umplist", builtin.jumplist)
