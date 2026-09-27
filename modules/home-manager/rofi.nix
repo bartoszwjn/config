@@ -15,11 +15,11 @@ in
   config = lib.mkIf cfg.enable {
     programs.rofi = {
       enable = true;
-      terminal = "kitty";
-      cycle = true;
-      location = "center";
       theme = "Arc-Dark";
-      extraConfig = {
+      settings = {
+        terminal = "kitty";
+        cycle = true;
+        location = 0; # center
         show-icons = true;
         drun-display-format = "{name}";
 
