@@ -35,5 +35,12 @@ in
     # Make nu the default shell launched by terminal emulators and `nix shell`
     # without changing the user's login shell.
     home.sessionVariables.SHELL = "${config.home.profileDirectory}/bin/nu";
+
+    # Make nu the default shell when connecting over SSH.
+    programs.zsh.loginExtra = lib.mkAfter ''
+      if [[ -n "''${SSH_CONNECTION:+1}" ]]; then
+        exec nu
+      fi
+    '';
   };
 }
