@@ -125,7 +125,8 @@ in
           style = "bold purple";
         };
         hostname = {
-          format = "[@$hostname]($style) ";
+          format = "[@$hostname]($style)$ssh_symbol ";
+          ssh_symbol = " [\\(SSH\\)](bold red)";
           ssh_only = false;
           trim_at = "";
         };
