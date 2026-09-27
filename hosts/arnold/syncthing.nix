@@ -79,10 +79,20 @@ in
             "bartoszwjn-green-bart3"
             "bartoszwjn-red"
           ];
-          ignorePerms = false;
           versioning = {
             type = "staggered";
             params.maxAge = "0";
+          };
+        };
+        bartoszwjn-photos = {
+          path = "/data/syncthing/bartoszwjn-photos";
+          type = "receiveonly";
+          devices = [
+            "bartoszwjn-red"
+          ];
+          versioning = {
+            type = "simple";
+            params.cleanoutDays = "0";
           };
         };
       };
