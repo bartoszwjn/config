@@ -53,7 +53,7 @@ in
 
   home = {
     username = "bart3";
-    stateVersion = "25.11";
+    stateVersion = "26.05";
     packages = lib.attrValues {
       inherit (pkgs)
         awscli2

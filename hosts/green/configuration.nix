@@ -16,7 +16,7 @@
     ./users.nix
   ];
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 
   home-manager.users.bartoszwjn = ./homes/bartoszwjn.nix;
   home-manager.users.bart3 = ./homes/bart3.nix;

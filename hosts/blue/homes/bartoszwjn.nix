@@ -50,7 +50,7 @@ in
 
   home = {
     username = "bartoszwjn";
-    stateVersion = "25.11";
+    stateVersion = "26.05";
     packages = lib.attrValues {
       inherit (pkgs) discord;
     };
