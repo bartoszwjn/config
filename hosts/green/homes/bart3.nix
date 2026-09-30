@@ -44,6 +44,7 @@ in
         options.listenAddresses = [ "tcp://${systemPrivateConfig.tailscale.ipv4}:22001" ];
         folders.bartoszwjn-main.devices = [
           "arnold"
+          "firebrick"
           "red"
         ];
       };

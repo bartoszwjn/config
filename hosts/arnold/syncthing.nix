@@ -51,9 +51,14 @@ in
       };
 
       devices = {
+        # keep-sorted start block=yes
         bartoszwjn-blue = {
           id = privateConfig.hosts.blue.bartoszwjn.syncthing.deviceId;
           addresses = [ "tcp://${privateConfig.hosts.blue.tailscale.fqdn}:22000" ];
+        };
+        bartoszwjn-firebrick = {
+          id = privateConfig.hosts.firebrick.syncthing.deviceId;
+          addresses = [ "tcp://${privateConfig.hosts.firebrick.tailscale.fqdn}:22000" ];
         };
         bartoszwjn-green = {
           id = privateConfig.hosts.green.bartoszwjn.syncthing.deviceId;
@@ -67,6 +72,7 @@ in
           id = privateConfig.hosts.red.syncthing.deviceId;
           addresses = [ "tcp://${privateConfig.hosts.red.tailscale.fqdn}:22000" ];
         };
+        # keep-sorted end
       };
 
       folders = {
@@ -75,6 +81,7 @@ in
           type = "sendreceive";
           devices = [
             "bartoszwjn-blue"
+            "bartoszwjn-firebrick"
             "bartoszwjn-green"
             "bartoszwjn-green-bart3"
             "bartoszwjn-red"
@@ -88,6 +95,7 @@ in
           path = "/data/syncthing/bartoszwjn-photos";
           type = "receiveonly";
           devices = [
+            "bartoszwjn-firebrick"
             "bartoszwjn-red"
           ];
           versioning = {

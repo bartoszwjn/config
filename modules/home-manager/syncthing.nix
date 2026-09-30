@@ -130,6 +130,7 @@ in
       gui.address = cfg.guiAddress;
 
       devices = {
+        # keep-sorted start block=yes
         arnold = {
           deviceID = privateConfig.hosts.arnold.syncthing.deviceId;
           addresses = [ "tcp://${privateConfig.hosts.arnold.tailscale.fqdn}:22000" ];
@@ -137,6 +138,10 @@ in
         blue = {
           deviceID = privateConfig.hosts.blue.bartoszwjn.syncthing.deviceId;
           addresses = [ "tcp://${privateConfig.hosts.blue.tailscale.fqdn}:22000" ];
+        };
+        firebrick = {
+          deviceID = privateConfig.hosts.firebrick.syncthing.deviceId;
+          addresses = [ "tcp://${privateConfig.hosts.firebrick.tailscale.fqdn}:22000" ];
         };
         green = {
           deviceID = privateConfig.hosts.green.bartoszwjn.syncthing.deviceId;
@@ -150,6 +155,7 @@ in
           deviceID = privateConfig.hosts.red.syncthing.deviceId;
           addresses = [ "tcp://${privateConfig.hosts.red.tailscale.fqdn}:22000" ];
         };
+        # keep-sorted end
       };
 
       folders = {
