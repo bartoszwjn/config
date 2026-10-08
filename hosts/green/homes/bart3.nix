@@ -45,7 +45,6 @@ in
         folders.bartoszwjn-main.devices = [
           "arnold"
           "firebrick"
-          "red"
         ];
       };
     };

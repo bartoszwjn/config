@@ -68,10 +68,6 @@ in
           id = privateConfig.hosts.green.bart3.syncthing.deviceId;
           addresses = [ "tcp://${privateConfig.hosts.green.tailscale.fqdn}:22001" ];
         };
-        bartoszwjn-red = {
-          id = privateConfig.hosts.red.syncthing.deviceId;
-          addresses = [ "tcp://${privateConfig.hosts.red.tailscale.fqdn}:22000" ];
-        };
         # keep-sorted end
       };
 
@@ -84,7 +80,6 @@ in
             "bartoszwjn-firebrick"
             "bartoszwjn-green"
             "bartoszwjn-green-bart3"
-            "bartoszwjn-red"
           ];
           versioning = {
             type = "staggered";
@@ -96,7 +91,6 @@ in
           type = "receiveonly";
           devices = [
             "bartoszwjn-firebrick"
-            "bartoszwjn-red"
           ];
           versioning = {
             type = "simple";

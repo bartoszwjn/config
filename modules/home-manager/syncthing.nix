@@ -151,10 +151,6 @@ in
           deviceID = privateConfig.hosts.green.bart3.syncthing.deviceId;
           addresses = [ "tcp://${privateConfig.hosts.green.tailscale.fqdn}:22001" ];
         };
-        red = {
-          deviceID = privateConfig.hosts.red.syncthing.deviceId;
-          addresses = [ "tcp://${privateConfig.hosts.red.tailscale.fqdn}:22000" ];
-        };
         # keep-sorted end
       };
 
