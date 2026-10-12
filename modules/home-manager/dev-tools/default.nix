@@ -255,6 +255,11 @@ in
             "-r"
             "all()"
           ];
+          "ld" = [
+            "log"
+            "-T"
+            "builtin_log_detailed"
+          ];
           "lfp" = [
             "log"
             "-r"
