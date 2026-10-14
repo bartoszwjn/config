@@ -25,7 +25,7 @@
   boot.loader.systemd-boot.enable = false;
   boot.lanzaboote = {
     enable = true;
-    pkiBundle = "/etc/secureboot";
+    pkiBundle = "/var/lib/sbctl";
     settings.editor = false;
   };
   boot.loader.timeout = 1;
