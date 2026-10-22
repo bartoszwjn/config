@@ -6,15 +6,8 @@
 }:
 {
   boot = {
-    kernelModules = [
-      # https://github.com/DHowett/framework-laptop-kmod?tab=readme-ov-file#usage
-      "cros_ec"
-      "cros_ec_lpcs"
-
-      "kvm-amd"
-    ];
+    kernelModules = [ "kvm-amd" ];
     kernelParams = [ "amd_pstate=active" ];
-    extraModulePackages = [ config.boot.kernelPackages.framework-laptop-kmod ];
   };
 
   environment.systemPackages = [ pkgs.framework-tool ];
