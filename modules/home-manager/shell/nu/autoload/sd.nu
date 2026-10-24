@@ -1,19 +1,13 @@
 module sd {
-    def complete [context: string] {
-        let last_char_is_whitespace = ($context | split chars | last | str trim) == ''
-        let args = $context | split row --regex "\\s+" | skip 1
-        let args = if $last_char_is_whitespace {
-            $args
-        } else {
-            $args | take (($args | length) - 1)
-        }
+    def complete [place: record] {
+        let previous_args = $place.command | skip 1 | take (($in | length) - 1)
 
         if "CONFIG_REPO_ROOT" not-in $env {
             return []
         }
         let root = $env.CONFIG_REPO_ROOT | path join scripts
 
-        let dir = $args | reduce --fold $root {|part, dir|
+        let dir = $previous_args | reduce --fold $root {|part, dir|
             if ($dir | path type) == dir {
                 $dir | path join $part
             } else {
