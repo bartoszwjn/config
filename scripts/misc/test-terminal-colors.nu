@@ -1,7 +1,7 @@
 #!/usr/bin/env nu
 
 # Print a table using all the standard terminal colors
-def main [] {
+export def main []: nothing -> nothing {
     let text = " Xyz "
     let base_colors = [
         [RED, red],

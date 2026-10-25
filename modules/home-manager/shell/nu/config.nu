@@ -1,5 +1,7 @@
 use std/config
 
+use s
+
 $env.config.show_banner = false
 
 $env.PROMPT_INDICATOR_VI_INSERT = ""

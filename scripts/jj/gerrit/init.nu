@@ -1,7 +1,7 @@
 #!/usr/bin/env nu
 
 # Initialize jj in a Git repo with Gerrit-specific configuration
-def main [
+export def main [
     --default-branch: string # Default branch for submitting changes (default: taken from .gitreview)
     --default-remote: string # Default remote for submitting changes (default: taken from .gitreview)
 ]: nothing -> nothing {

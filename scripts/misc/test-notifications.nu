@@ -1,7 +1,7 @@
 #!/usr/bin/env nu
 
 # Send some test notifications with notify-send
-def main [] {
+export def main []: nothing -> nothing {
     for urgency in [normal low critical] {
         (
             ^notify-send

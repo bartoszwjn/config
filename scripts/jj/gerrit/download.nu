@@ -3,7 +3,7 @@
 use std/assert
 
 # Download a change from Gerrit into a local branch
-def main [
+export def main [
     change_number: int
     patchset_number?: int
     --remote: string = origin # The remote to fetch from

@@ -36,6 +36,9 @@ in
         };
         "nushell/config.nu".source = ./config.nu;
         "nushell/env.nu".source = ./env.nu;
+        "nushell/scripts/s".source = config.lib.file.mkOutOfStoreSymlink (
+          config.custom.repo.configRepoRoot + "/scripts"
+        );
         "nushell/plugin.msgpackz".source =
           let
             pluginPaths = map lib.getExe plugins;
