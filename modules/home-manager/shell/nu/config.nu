@@ -54,7 +54,7 @@ $env.config.menus ++= do {
     }
     let completion_menu = {
         name: completion_menu
-        only_buffer_difference: false
+        input_mode: cursor_prefix
         marker: "| "
         type: {
             layout: columnar
@@ -66,8 +66,8 @@ $env.config.menus ++= do {
     }
     let history_menu = {
         name: history_menu
-        only_buffer_difference: true
-        marker: "? "
+        input_mode: cursor_prefix
+        marker: "^ "
         type: {
             layout: list
             page_size: 10
@@ -76,7 +76,7 @@ $env.config.menus ++= do {
     }
     let help_menu = {
         name: help_menu
-        only_buffer_difference: true
+        input_mode: diff
         marker: "? "
         type: {
             layout: description
@@ -89,4 +89,43 @@ $env.config.menus ++= do {
         style: $style
     }
     [$completion_menu $history_menu $help_menu]
+}
+
+$env.config.keybindings ++= do {
+    let all_modes = [emacs vi_insert vi_normal helix_insert helix_normal]
+    [
+        {
+            name: menu_up_ctrl_k
+            modifier: control
+            keycode: char_k
+            mode: $all_modes
+            event: { send: menuup }
+        }
+        {
+            name: menu_down_ctrl_j
+            modifier: control
+            keycode: char_j
+            mode: $all_modes
+            event: { send: menudown }
+        }
+        {
+            name: menu_left_ctrl_h
+            modifier: control
+            keycode: char_h
+            mode: $all_modes
+            event: { send: menuleft }
+        }
+        {
+            name: menu_right_or_clear_screen_ctrl_l
+            modifier: control
+            keycode: char_l
+            mode: $all_modes
+            event: {
+                until: [
+                    { send: menuright }
+                    { send: clearscreen }
+                ]
+            }
+        }
+    ]
 }
