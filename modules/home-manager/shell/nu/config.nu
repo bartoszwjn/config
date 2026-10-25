@@ -2,6 +2,10 @@ use std/config
 
 $env.config.show_banner = false
 
+$env.PROMPT_INDICATOR_VI_INSERT = ""
+$env.PROMPT_INDICATOR_VI_NORMAL = ""
+$env.PROMPT_MULTILINE_INDICATOR = "::: "
+$env.config.edit_mode = "vi"
 $env.config.cursor_shape = {
     emacs: block
     vi_insert: block
