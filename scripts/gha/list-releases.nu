@@ -27,7 +27,9 @@ def get_releases [ owner: string, repo: string ]: nothing -> table {
     let headers = { "X-GitHub-Api-Version": "2026-03-10" }
 
     mut releases = []
-    mut links = { next: $"https://api.github.com/repos/($owner)/($repo)/releases?per_page=100" }
+    mut links: record = {
+        next: $"https://api.github.com/repos/($owner)/($repo)/releases?per_page=100"
+    }
     while "next" in $links {
         let response = http get --full --headers $headers $links.next
         $releases = $releases | append $response.body
