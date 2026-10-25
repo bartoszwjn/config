@@ -1,12 +1,13 @@
 #!/usr/bin/env nu
 
+use ./common.nu [complete_workflow_file]
 use ./list-deps.nu
 
 # Update all uses of an action in a workflow file to a new version.
 export def main [
-    workflow_file: path
-    owner: string
-    repo: string
+    workflow_file: path@complete_workflow_file
+    owner: string@complete_owner
+    repo: string@complete_repo
     new_version: string
 ]: nothing -> nothing {
     let deps = list-deps $workflow_file | where {|dep| $dep.owner == $owner and $dep.repo == $repo }
@@ -66,4 +67,17 @@ def resolve_tag [
             )
         }
     }
+}
+
+def complete_owner [place: record]: nothing -> list<string> {
+    let file = $place.command | get 1
+    let deps = try { list-deps $file } catch { return [] }
+    $deps | each { get owner } | uniq
+}
+
+def complete_repo [place: record]: nothing -> list<string> {
+    let file = $place.command | get 1
+    let owner = $place.command | get 2
+    let deps = try { list-deps $file } catch { return [] }
+    $deps | where owner == $owner | each { get repo }
 }

@@ -1,8 +1,10 @@
 #!/usr/bin/env nu
 
+use ./common.nu [complete_workflow_file]
+
 # List all actions used as dependencies in a GitHub Actions workflow file.
 export def main [
-    workflow_file: path
+    workflow_file: path@complete_workflow_file
 ]: nothing -> table<owner: string, repo: string, version: string, sha: string, lines: list<int>> {
     let contents = open --raw $workflow_file
 
