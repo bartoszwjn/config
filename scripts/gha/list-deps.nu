@@ -11,7 +11,7 @@ export def main [
     let owner_pat = "(?<owner>[a-zA-Z0-9_-]+)"
     let repo_pat = "(?<repo>[a-zA-Z0-9_-]+)"
     let sha_pat = "(?<sha>[0-9a-f]{40})"
-    let version_pat = "(?<version>v[0-9]+(?:\\.[0-9]+)*)"
+    let version_pat = "(?<version>v?[0-9]+(?:\\.[0-9]+)*)"
     let pat = $"^ *uses: ($owner_pat)/($repo_pat)@($sha_pat) # ($version_pat)$"
 
     (
