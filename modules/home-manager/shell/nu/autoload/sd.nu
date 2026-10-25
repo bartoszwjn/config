@@ -18,17 +18,19 @@ module sd {
         if ($dir | path type) == dir {
             ls --all --short-names $dir | each {
                 let item = $in
-                let description = if $item.type == file and ($item.name | str ends-with .nu) {
-                    let help = try {
-                        run-external ($dir | path join $item.name) "--help"
-                    } catch {
-                        null
+                let opts = match $item.type {
+                    file if ($item.name | str ends-with .nu) => {
+                        let help = try {
+                            run-external ($dir | path join $item.name) "--help"
+                        } catch { null }
+                        let help = $help | default "" | lines | get 0?
+                        let style = if $help != null { "green_bold" } else { null }
+                        { description: $help, style: $style }
                     }
-                    $help | default "" | lines | get 0? | default $item.type
-                } else {
-                    $item.type
+                    dir => { { style: blue_bold } }
+                    _ => { { description: $item.type } }
                 }
-                { value: ($item.name + " "), description: $description }
+                $opts | merge { value: ($item.name + " "), display_override: $item.name }
             }
         } else {
             []
