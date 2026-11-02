@@ -33,6 +33,7 @@
     printing.enable = true;
     virtualisation = {
       docker.enable = true;
+      podman.enable = true;
       virt-manager.enable = true;
     };
     xkb.enable = true;
