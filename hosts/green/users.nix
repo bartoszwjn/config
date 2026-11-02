@@ -18,7 +18,6 @@ in
         extraGroups = [
           "wheel"
           "video"
-          "docker"
           "libvirtd"
         ];
         hashedPassword = systemPrivateConfig.bart3.hashedPassword;
@@ -30,7 +29,6 @@ in
         extraGroups = [
           "wheel"
           "video"
-          "docker"
           "libvirtd"
         ];
         hashedPassword = systemPrivateConfig.bartoszwjn.hashedPassword;

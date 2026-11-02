@@ -32,7 +32,6 @@
     nix.enable = true;
     printing.enable = true;
     virtualisation = {
-      docker.enable = true;
       podman.enable = true;
       virt-manager.enable = true;
     };

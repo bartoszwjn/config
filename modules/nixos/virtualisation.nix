@@ -9,14 +9,11 @@ let
 in
 {
   options.custom.virtualisation = {
-    docker.enable = lib.mkEnableOption "docker";
     podman.enable = lib.mkEnableOption "podman";
     virt-manager.enable = lib.mkEnableOption "virt-manager";
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.docker.enable { virtualisation.docker.enable = true; })
-
     (lib.mkIf cfg.podman.enable { virtualisation.podman.enable = true; })
 
     (lib.mkIf cfg.virt-manager.enable {
