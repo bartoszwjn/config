@@ -26,6 +26,4 @@
       "xhci_pci"
     ];
   };
-
-  boot.initrd.systemd.enable = true;
 }

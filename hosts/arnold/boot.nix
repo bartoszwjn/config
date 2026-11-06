@@ -44,8 +44,6 @@
       "xhci_pci"
     ];
 
-    systemd.enable = true;
-
     network.enable = true;
     network.ssh = {
       enable = true;
